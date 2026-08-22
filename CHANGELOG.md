@@ -6,7 +6,7 @@ version below corresponds to a real git tag on this repo — `git checkout
 v0.4.0`, for instance, gets you the skill exactly as it stood right
 after the STRIDE threat-taxonomy pass was added, before anything later.
 
-## Where things stand right now (v0.9.3)
+## Where things stand right now (v0.9.4)
 
 A single Claude Code Agent Skill (`skills/autistic/`) implementing
 depth-first systems reasoning, plus a mechanically-scored benchmark
@@ -42,6 +42,17 @@ but not exercised by the benchmark; token/time cost tracking exists in
 the harness but no committed result yet has that data.
 
 ---
+
+## v0.9.4 — 2026-08-22
+
+- GitHub repo renamed `autistic` → `neurodiversity-coding` to match a
+  new banner that presents ADHD and AUTISTIC as two explicitly
+  co-branded, paired reasoning engines under one "Neurodiversity"
+  identity. Every internal self-reference (`SKILL.md`, JSON schema
+  `$id` fields, README) updated to the new URL.
+- Adopted the new banner image; README gained a short line on why the
+  repo carries this name while the skill itself stays `autistic` (its
+  own identity, and its `/autistic` invocation, are unchanged).
 
 ## v0.9.3 — 2026-08-22
 
