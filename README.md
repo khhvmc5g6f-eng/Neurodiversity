@@ -90,7 +90,10 @@ Then in Claude Code:
 No install is required to read the reasoning — it's a Markdown skill
 that drives Claude's own `Agent` tool calls, the same mechanism the
 [`adhd`](https://github.com/UditAkhourii/adhd) skill uses for isolated
-parallel branches. Full operational detail:
+parallel branches. `adhd` is a real, actively maintained project (not
+just a skill file) with its own [`adhd-agent`](https://www.npmjs.com/package/adhd-agent)
+npm package and CLI — AUTISTIC deliberately doesn't duplicate its
+divergence engine; see the ADHD bridge below. Full operational detail:
 [`skills/autistic/SKILL.md`](skills/autistic/SKILL.md).
 
 ## How it works, briefly
@@ -114,6 +117,17 @@ parallel branches. Full operational detail:
 5. **Two-stage synthesis** — a full technical model, then a distilled,
    evidence-linked, confidence-calibrated result. Nothing unresolved is
    silently dropped; it's ranked `BLOCKING → CURIOSITY` and reported.
+
+Two things run underneath all five phases: **tool-backed verification**
+prefers a real call-graph MCP, static-analysis MCP, or CLI tool
+(dependency-cruiser, Semgrep, Stryker/mutmut/cargo-mutants,
+Schemathesis/oasdiff) over an LLM inferring the same thing from reading
+files, wherever one is available
+([`references/tooling.md`](skills/autistic/references/tooling.md)); and
+a **cross-run memory ledger** (`.autistic/memory.json`, written into the
+*target* repo being analysed) means a repeat audit doesn't re-derive
+invariants and contradictions a previous run already confirmed
+([`references/memory.md`](skills/autistic/references/memory.md)).
 
 Full architecture: [`skills/autistic/references/`](skills/autistic/references/).
 Cognitive profiles: [`skills/autistic/frames/`](skills/autistic/frames/).
@@ -146,9 +160,10 @@ autistic/
 ├── skills/autistic/
 │   ├── SKILL.md
 │   ├── references/   architecture, monotropism, patterns, requirements,
-│   │                  debugging, verification, adhd-bridge
+│   │                  debugging, verification, adhd-bridge, tooling,
+│   │                  memory
 │   ├── frames/        cognitive-profiles, profile-selection
-│   └── schemas/       result, tunnel, system-map (JSON Schema)
+│   └── schemas/       result, tunnel, system-map, memory-ledger (JSON Schema)
 ├── bench/
 │   ├── fixtures/      seeded-defect scenarios + ground-truth answer keys
 │   ├── harness/       runner + mechanical scorer

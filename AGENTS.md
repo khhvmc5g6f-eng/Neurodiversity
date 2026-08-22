@@ -51,11 +51,18 @@ let both stand with their run IDs.
 
 The full 148-point source spec (`documentation/SOURCE-SPEC.md`)
 describes more than this first build implements — notably a standalone
-TS/CLI package (`src/*.ts`, `npm install -g`), mutation-testing
-integration, and a full 10-category × 10-scenario stress suite. This
-build scoped to: the Claude Code Skill itself (complete), and a 10-
-fixture benchmark suite covering the ten stress-test categories from the
-spec at one fixture each (not the full cross-product). See `EVALS.md`'s
-"scope and honesty" section for exactly what ran and what didn't, and
-`CONTRIBUTING.md` for how to pick up deferred scope without silently
-expanding it.
+TS/CLI package (`src/*.ts`, `npm install -g`) and a full
+10-category × 10-scenario stress suite. Mutation-testing and
+static-analysis tool dispatch is specified concretely in
+`skills/autistic/references/tooling.md`, but is not exercised by the
+benchmark (see `EVALS.md`). This build scoped to: the Claude Code Skill
+itself (complete, including real-tool-integration guidance and a
+cross-run memory ledger — `references/tooling.md`,
+`references/memory.md`), and a 12-fixture benchmark suite (10
+bug-finding + 2 design) covering the ten stress-test categories from
+the spec at one fixture each plus two architecture-design fixtures (not
+the full cross-product). A real head-to-head run against the actual
+`adhd-agent` package was attempted and hit a real, documented blocker —
+see `EVALS.md` → "Attempted and blocked." See `EVALS.md`'s "Deferred"
+section for exactly what ran and what didn't, and `CONTRIBUTING.md` for
+how to pick up deferred scope without silently expanding it.

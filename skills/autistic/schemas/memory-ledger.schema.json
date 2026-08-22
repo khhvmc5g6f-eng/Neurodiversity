@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/khhvmc5g6f-eng/autistic/schemas/memory-ledger.schema.json",
+  "title": "Cross-run memory ledger",
+  "description": "Persisted at .autistic/memory.json in the TARGET repo being analysed (not this skill's own directory). See references/memory.md.",
+  "type": "object",
+  "required": ["repo", "lastUpdated"],
+  "properties": {
+    "repo": { "type": "string", "description": "descriptive name or path, for sanity-checking on load" },
+    "lastUpdated": { "type": "string", "format": "date-time" },
+    "invariants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["rule", "confidence"],
+        "properties": {
+          "rule": { "type": "string" },
+          "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+          "evidence": { "type": "array", "items": { "type": "string" } },
+          "confirmedRuns": { "type": "integer", "minimum": 1, "default": 1 },
+          "status": { "enum": ["active", "superseded"], "default": "active" },
+          "supersededBy": { "type": "string", "description": "pointer to the finding that superseded this, when status=superseded" }
+        }
+      }
+    },
+    "contradictions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["description", "status"],
+        "properties": {
+          "description": { "type": "string" },
+          "status": { "enum": ["open", "resolved"] },
+          "sources": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["claim", "verified"],
+        "properties": {
+          "claim": { "type": "string" },
+          "verified": { "type": "boolean" },
+          "blastRadius": { "enum": ["low", "medium", "high", "critical"] }
+        }
+      }
+    },
+    "loadBearingNodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "score"],
+        "properties": {
+          "name": { "type": "string" },
+          "score": { "type": "number" }
+        }
+      }
+    }
+  }
+}

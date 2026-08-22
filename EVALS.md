@@ -228,6 +228,39 @@ since it's the one case where AUTISTIC clearly underperformed baseline
 on recall for no visible good reason (unlike the aggregate recall gap,
 which has a clear volume-tradeoff explanation).
 
+## Attempted and blocked: a real head-to-head run against `adhd-agent`
+
+The `adhd` condition throughout this file is AUTISTIC's own agent
+*simulating* ADHD's process from prose, not the real, actively
+maintained `adhd-agent` npm package
+(https://www.npmjs.com/package/adhd-agent, 3,900★ upstream repo). We
+tried to close that gap directly: `npm install -g adhd-agent`, then
+`adhd "name this function" --frames 2 --ideas 2 --top 1 --json` as a
+minimal smoke test before committing to a full run.
+
+**It hung.** Reading `adhd-agent`'s own source
+(`dist/llm.js`) shows why: each call goes through
+`@anthropic-ai/claude-agent-sdk`'s `query()` with
+`permissionMode: "bypassPermissions"` and the `claude_code` system
+prompt preset — i.e. `adhd-agent` spawns its own nested Claude
+Code-style session per branch. Launched from *inside* an already-active
+Claude Code session (which is what built this repo), that nested call
+sat at 0% CPU with no progress for minutes on a trivial 2-frame,
+2-idea prompt — evidence of a resource/session conflict between the
+parent and nested sessions in this sandboxed environment, not a slow
+but working call. We killed it rather than let it hang indefinitely.
+
+This is a real, reproducible finding worth having, even unresolved: **a
+tool built on the Claude Agent SDK, run from inside a Claude Code
+session, is not guaranteed to work** — a constraint neither this repo's
+nor `adhd-agent`'s own docs mention. If you want to actually complete
+this comparison: run the exact command above from a plain terminal that
+is *not* itself inside an active Claude Code / Claude Agent SDK
+session, with `ANTHROPIC_API_KEY` set or a fresh `claude login`, then
+score its `--json` output the same way `bench/harness/score.js` scores
+everything else (extract `RunResult.deepened`/`shortlist` findings into
+`{"findings": [...]}` and run the scorer against the same fixtures).
+
 ## Deferred from the source spec
 
 Not run in this pass, honestly flagged rather than silently skipped
@@ -236,11 +269,21 @@ Not run in this pass, honestly flagged rather than silently skipped
 - The full 10×10 category-by-scenario stress matrix (§145) — this pass
   used 1 bug-finding fixture per category (10 total) plus 2 design
   fixtures, not 10 per category.
-- Mutation testing, static analysis tool integration (§95-96).
+- Mutation testing and static-analysis tool integration (§95-96) is now
+  specified concretely in the skill itself
+  (`skills/autistic/references/tooling.md` — per-ecosystem dispatch
+  table for Stryker/PIT/mutmut/cargo-mutants, Semgrep MCP preference,
+  Schemathesis/oasdiff for contract verification), but **the benchmark
+  fixtures don't exercise it** — they're small pasted-code scenarios
+  with no real toolchain to invoke, not full repos with a package
+  manifest and test suite.
 - A true multi-agent isolated-context run of each condition (see
   Methodology above) — what's measured here is the reasoning strategy,
   not the full isolation-infrastructure benefit.
-- A standalone TS/CLI package benchmark run outside Claude Code.
+- A standalone TS/CLI package benchmark run outside Claude Code — see
+  the `adhd-agent` stall finding above; the same nested-session
+  constraint would likely apply to any AUTISTIC equivalent built the
+  same way.
 - Further semantic-scoring work beyond the v1.1 correction (see "Known
   limitation" above) — an LLM-judge supplemental pass, used only to
   *flag* candidate near-misses for human review per the source spec's

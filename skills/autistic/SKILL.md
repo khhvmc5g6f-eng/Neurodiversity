@@ -68,10 +68,20 @@ explicitly about generating or choosing between options.
 
 ## Phase 0 — System Cartography
 
-Before any deep dive, map the system. Spawn one **System Cartographer**
-Agent call (or do it inline for small scope) that returns the system
-graph — do not skip this even under time pressure; every later phase
-depends on it.
+Before any deep dive, check for a memory ledger and prefer real tools
+over manual reading:
+
+- If `.autistic/memory.json` exists in the target repo, load it —
+  prior invariants/contradictions/assumptions are evidence, not
+  settled fact; re-verify what this run actually touches. Full
+  behavior: `references/memory.md`.
+- Prefer a real call-graph/dependency tool (an MCP server via
+  `ToolSearch`, or a CLI tool shelled out to) over inferring the graph
+  from reading files. Full dispatch order: `references/tooling.md`.
+
+Then map the system. Spawn one **System Cartographer** Agent call (or
+do it inline for small scope) that returns the system graph — do not
+skip this even under time pressure; every later phase depends on it.
 
 Capture, as a typed graph (`schemas/system-map.schema.json`):
 
@@ -183,14 +193,54 @@ actually surfaced (don't run all of them exhaustively on trivial scope):
   (create↔delete, subscribe↔unsubscribe), missing permission checks.
 - **Contradiction hunt**: search README vs code vs tests vs schema vs
   docs vs config vs runtime for disagreements. Weight by impact ×
-  certainty × reach.
+  certainty × reach. Where a documented contract can be verified by a
+  real tool (a contract test, an OpenAPI diff, a schema validator)
+  rather than by reading the doc and the code side by side, use it —
+  see `references/tooling.md`.
+- **Static analysis**: prefer a connected static-analysis MCP (Semgrep)
+  or the target repo's own configured linter over a purely manual read
+  — see `references/tooling.md`.
+- **Mutation testing**: for `--forensic` runs or an explicit request,
+  on load-bearing logic identified in Phase 0 only (expensive; not a
+  `--standard`-mode default) — dispatch to the ecosystem's tool
+  (Stryker/PIT/mutmut/cargo-mutants) per `references/tooling.md`.
 - **Claim challenger / falsification**: for each high-impact finding,
   spawn a fresh agent instructed to assume it's false and find evidence
   against it. Record `attempts_to_disprove / result / confidence`.
 
 Details and prompts for each pass: `references/requirements.md`,
 `references/patterns.md`, `references/verification.md`,
-`references/debugging.md`.
+`references/debugging.md`, `references/tooling.md`.
+
+## Resilience: a stalled or failed specialist call
+
+Any Agent call in Phases 0–3 can fail outright (API/tool error), stall
+(no useful output), or loop (repeats the same evidence/hypothesis with
+no new fact — see the hyperfocus valve, which covers the same symptom
+for the *content* of a tunnel; this covers the *mechanics* of the call
+itself). Track status per call: `ACTIVE / WAITING / SATURATED /
+STALLED / LOOPING / FAILED / COMPLETE`. This is a hard rule, not a
+suggestion — a coordination failure in one specialist call must never
+silently abort the whole run:
+
+1. On failure or a stall/loop detection, **retry once** with the same
+   scoped context pack (not the whole investigation history — the
+   point of a context pack is a clean retry, not a bigger one).
+2. If the retry also fails/stalls/loops, **do not retry again and do
+   not let it block the run.** Log it as an unresolved question at
+   `HIGH` materiality (it was load-bearing enough to open a tunnel or
+   spawn a pass in the first place) in the interrupt queue / unknowns
+   list, and continue with the next-highest-value tunnel or pass.
+3. Never ask a specialist agent to relay another agent's output back
+   through a chain of `SendMessage` calls instead of just producing its
+   own result — that's a coordination pattern, not a reasoning one, and
+   it's a demonstrated failure mode (see `EVALS.md`'s methodology notes
+   in the companion repo for a concrete instance). If a call's own
+   result is needed by another call, pass the *data*, not an
+   instruction to go fetch it from a third agent.
+4. Report unresolved-due-to-tooling-failure findings honestly in the
+   output's remaining-uncertainty section — do not present a run that
+   hit two failed specialist calls as if it were a clean, complete pass.
 
 ## Phase 4 — Synthesis (two-stage)
 
@@ -204,6 +254,14 @@ low-value analytical detail unless the user asked for `--show-*` output
 (see Modes). Confidence is calibrated from direct evidence, independent
 confirmation, test results, and assumption/contradiction count — never
 from writing tone.
+
+**Memory write**: update `.autistic/memory.json` in the target repo
+with this run's confirmed invariants/contradictions/assumptions (not
+speculative `unknowns`). Increment `confirmedRuns` for anything
+re-verified rather than duplicating it; mark anything this run's
+evidence overturned as `superseded`, don't silently overwrite it. Full
+behavior: `references/memory.md`. Skip this step only when the target
+isn't a real repo AUTISTIC can write into (e.g. a pasted snippet).
 
 ### Hard failure states — do not declare success if
 
@@ -282,6 +340,13 @@ problem → …`, stopping at saturation).
 - **Hyperfocus without the valve.** See Phase 2. This is the mirror image
   of ADHD's "convergence disguised as divergence" — here it's "depth
   disguised as progress."
+- **Coordination theatre.** A specialist agent relaying another agent's
+  output back through a chain of messages instead of producing its own
+  result is not resilience, it's a stall waiting to happen. See
+  "Resilience" above.
+- **Trusting stale memory.** Loading `.autistic/memory.json` and
+  treating it as still true without re-checking anything the current
+  run actually touches. See `references/memory.md`.
 
 ## Cost
 
@@ -297,7 +362,13 @@ Full spec, reference docs, cognitive-profile definitions, JSON schemas,
 and the seeded-defect benchmark suite (raw results, not cherry-picked)
 live at https://github.com/khhvmc5g6f-eng/autistic. Companion divergent
 skill: `adhd` (installed locally, also at
-https://github.com/UditAkhourii/adhd).
+https://github.com/UditAkhourii/adhd — a real, actively maintained
+project with its own `adhd-agent` npm package, not just a skill file;
+`references/adhd-bridge.md` and `EVALS.md` in the companion repo note
+where the benchmark does and doesn't run the actual package).
+Real-tool integration for cartography/static-analysis/mutation/contract
+verification: `references/tooling.md`. Cross-run memory:
+`references/memory.md`.
 
 ## Source spec
 
