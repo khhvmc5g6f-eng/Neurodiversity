@@ -22,6 +22,18 @@
           },
           "name": { "type": "string" },
           "layer": { "enum": ["micro", "meso", "macro"] },
+          "boundaryOrigin": {
+            "enum": ["explicit", "inferred"],
+            "description": "security_boundary nodes only: 'explicit' if an obvious auth check/middleware labels it, 'inferred' if found via the implicit-boundary checklist in references/architecture.md (external input reaching a sensitive sink with no obvious check nearby)."
+          },
+          "justification": {
+            "type": "string",
+            "description": "Required when boundaryOrigin is 'inferred' -- which external input and which sensitive sink triggered the inference. Keeps inferred boundaries traceable to evidence rather than invented."
+          },
+          "checkPresent": {
+            "type": "boolean",
+            "description": "security_boundary nodes only: whether an authorization/validation step was actually found between the input and the sink. false is itself a candidate finding, not just a note -- feed it to the STRIDE pass."
+          },
           "loadBearingScore": {
             "type": "object",
             "properties": {

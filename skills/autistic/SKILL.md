@@ -91,6 +91,12 @@ Capture, as a typed graph (`schemas/system-map.schema.json`):
   VALIDATES AUTHENTICATES AUTHORIZES OBSERVES CACHES TRANSFORMS
   SERIALISES CONSUMES PRODUCES OWNS BLOCKS RETRIES INVALIDATES`.
 
+Security boundaries specifically: capture the obvious ones (an actual
+auth check/middleware) *and* run the implicit-boundary checklist —
+external input reaching a sensitive sink with no labeled check nearby
+is still a boundary, and its missing check is itself a finding, not a
+reason to skip it. Full checklist: `references/architecture.md`.
+
 Score each node for **load-bearing weight**: `centrality +
 dependency_count + failure_impact − replaceability − observability`
 (rough, relative ranking is enough — this is a triage signal, not a

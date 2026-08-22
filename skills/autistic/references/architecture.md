@@ -39,6 +39,51 @@ API Gateway --PRODUCES--> Event Bus
 
 Full JSON shape: `../schemas/system-map.schema.json`.
 
+## Implicit security boundaries — don't only capture the labeled ones
+
+The threat-taxonomy STRIDE pass (`threat-taxonomy.md`) can only walk
+`security_boundary` nodes and `AUTHENTICATES`/`AUTHORIZES`/`VALIDATES`
+edges that cartography actually found. A boundary that exists in the
+system but was never labeled with an obvious auth check is invisible to
+it — and an *absent* check is exactly the kind of thing worth finding,
+not a reason to skip the node. The `security-trust-boundary` fixture in
+the companion repo's benchmark (a client-supplied `x-internal-role`
+header trusted for authorization, no middleware wrapping it) is a
+worked example: nothing in that code says "auth" anywhere near the
+vulnerable line.
+
+For every function/handler/entry point found while mapping the system,
+run this checklist, in order:
+
+1. **Does it receive data whose origin is outside this system's
+   control?** — HTTP request body/headers/query/cookies, CLI args, file
+   contents from a user-writable path, a webhook payload, deserialized
+   data, an upstream service response that isn't itself already fully
+   trusted.
+2. **Does that data, directly or after light transformation, reach a
+   sensitive sink?** — a privilege/authorization decision, a financial
+   amount, a destructive operation (delete/overwrite), a query executed
+   against a datastore, a command executed by the OS/shell, a file path
+   used for read/write, or a call to an external system.
+3. **If both are yes, this is an implicit security boundary** —
+   regardless of whether anything nearby is labeled "auth." Add a
+   `security_boundary` node for it, with a short `justification` noting
+   which external input and which sensitive sink triggered the
+   inference (`schemas/system-map.schema.json`'s `justification`
+   field) — record *why* it was inferred, don't silently invent
+   boundaries that can't be traced back to evidence.
+4. **Check explicitly whether an authorization/validation step actually
+   sits between the input and the sink.** If one exists, note it (the
+   boundary is real but covered). If none exists, that absence is
+   itself a candidate finding for the STRIDE pass's Spoofing and
+   Elevation-of-privilege categories — don't just note the boundary and
+   move on, feed it directly into Phase 3.
+
+This is cartography work, not the STRIDE walk itself — the checklist
+finds where boundaries are; STRIDE (once profile selection includes
+Security Analyst) is what systematically interrogates each one across
+all six categories.
+
 ## Load-bearing component detector
 
 Score every node (relative ranking across the current map is enough —
