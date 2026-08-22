@@ -173,6 +173,13 @@ autistic/
     └── SOURCE-SPEC.md the original 148-point spec, preserved verbatim
 ```
 
+## Changelog
+
+Every version, what changed, and where the project currently stands:
+[`CHANGELOG.md`](CHANGELOG.md). Each version has a matching git tag —
+`git checkout v0.4.0` gets you the skill exactly as it stood at that
+point.
+
 ## License
 
 MIT — see [`LICENSE`](LICENSE).
