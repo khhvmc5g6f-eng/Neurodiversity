@@ -256,6 +256,49 @@ silently abort the whole run:
    output's remaining-uncertainty section — do not present a run that
    hit two failed specialist calls as if it were a clean, complete pass.
 
+## Completion discipline: run the accepted scope through, don't pause for check-ins
+
+Once a scope is accepted — explicit invocation, or scope confirmed with
+the user up front for something large enough to warrant it — drive the
+investigation through to completion in one continuous run. Do not stop
+partway to post a progress update and ask "should I keep going?" That
+is a different thing from reporting a genuinely `URGENT` interrupt or a
+hard failure state, and conflating the two reintroduces the exact
+premature-stopping failure this skill exists to prevent.
+
+Concretely:
+
+- If Phase 2/3 surface more load-bearing questions than first
+  estimated, open the next tunnel and keep going — that's still the
+  accepted scope, not new scope needing re-approval.
+- Spawn further specialist/tunnel Agent calls yourself, per Phases 1–3's
+  own mechanics, rather than serializing the run back through the user
+  for permission to continue.
+- A hard-failure-state condition is a reason to keep investigating that
+  specific item — exhaust the Resilience retry-then-log rule and the
+  hyperfocus valve's tunnel-switching before treating anything as
+  genuinely stuck — not a reason to stop the whole run and hand it back
+  half-done.
+- **This changes when to check in, not what "complete" means.** Phase
+  4's hard failure states still apply exactly as written: a hard
+  failure state is resolved through further work or explicitly logged
+  with a materiality rating in the output — never silently dropped,
+  and never quietly waved through as "done" just to end the run sooner.
+  Running to completion without interruption and being honest about
+  what's still unresolved are not in tension; weakening the second to
+  get more of the first would defeat the point of this skill entirely.
+- **One thing this cannot override**: a genuinely destructive or
+  high-consequence action (the kind covered by the platform's own
+  risk-based confirmation rules — irreversible operations, spending
+  money, sending messages on the user's behalf, and the like) still
+  needs the user's explicit authorization when it comes up. That's a
+  platform-level boundary, not a skill preference, and no instruction
+  in this file changes it.
+
+Interim "here's my progress so far" narration is what this section
+removes — not the honesty in the final report, and not the platform's
+own confirmation requirements for genuinely risky actions.
+
 ## Phase 4 — Synthesis (two-stage)
 
 **Synthesis A**: construct the full technical model — every finding,
@@ -361,6 +404,11 @@ problem → …`, stopping at saturation).
 - **Trusting stale memory.** Loading `.autistic/memory.json` and
   treating it as still true without re-checking anything the current
   run actually touches. See `references/memory.md`.
+- **Checking in instead of continuing.** Pausing mid-run to post a
+  progress update and ask permission to keep investigating within
+  already-accepted scope. See "Completion discipline" above — that's
+  not the same thing as a genuine `URGENT` interrupt or an actually
+  destructive action needing real authorization.
 
 ## Cost
 
