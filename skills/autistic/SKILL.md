@@ -362,13 +362,9 @@ Full spec, reference docs, cognitive-profile definitions, JSON schemas,
 and the seeded-defect benchmark suite (raw results, not cherry-picked)
 live at https://github.com/khhvmc5g6f-eng/autistic. Companion divergent
 skill: `adhd` (installed locally, also at
-https://github.com/UditAkhourii/adhd — a real, actively maintained
-project with its own `adhd-agent` npm package, not just a skill file;
-`references/adhd-bridge.md` and `EVALS.md` in the companion repo note
-where the benchmark does and doesn't run the actual package).
-Real-tool integration for cartography/static-analysis/mutation/contract
-verification: `references/tooling.md`. Cross-run memory:
-`references/memory.md`.
+https://github.com/UditAkhourii/adhd). Real-tool integration for
+cartography/static-analysis/mutation/contract verification:
+`references/tooling.md`. Cross-run memory: `references/memory.md`.
 
 ## Source spec
 

@@ -90,10 +90,8 @@ Then in Claude Code:
 No install is required to read the reasoning — it's a Markdown skill
 that drives Claude's own `Agent` tool calls, the same mechanism the
 [`adhd`](https://github.com/UditAkhourii/adhd) skill uses for isolated
-parallel branches. `adhd` is a real, actively maintained project (not
-just a skill file) with its own [`adhd-agent`](https://www.npmjs.com/package/adhd-agent)
-npm package and CLI — AUTISTIC deliberately doesn't duplicate its
-divergence engine; see the ADHD bridge below. Full operational detail:
+parallel branches. AUTISTIC deliberately doesn't duplicate ADHD's
+divergence engine — see the ADHD bridge below. Full operational detail:
 [`skills/autistic/SKILL.md`](skills/autistic/SKILL.md).
 
 ## How it works, briefly

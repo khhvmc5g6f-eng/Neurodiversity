@@ -61,8 +61,6 @@ cross-run memory ledger — `references/tooling.md`,
 `references/memory.md`), and a 12-fixture benchmark suite (10
 bug-finding + 2 design) covering the ten stress-test categories from
 the spec at one fixture each plus two architecture-design fixtures (not
-the full cross-product). A real head-to-head run against the actual
-`adhd-agent` package was attempted and hit a real, documented blocker —
-see `EVALS.md` → "Attempted and blocked." See `EVALS.md`'s "Deferred"
-section for exactly what ran and what didn't, and `CONTRIBUTING.md` for
-how to pick up deferred scope without silently expanding it.
+the full cross-product). See `EVALS.md`'s "Deferred" section for
+exactly what ran and what didn't, and `CONTRIBUTING.md` for how to pick
+up deferred scope without silently expanding it.
