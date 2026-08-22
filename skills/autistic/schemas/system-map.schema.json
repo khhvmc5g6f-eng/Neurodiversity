@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/khhvmc5g6f-eng/autistic/schemas/system-map.schema.json",
+  "title": "System map",
+  "description": "Typed graph produced by Phase 0 System Cartography. See references/architecture.md",
+  "type": "object",
+  "required": ["nodes", "edges"],
+  "properties": {
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "name"],
+        "properties": {
+          "id": { "type": "string" },
+          "kind": {
+            "enum": [
+              "actor", "component", "service", "data", "state",
+              "external_system", "configuration", "security_boundary",
+              "failure_boundary", "event", "interface"
+            ]
+          },
+          "name": { "type": "string" },
+          "layer": { "enum": ["micro", "meso", "macro"] },
+          "loadBearingScore": {
+            "type": "object",
+            "properties": {
+              "centrality": { "type": "number" },
+              "dependencyCount": { "type": "number" },
+              "failureImpact": { "type": "number" },
+              "replaceability": { "type": "number" },
+              "observability": { "type": "number" },
+              "score": { "type": "number" }
+            }
+          }
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["from", "to", "type"],
+        "properties": {
+          "from": { "type": "string" },
+          "to": { "type": "string" },
+          "type": {
+            "enum": [
+              "CALLS", "READS", "WRITES", "DEPENDS_ON", "TRIGGERS",
+              "VALIDATES", "AUTHENTICATES", "AUTHORIZES", "OBSERVES",
+              "CACHES", "TRANSFORMS", "SERIALISES", "CONSUMES",
+              "PRODUCES", "OWNS", "BLOCKS", "RETRIES", "INVALIDATES"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

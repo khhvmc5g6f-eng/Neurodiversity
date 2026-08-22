@@ -1,0 +1,40 @@
+{
+  "fixtureId": "documentation-misleading-ratelimit",
+  "category": "DOCUMENTATION",
+  "title": "Misleading documentation: rate limiting",
+  "defects": [
+    {
+      "id": "DOC-1",
+      "description": "Documentation says the limit is per API key; the implementation actually keys by IP address -- behaviorally different (shared-IP clients like an office NAT share one bucket across many API keys).",
+      "mustMatchAny": [
+        "per.*api key",
+        "keyed by ip",
+        "ip.*not.*api key",
+        "shared.*ip",
+        "nat",
+        "contradicts.*documented"
+      ]
+    },
+    {
+      "id": "DOC-2",
+      "description": "Documentation promises a Retry-After header on 429 responses; the implementation never sets one.",
+      "mustMatchAny": [
+        "retry-after",
+        "never set",
+        "missing header",
+        "no retry-after"
+      ]
+    },
+    {
+      "id": "DOC-3",
+      "description": "Nothing tests the documented contract against the implementation, so doc and code can silently diverge again -- this is the systemic gap behind both individual mismatches.",
+      "mustMatchAny": [
+        "no test.*documented",
+        "nothing tests",
+        "contract.*not tested",
+        "diverge again",
+        "no enforcement"
+      ]
+    }
+  ]
+}

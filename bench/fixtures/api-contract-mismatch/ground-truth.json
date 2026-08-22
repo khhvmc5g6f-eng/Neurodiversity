@@ -1,0 +1,45 @@
+{
+  "fixtureId": "api-contract-mismatch",
+  "category": "API",
+  "title": "Contradictory API contract",
+  "defects": [
+    {
+      "id": "API-1",
+      "description": "Enum spelling mismatch: server emits \"canceled\" (US spelling), documented contract and client both use \"cancelled\" (UK spelling) -- isCancelled() never matches, so the banner never appears.",
+      "mustMatchAny": [
+        "cancelled.*canceled",
+        "canceled.*cancelled",
+        "spelling",
+        "us spelling",
+        "uk spelling",
+        "never match",
+        "enum.*mismatch"
+      ]
+    },
+    {
+      "id": "API-2",
+      "description": "Units mismatch: contract documents `amount` as dollars, server actually returns `amountCents` (cents) -- client formatAmount() will display amounts 100x too small.",
+      "mustMatchAny": [
+        "cents",
+        "dollars",
+        "units mismatch",
+        "amountcents",
+        "100x",
+        "unit.*mismatch"
+      ]
+    },
+    {
+      "id": "API-3",
+      "description": "Nothing enforces the documented contract against the actual response shape (no contract/schema test) -- the doc and code can silently diverge again after this fix, which is the underlying reason two mismatches accumulated at once.",
+      "mustMatchAny": [
+        "contract test",
+        "no test.*contract",
+        "schema test",
+        "no enforcement",
+        "nothing enforces",
+        "silently diverge again",
+        "root cause.*no test"
+      ]
+    }
+  ]
+}

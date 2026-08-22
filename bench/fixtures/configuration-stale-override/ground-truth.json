@@ -1,0 +1,41 @@
+{
+  "fixtureId": "configuration-stale-override",
+  "category": "CONFIGURATION",
+  "title": "Config failure: stale debug override",
+  "defects": [
+    {
+      "id": "CFG-1",
+      "description": "production.env overrides CACHE_TTL_SECONDS to 0, silently disabling caching in production while base config and documentation both say 300 seconds.",
+      "mustMatchAny": [
+        "cache_ttl_seconds=0",
+        "ttl.*0",
+        "disables caching",
+        "override.*disable.*cache"
+      ]
+    },
+    {
+      "id": "CFG-2",
+      "description": "The override was a leftover debug change, never reverted -- nothing in the config loading or review process flags an environment override that contradicts the base/documented value.",
+      "mustMatchAny": [
+        "leftover.*debug",
+        "never reverted",
+        "stale.*override",
+        "no.*flag.*override",
+        "no diffing",
+        "no alert.*override"
+      ]
+    },
+    {
+      "id": "CFG-3",
+      "description": "The stale debug value and an intentional, unrelated config change (DB_POOL_SIZE) were committed together with no comment distinguishing them, making the accidental change easy to miss in review -- a process/observability gap, not just a wrong value.",
+      "mustMatchAny": [
+        "same commit",
+        "unrelated change",
+        "mixed.*intentional.*accidental",
+        "hard to.*review",
+        "process gap",
+        "no comment distinguishing"
+      ]
+    }
+  ]
+}

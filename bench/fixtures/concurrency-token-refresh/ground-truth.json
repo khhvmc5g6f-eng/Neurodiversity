@@ -1,0 +1,45 @@
+{
+  "fixtureId": "concurrency-token-refresh",
+  "category": "CONCURRENCY",
+  "title": "Obscure concurrency bug: token refresh race",
+  "defects": [
+    {
+      "id": "CONC-1",
+      "description": "Check-then-act race on the `refreshing` flag: two concurrent getToken() calls can both observe `refreshing === false` before either sets it to true, so both start a refresh against the same oldToken.",
+      "mustMatchAny": [
+        "toctou",
+        "check-then-act",
+        "race",
+        "refreshing flag",
+        "both.*true",
+        "two.*refresh",
+        "concurrent.*refresh",
+        "double refresh"
+      ]
+    },
+    {
+      "id": "CONC-2",
+      "description": "Server invalidates the old token as soon as the first refresh request is received, so the second concurrent refresh call (using the same now-invalidated oldToken) fails, producing an intermittent logout.",
+      "mustMatchAny": [
+        "invalidat",
+        "second refresh.*fail",
+        "old.*token.*invalid",
+        "server invalidates"
+      ]
+    },
+    {
+      "id": "CONC-3",
+      "description": "Waiting callers use a fixed 50ms sleep then return currentToken, with no guarantee the in-flight refresh has completed by then -- they can return a stale/invalid token instead of waiting on the actual refresh.",
+      "mustMatchAny": [
+        "sleep\\(50\\)",
+        "fixed delay",
+        "fixed.*sleep",
+        "no guarantee",
+        "stale token",
+        "in-flight",
+        "shared promise",
+        "return.*before.*complet"
+      ]
+    }
+  ]
+}

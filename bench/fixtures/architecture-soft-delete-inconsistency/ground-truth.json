@@ -1,0 +1,40 @@
+{
+  "fixtureId": "architecture-soft-delete-inconsistency",
+  "category": "ARCHITECTURE",
+  "title": "Cross-module behavioural inconsistency: soft delete",
+  "defects": [
+    {
+      "id": "ARCH-1",
+      "description": "Two incompatible soft-delete conventions coexist in the same codebase: orders uses deleted_at TIMESTAMP, users uses is_deleted BOOLEAN, with no shared abstraction reconciling them.",
+      "mustMatchAny": [
+        "two.*convention",
+        "deleted_at.*is_deleted",
+        "incompatible.*soft.delet",
+        "inconsistent.*soft.delet"
+      ]
+    },
+    {
+      "id": "ARCH-2",
+      "description": "The shared excludeDeleted() helper hardcodes the orders-style convention (deleted_at) and is applied uniformly to both tables; combined with the ORM's silent-skip mode for unknown columns, the filter is silently dropped for `users` (which has no deleted_at column) instead of erroring, so deleted users pass through the filter unfiltered.",
+      "mustMatchAny": [
+        "silently skip",
+        "silent-skip",
+        "unknown column.*silent",
+        "filter.*dropped",
+        "no error.*missing column",
+        "deleted users.*pass through"
+      ]
+    },
+    {
+      "id": "ARCH-3",
+      "description": "Nothing in the codebase documents \"excluded from all queries when deleted, regardless of representation\" as a system-wide invariant -- that missing invariant is the root cause the other two symptoms trace back to.",
+      "mustMatchAny": [
+        "no invariant",
+        "missing invariant",
+        "not documented as.*invariant",
+        "system-wide.*rule.*missing",
+        "root cause.*invariant"
+      ]
+    }
+  ]
+}

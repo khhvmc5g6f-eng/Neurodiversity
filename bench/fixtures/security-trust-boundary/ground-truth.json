@@ -1,0 +1,41 @@
+{
+  "fixtureId": "security-trust-boundary",
+  "category": "SECURITY",
+  "title": "Security trust-boundary failure",
+  "defects": [
+    {
+      "id": "SEC-1",
+      "description": "A client-controlled request header (X-Internal-Role) is trusted as an authorization signal -- any caller who can reach the endpoint can set this header themselves.",
+      "mustMatchAny": [
+        "client-controlled header",
+        "trust.*header",
+        "x-internal-role",
+        "spoof.*header",
+        "header.*attacker"
+      ]
+    },
+    {
+      "id": "SEC-2",
+      "description": "The \"internal network isolation\" assumption the header check relies on is false: api-service is configured `public: true`, so the admin route is directly reachable from the public internet, not just from internal callers.",
+      "mustMatchAny": [
+        "public: true",
+        "publicly reachable",
+        "exposed.*internet",
+        "internal network.*false",
+        "assumption.*false.*network",
+        "not actually internal"
+      ]
+    },
+    {
+      "id": "SEC-3",
+      "description": "No validation on orderId/amount before processRefund -- once the auth bypass is exploited, the caller controls an arbitrary refund amount for an arbitrary order.",
+      "mustMatchAny": [
+        "arbitrary refund",
+        "no validation.*amount",
+        "unvalidated.*amount",
+        "arbitrary amount",
+        "no input validation"
+      ]
+    }
+  ]
+}

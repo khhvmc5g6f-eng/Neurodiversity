@@ -1,0 +1,38 @@
+{
+  "fixtureId": "requirements-missing-refund-policy",
+  "category": "REQUIREMENTS",
+  "title": "Missing requirement: cancellation refund policy",
+  "defects": [
+    {
+      "id": "REQ-1",
+      "description": "The requirements never specify a refund policy for cancellation at all -- both implementations invented one independently.",
+      "mustMatchAny": [
+        "refund policy.*unspecified",
+        "no refund.*requirement",
+        "requirements.*silent.*refund",
+        "missing requirement.*refund"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "description": "The requirements never specify a cancellation cutoff window -- the API path's 24-hour cutoff has no basis in the spec.",
+      "mustMatchAny": [
+        "cutoff.*unspecified",
+        "24.hour.*not.*requirement",
+        "missing requirement.*cutoff",
+        "no.*window.*specified"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "description": "Because neither was specified, the two entry points (API vs admin panel) silently diverged: the API path only refunds outside 24 hours, the admin path always refunds -- the same underlying action produces different financial outcomes depending on which UI performed it.",
+      "mustMatchAny": [
+        "diverg",
+        "inconsistent.*refund",
+        "two.*paths.*different",
+        "admin.*api.*inconsistent",
+        "same action.*different outcome"
+      ]
+    }
+  ]
+}

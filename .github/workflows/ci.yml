@@ -1,0 +1,35 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Validate JSON schemas parse
+        run: |
+          for f in skills/autistic/schemas/*.json bench/fixtures/*/ground-truth.json; do
+            echo "checking $f"
+            node -e "JSON.parse(require('fs').readFileSync('$f','utf8'))"
+          done
+      - name: Validate SKILL.md frontmatter
+        run: |
+          node -e "
+            const fs = require('fs');
+            const text = fs.readFileSync('skills/autistic/SKILL.md', 'utf8');
+            if (!text.startsWith('---')) throw new Error('missing frontmatter');
+            const end = text.indexOf('---', 3);
+            if (end === -1) throw new Error('unterminated frontmatter');
+            const fm = text.slice(3, end);
+            if (!/^name:\s*autistic\s*$/m.test(fm)) throw new Error('name field missing/wrong');
+            if (!/^description:/m.test(fm)) throw new Error('description field missing');
+            console.log('frontmatter OK');
+          "
+      - name: Run benchmark scorer against checked-in results
+        run: node bench/harness/score.js --verify-only

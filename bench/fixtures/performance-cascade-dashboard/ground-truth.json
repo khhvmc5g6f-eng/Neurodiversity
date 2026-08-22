@@ -1,0 +1,40 @@
+{
+  "fixtureId": "performance-cascade-dashboard",
+  "category": "PERFORMANCE",
+  "title": "Performance cascade in dashboard endpoint",
+  "defects": [
+    {
+      "id": "PERF-1",
+      "description": "N+1 sequential external calls: one pricing-API call per order, awaited in a loop, with no batching and no caching -- latency scales linearly with order count.",
+      "mustMatchAny": [
+        "n\\+1",
+        "sequential.*call",
+        "per order",
+        "no batching",
+        "no caching",
+        "loop.*await"
+      ]
+    },
+    {
+      "id": "PERF-2",
+      "description": "Unbounded retry with no backoff and no max-attempts on fetchLivePrice -- any pricing-API error becomes an infinite retry loop for that request.",
+      "mustMatchAny": [
+        "unbounded retry",
+        "no backoff",
+        "no max.*attempt",
+        "infinite retry",
+        "retry.*no limit"
+      ]
+    },
+    {
+      "id": "PERF-3",
+      "description": "No timeout configured on the pricing API client, so a single slow/hanging upstream call blocks the whole request indefinitely, compounding the retry issue into a full request hang.",
+      "mustMatchAny": [
+        "no timeout",
+        "hang",
+        "no timeout configured",
+        "block.*indefinitely"
+      ]
+    }
+  ]
+}

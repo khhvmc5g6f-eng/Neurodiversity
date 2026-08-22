@@ -1,0 +1,43 @@
+{
+  "fixtureId": "data-nullability-mismatch",
+  "category": "DATA",
+  "title": "Hidden database mismatch",
+  "defects": [
+    {
+      "id": "DATA-1",
+      "description": "Nullability mismatch: schema allows phone to be NULL, but the TypeScript User interface declares phone as required (non-nullable) -- a row with no phone violates the type at runtime with no error.",
+      "mustMatchAny": [
+        "phone.*null",
+        "nullability",
+        "null.*phone",
+        "schema allows null.*type.*not",
+        "type.*required.*schema.*null"
+      ]
+    },
+    {
+      "id": "DATA-2",
+      "description": "`listActiveUsers` does not filter on `deleted_at IS NULL` -- despite its name, it returns soft-deleted users too.",
+      "mustMatchAny": [
+        "listactiveusers",
+        "deleted_at",
+        "soft.delet",
+        "missing.*filter",
+        "does not filter",
+        "name.*lie",
+        "misleading name"
+      ]
+    },
+    {
+      "id": "DATA-3",
+      "description": "No UNIQUE constraint on email, and signup does a check-then-insert (SELECT then INSERT) with no transaction/lock -- two concurrent signups with the same email can both pass the check and both insert, creating duplicate accounts.",
+      "mustMatchAny": [
+        "unique constraint",
+        "duplicate account",
+        "check-then-insert",
+        "race.*signup",
+        "toctou.*email",
+        "concurrent signup"
+      ]
+    }
+  ]
+}

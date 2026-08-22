@@ -1,0 +1,39 @@
+{
+  "fixtureId": "integration-webhook-version-mismatch",
+  "category": "INTEGRATION",
+  "title": "Integration version mismatch: webhook payload",
+  "defects": [
+    {
+      "id": "INT-1",
+      "description": "Two internal senders emit different versions of the same webhook payload for the same endpoint: the checkout path sends v2 (with currency), the legacy import path still sends v1 (without it).",
+      "mustMatchAny": [
+        "two.*sender",
+        "v1.*v2",
+        "different.*version.*payload",
+        "legacy.*sender.*v1"
+      ]
+    },
+    {
+      "id": "INT-2",
+      "description": "The legacy import path was never migrated when the webhook contract was upgraded to v2 -- this is the structural root cause, not a one-off bug in the import path.",
+      "mustMatchAny": [
+        "never migrated",
+        "not upgraded",
+        "legacy.*never updated",
+        "root cause.*migration"
+      ]
+    },
+    {
+      "id": "INT-3",
+      "description": "The consumer trusts the v2 doc unconditionally (payload.currency.toUpperCase() with no null check), so the version gap surfaces only for orders from the one un-migrated source, making it look data-dependent/intermittent rather than a structural version mismatch.",
+      "mustMatchAny": [
+        "no null check",
+        "unconditional",
+        "crash.*currency",
+        "looks intermittent",
+        "appears data-dependent",
+        "no defensive check"
+      ]
+    }
+  ]
+}
