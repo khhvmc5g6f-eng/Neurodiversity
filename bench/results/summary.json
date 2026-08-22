@@ -33,7 +33,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "divergent": {
+      "adhd": {
         "tp": 2,
         "fp": 3,
         "fn": 1,
@@ -95,7 +95,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "divergent-autistic": {
+      "adhd-autistic": {
         "tp": 2,
         "fp": 1,
         "fn": 1,
@@ -159,7 +159,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "divergent": {
+      "adhd": {
         "tp": 2,
         "fp": 4,
         "fn": 1,
@@ -221,7 +221,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "divergent-autistic": {
+      "adhd-autistic": {
         "tp": 2,
         "fp": 5,
         "fn": 1,
@@ -285,7 +285,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "divergent": {
+      "adhd": {
         "tp": 3,
         "fp": 2,
         "fn": 0,
@@ -347,7 +347,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "divergent-autistic": {
+      "adhd-autistic": {
         "tp": 3,
         "fp": 1,
         "fn": 0,
@@ -411,7 +411,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "divergent": {
+      "adhd": {
         "tp": 3,
         "fp": 4,
         "fn": 0,
@@ -473,7 +473,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "divergent-autistic": {
+      "adhd-autistic": {
         "tp": 3,
         "fp": 3,
         "fn": 0,
@@ -537,7 +537,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "divergent": {
+      "adhd": {
         "tp": 3,
         "fp": 3,
         "fn": 0,
@@ -599,7 +599,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "divergent-autistic": {
+      "adhd-autistic": {
         "tp": 3,
         "fp": 2,
         "fn": 0,
@@ -681,7 +681,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "divergent": {
+      "adhd": {
         "tp": 4,
         "fp": 10,
         "fn": 2,
@@ -779,7 +779,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "divergent-autistic": {
+      "adhd-autistic": {
         "tp": 5,
         "fp": 7,
         "fn": 1,
@@ -879,7 +879,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "divergent": {
+      "adhd": {
         "tp": 6,
         "fp": 9,
         "fn": 0,
@@ -977,7 +977,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "divergent-autistic": {
+      "adhd-autistic": {
         "tp": 6,
         "fp": 7,
         "fn": 0,
@@ -1059,7 +1059,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "divergent": {
+      "adhd": {
         "tp": 2,
         "fp": 3,
         "fn": 1,
@@ -1121,7 +1121,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "divergent-autistic": {
+      "adhd-autistic": {
         "tp": 2,
         "fp": 3,
         "fn": 1,
@@ -1185,7 +1185,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "divergent": {
+      "adhd": {
         "tp": 2,
         "fp": 5,
         "fn": 1,
@@ -1247,7 +1247,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "divergent-autistic": {
+      "adhd-autistic": {
         "tp": 2,
         "fp": 5,
         "fn": 1,
@@ -1311,7 +1311,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "divergent": {
+      "adhd": {
         "tp": 3,
         "fp": 4,
         "fn": 0,
@@ -1373,7 +1373,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "divergent-autistic": {
+      "adhd-autistic": {
         "tp": 3,
         "fp": 3,
         "fn": 0,
@@ -1437,7 +1437,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "divergent": {
+      "adhd": {
         "tp": 3,
         "fp": 2,
         "fn": 0,
@@ -1499,7 +1499,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "divergent-autistic": {
+      "adhd-autistic": {
         "tp": 2,
         "fp": 5,
         "fn": 1,
@@ -1563,7 +1563,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "divergent": {
+      "adhd": {
         "tp": 3,
         "fp": 5,
         "fn": 0,
@@ -1625,7 +1625,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "divergent-autistic": {
+      "adhd-autistic": {
         "tp": 3,
         "fp": 2,
         "fn": 0,
@@ -1673,7 +1673,7 @@
       "findingsPerToken": null,
       "findingsPerSecond": null
     },
-    "divergent": {
+    "adhd": {
       "tp": 36,
       "fp": 54,
       "fn": 6,
@@ -1701,7 +1701,7 @@
       "findingsPerToken": null,
       "findingsPerSecond": null
     },
-    "divergent-autistic": {
+    "adhd-autistic": {
       "tp": 36,
       "fp": 44,
       "fn": 6,

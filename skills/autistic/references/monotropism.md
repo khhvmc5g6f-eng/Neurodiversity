@@ -30,8 +30,8 @@ cognition to be useful as a reasoning architecture.
 Two failure modes sit on either side of this mechanism, and the skill is
 built to avoid both:
 
-1. **Context-switch thrash** (the failure breadth-first divergent-
-   ideation agents fall into when misapplied to depth work): jumping to whatever
+1. **Context-switch thrash** (the failure ADHD-style breadth-first
+   agents fall into when misapplied to depth work): jumping to whatever
    the most recently discovered issue is, never finishing an
    investigation, producing a wide shallow list of "concerns" with no
    verified root cause. The Monotropic Focus Engine's ranking step
@@ -66,8 +66,8 @@ unresolved question in the whole investigation, compared against
 everything currently in the candidate list and interrupt queue?* If no,
 close the tunnel at its current depth (log
 `WHERE_WE_WERE/WHAT_WAS_RESOLVED/WHAT_REMAINS/WHY_SWITCHING`) and open
-the next-ranked one. This is symmetric with divergent ideation's own
-anti-pattern of "convergence disguised as divergence" — here the
+the next-ranked one. This is symmetric with ADHD's own anti-pattern of
+"convergence disguised as divergence" — here the
 matching failure is "depth disguised as progress."
 
 ## Detail-value scoring

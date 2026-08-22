@@ -4,20 +4,21 @@
 
 *Explore wider. Understand deeper. Build better.*
 
-![AUTISTIC — Deep Systems Reasoning for Agents. A dual illustration contrasting divergent exploration (divergent thinking, wide exploration, creative connections, alternative ideas, break patterns, find the unseen) with depth-first understanding (deep system analysis, pattern recognition, contradiction detection, dependency mapping, invariant discovery, edge-case hunting, truth and verification). Two minds, one unstoppable system.](docs/banner.png)
+![AUTISTIC — Deep Systems Reasoning for Agents. ADHD explores the possibilities (divergent thinking, wide exploration, creative connections, alternative ideas, break patterns, find the unseen). AUTISTIC understands the system (deep system analysis, pattern recognition, contradiction detection, dependency mapping, invariant discovery, edge-case hunting, truth and verification). Two minds, one unstoppable system.](docs/banner.png)
 
 AUTISTIC is a depth-first systems-reasoning Agent Skill for coding
-agents. Where a breadth-first ideation loop widens the solution space —
-isolated parallel cognitive frames generate options, then a critic
-scores, clusters, and deepens the survivors — AUTISTIC is a depth-first
-systems-reasoning loop: it builds a system map, then drives sustained,
-ranked, single-tunnel focus through assumptions, invariants,
-contradictions, and edge cases — with a hard "hyperfocus" limiter so
-depth never becomes tunnel vision — until the model of the system stops
-changing materially.
+agents, built as the complementary architecture to
+[`UditAkhourii/adhd`](https://github.com/UditAkhourii/adhd). ADHD is a
+breadth-first ideation loop: isolated parallel cognitive frames widen
+the solution space, then a critic scores, clusters, and deepens the
+survivors. AUTISTIC is a depth-first systems-reasoning loop: it builds a
+system map, then drives sustained, ranked, single-tunnel focus through
+assumptions, invariants, contradictions, and edge cases — with a hard
+"hyperfocus" limiter so depth never becomes tunnel vision — until the
+model of the system stops changing materially.
 
 ```
-DIVERGENT                         AUTISTIC
+ADHD                              AUTISTIC
 explore the possibilities         understand the system
 divergent thinking                deep system analysis
 wide exploration                  pattern recognition
@@ -31,26 +32,30 @@ ideas · options · novelty         truth · structure · clarity
 alternatives · insight            precision · completeness
 ```
 
-Divergent ideation exists to prevent **premature convergence**.
-AUTISTIC exists to prevent **premature understanding**. Divergence keeps
-looking outward. AUTISTIC keeps looking inward until the model holds
-together.
+ADHD exists to prevent **premature convergence**. AUTISTIC exists to
+prevent **premature understanding**. ADHD keeps looking outward. AUTISTIC
+keeps looking inward until the model holds together.
 
 ## Author's note
 
 > I'm a certified autistic adult. Social situations have never come easy
 > to me, but coding always has. It's one of the few places I can just
-> settle in, focus, and feel like myself. I use AI a lot to help me
-> engage with the world in a way that actually works for me, though I'll
-> admit the sheer amount of information out there can get overwhelming
-> fast. Staying with one hard problem long enough to really understand
-> it, instead of bouncing off it the second something else grabs my
-> attention, is something I've genuinely struggled with. I built AUTISTIC
-> to give myself (and Claude) a disciplined way to do that: pick the one
-> question that actually matters, stay on it until it's really resolved,
-> and don't lose the whole picture while doing it. It's a tool built out
-> of my own struggle with all of this, for anyone else who wants the
-> same kind of sustained, structured depth from their coding agent.
+> settle in, focus, and feel like myself.
+>
+> I use AI a lot to help me engage with the world in a way that actually
+> works for me, though I'll admit the sheer amount of information out
+> there can get overwhelming fast.
+>
+> Staying with one hard problem long enough to really understand it,
+> instead of bouncing off it the second something else grabs my
+> attention, is something I've genuinely struggled with. I built
+> AUTISTIC to give myself (and Claude) a disciplined way to do that: pick
+> the one question that actually matters, stay on it until it's really
+> resolved, and don't lose the whole picture while doing it.
+>
+> It's a tool built out of my own struggle with all of this, for anyone
+> else who wants the same kind of sustained, structured depth from their
+> coding agent.
 >
 > — Owen
 
@@ -93,10 +98,11 @@ Then in Claude Code:
 ```
 
 No install is required to read the reasoning — it's a Markdown skill
-that drives Claude's own `Agent` tool calls for isolated parallel
-branches where independence matters. AUTISTIC deliberately doesn't
-build its own divergence engine — see the divergence bridge below. Full
-operational detail: [`skills/autistic/SKILL.md`](skills/autistic/SKILL.md).
+that drives Claude's own `Agent` tool calls, the same mechanism the
+[`adhd`](https://github.com/UditAkhourii/adhd) skill uses for isolated
+parallel branches. AUTISTIC deliberately doesn't duplicate ADHD's
+divergence engine — see the ADHD bridge below. Full operational detail:
+[`skills/autistic/SKILL.md`](skills/autistic/SKILL.md).
 
 ## How it works, briefly
 
@@ -135,20 +141,19 @@ Full architecture: [`skills/autistic/references/`](skills/autistic/references/).
 Cognitive profiles: [`skills/autistic/frames/`](skills/autistic/frames/).
 Typed schemas: [`skills/autistic/schemas/`](skills/autistic/schemas/).
 
-## Divergence bridge
+## ADHD bridge
 
-AUTISTIC can consume a divergent-ideation skill's
-`{ideas, clusters, traps, shortlist, deepened, nonObviousPick}` output
-directly and verify each shortlisted candidate in depth, or hand
-AUTISTIC's own precisely-defined failures back to a divergent phase
-when depth has diagnosed a dead end but not a way forward. See
-[`skills/autistic/references/divergence-bridge.md`](skills/autistic/references/divergence-bridge.md)
+AUTISTIC can consume ADHD's `{ideas, clusters, traps, shortlist,
+deepened, nonObviousPick}` output directly and verify each shortlisted
+candidate in depth, or hand AUTISTIC's own precisely-defined failures to
+ADHD when depth has diagnosed a dead end but not a way forward. See
+[`skills/autistic/references/adhd-bridge.md`](skills/autistic/references/adhd-bridge.md)
 for the routing table and both pipeline directions.
 
 ## Benchmarks
 
-Raw, non-cherry-picked results from running BASELINE / DIVERGENT /
-AUTISTIC / DIVERGENT→AUTISTIC against a seeded-defect fixture suite
+Raw, non-cherry-picked results from running BASELINE / ADHD /
+AUTISTIC / ADHD→AUTISTIC against a seeded-defect fixture suite
 (concurrency, security, contradictory API contracts, missing
 requirements, config failure, and more) are in [`EVALS.md`](EVALS.md).
 The scoring is mechanical (planted defects matched against reported
@@ -164,7 +169,7 @@ autistic/
 ├── skills/autistic/
 │   ├── SKILL.md
 │   ├── references/   architecture, monotropism, patterns, requirements,
-│   │                  debugging, verification, divergence-bridge,
+│   │                  debugging, verification, adhd-bridge,
 │   │                  tooling, memory, threat-taxonomy, invariant-taxonomy,
 │   │                  failure-mode-taxonomy, production-readiness,
 │   │                  edge-case-taxonomy, simplicity-taxonomy

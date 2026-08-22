@@ -45,7 +45,7 @@ you're picking one of those up, say so in the PR and update
 
 Benchmark disagreements are the most useful bug reports this project can
 get. Open an issue with: the fixture ID, the run condition (BASELINE /
-DIVERGENT / AUTISTIC / DIVERGENT→AUTISTIC), the planted defect ID from the
+ADHD / AUTISTIC / ADHD→AUTISTIC), the planted defect ID from the
 fixture's `ground-truth.json`, and whether the skill missed it (false
 negative) or reported something not actually planted (false positive).
 

@@ -6,7 +6,7 @@ version below corresponds to a real git tag on this repo — `git checkout
 v0.4.0`, for instance, gets you the skill exactly as it stood right
 after the STRIDE threat-taxonomy pass was added, before anything later.
 
-## Where things stand right now (v0.9.2)
+## Where things stand right now (v0.9.3)
 
 A single Claude Code Agent Skill (`skills/autistic/`) implementing
 depth-first systems reasoning, plus a mechanically-scored benchmark
@@ -23,8 +23,8 @@ No compiled artifact, no build step, no standalone CLI yet — the skill
   for edge cases, Fowler's code-smell catalogue for simplification) →
   monotropic single-tunnel depth engine with a hard hyperfocus valve →
   two-stage synthesis conforming to a typed result schema.
-- A divergence bridge to hand off to/consume from a breadth-first
-  ideation skill, if one is installed — genericized, names nothing.
+- An ADHD bridge to hand off to/consume from [`adhd`](https://github.com/UditAkhourii/adhd),
+  the companion breadth-first ideation skill, if one is installed.
 - Real-tool preference (MCP/CLI) over LLM-inferred data where available;
   a cross-run memory ledger written into the *target* repo being
   audited; resilience rules for a stalled/failed specialist call.
@@ -42,6 +42,27 @@ but not exercised by the benchmark; token/time cost tracking exists in
 the harness but no committed result yet has that data.
 
 ---
+
+## v0.9.3 — 2026-08-22
+
+Reversed the v0.8.0 de-attribution, on request, after a banner design
+made ADHD and AUTISTIC into two explicitly co-named, paired engines —
+naming both openly is now the whole point of the design, so the
+generic phrasing it left behind no longer fit:
+
+- Restored `adhd` naming throughout the skill body, reference docs,
+  benchmark condition names/files (24 result files renamed back),
+  `AGENTS.md`, `CONTRIBUTING.md`, `bench/README.md`, `EVALS.md`, and
+  this changelog's own current-state summary above.
+  `references/divergence-bridge.md` reverted to
+  `references/adhd-bridge.md`.
+- Left `documentation/SOURCE-SPEC.md` untouched, as before — it's the
+  user's own verbatim prompt, not this project's voice, in either
+  direction.
+- Older entries below that describe work done *between* v0.8.0 and
+  this version keep the generic names they actually shipped with at
+  the time; only the current-state summary and pre-v0.8.0 entries were
+  corrected for period accuracy.
 
 ## v0.9.2 — 2026-08-22
 
@@ -150,7 +171,7 @@ Fixed two ground-truth patterns in the benchmark that were too narrow
 to match correctly-phrased findings (found across every condition, not
 one — the same frozen results were rescored, nothing regenerated).
 Added two open-ended architecture-design fixtures specifically to test
-the combined divergent→depth-first condition on the kind of problem
+the combined ADHD→AUTISTIC condition on the kind of problem
 it's actually built for, rather than only bug-finding tasks. Result:
 depth-first reasoning alone wins on bug-finding, the combined approach
 wins on open design decisions — the benchmark can show either winning,

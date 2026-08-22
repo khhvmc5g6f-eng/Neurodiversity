@@ -25,30 +25,28 @@ entry gives a set of regex patterns, any of which counts as a hit.
 Four conditions were run per fixture, 48 runs total:
 
 - **baseline** — plain review / plain proposal, no method, no framing.
-- **divergent** — one agent following a breadth-first divergent→
-  convergent ideation loop (multiple vantage points, then
-  score/cluster/converge).
+- **adhd** — one agent following ADHD's divergent→convergent loop
+  (multiple vantage points, then score/cluster/converge).
 - **autistic** — one agent following AUTISTIC's depth-first process
   (map → rank load-bearing questions → drive the top one to a
   conclusion with evidence → check contradictions/requirements/
   concurrency/units → falsify each candidate before keeping it).
-- **divergent-autistic** — one agent running both stages in sequence: a
+- **adhd-autistic** — one agent running both stages in sequence: a
   divergent pass, then a depth-first verification pass over its own
   candidates.
 
 **Known simplification, stated plainly:** each condition ran as *one*
 agent's own single-turn reasoning following the written process, not
-the true multi-agent isolated-context fan-out AUTISTIC's own
-`SKILL.md` specifies for its own passes (separate Agent calls per
-tunnel/profile with context isolation), nor an equivalent isolated
-per-frame fan-out on the divergent side. This measures whether the
-*reasoning strategy* changes output quality, not the added value of the
-isolation infrastructure itself — a real gap between what's benchmarked
-here and full end-to-end execution. One early divergent-condition run
-did spawn real isolated sub-agents on its own initiative and got stuck
-in a coordination loop trying to relay their outputs back to itself;
-that run's raw sub-agent outputs were kept and converged manually (see
-`bench/results/data-nullability-mismatch/divergent.json`) rather than
+the true multi-agent isolated-context fan-out either skill's real
+`SKILL.md` specifies (separate Agent calls per frame/profile with
+context isolation). This measures whether the *reasoning strategy*
+changes output quality, not the added value of the isolation
+infrastructure itself — a real gap between what's benchmarked here and
+what the skills do end-to-end. One early ADHD run did spawn real
+isolated sub-agents on its own initiative and got stuck in a
+coordination loop trying to relay their outputs back to itself; that
+run's raw sub-agent outputs were kept and converged manually (see
+`bench/results/data-nullability-mismatch/adhd.json`) rather than
 discarded, and the incident itself is left in this repo's session
 record rather than smoothed over.
 
@@ -84,9 +82,9 @@ distinguish "wrong" from "correct but not what we were counting."
 | Condition | TP | FP | FN | Precision | Recall | F1 | Total findings reported |
 |---|---|---|---|---|---|---|---|
 | baseline | 38 | 78 | 4 | 0.328 | 0.905 | 0.481 | 116 |
-| divergent | 36 | 54 | 6 | 0.400 | 0.857 | 0.545 | 90 |
+| adhd | 36 | 54 | 6 | 0.400 | 0.857 | 0.545 | 90 |
 | autistic | 35 | 43 | 7 | **0.449** | 0.833 | 0.583 | 78 |
-| divergent→autistic | 36 | 44 | 6 | 0.450 | 0.857 | **0.590** | 80 |
+| adhd→autistic | 36 | 44 | 6 | 0.450 | 0.857 | **0.590** | 80 |
 
 For comparison, the original 10-fixture / pre-widening numbers
 (`bench/results/summary.v1-original-patterns.json`):
@@ -94,12 +92,12 @@ For comparison, the original 10-fixture / pre-widening numbers
 | Condition | TP | FP | FN | Precision | Recall | F1 |
 |---|---|---|---|---|---|---|
 | baseline | 26 | 59 | 4 | 0.306 | 0.867 | 0.452 |
-| divergent | 24 | 36 | 6 | 0.400 | 0.800 | 0.533 |
+| adhd | 24 | 36 | 6 | 0.400 | 0.800 | 0.533 |
 | autistic | 22 | 26 | 8 | 0.458 | 0.733 | 0.564 |
-| divergent→autistic | 24 | 31 | 6 | 0.436 | 0.800 | 0.565 |
+| adhd→autistic | 24 | 31 | 6 | 0.436 | 0.800 | 0.565 |
 
-The ranking by F1 is stable across the correction (baseline < divergent <
-autistic ≈ divergent→autistic in both) — the scorer fix moved absolute
+The ranking by F1 is stable across the correction (baseline < adhd <
+autistic ≈ adhd→autistic in both) — the scorer fix moved absolute
 numbers up for everyone roughly proportionally, it didn't flip a
 result. That's the check that mattered before trusting the fix.
 
@@ -125,20 +123,20 @@ real one (0.449 true positives per reported finding vs baseline's
 address (§141: don't dump unreadable output; hard-failure-states around
 unverified claims).
 
-**The combined divergent→autistic condition has the best overall F1 (0.590),
+**The combined ADHD→AUTISTIC condition has the best overall F1 (0.590),
 and the gap is not just noise — it's concentrated exactly where the
 architecture predicts it should be.** Split by fixture type:
 
 | Fixture type | Condition | TP | FP | FN | Precision | Recall | F1 |
 |---|---|---|---|---|---|---|---|
 | 10 bug-finding fixtures | baseline | 28 | 57 | 2 | 0.329 | 0.933 | 0.487 |
-| 10 bug-finding fixtures | divergent | 26 | 35 | 4 | 0.426 | 0.867 | 0.571 |
+| 10 bug-finding fixtures | adhd | 26 | 35 | 4 | 0.426 | 0.867 | 0.571 |
 | 10 bug-finding fixtures | autistic | 25 | 24 | 5 | 0.510 | 0.833 | 0.633 |
-| 10 bug-finding fixtures | divergent→autistic | 25 | 30 | 5 | 0.455 | 0.833 | 0.588 |
+| 10 bug-finding fixtures | adhd→autistic | 25 | 30 | 5 | 0.455 | 0.833 | 0.588 |
 | 2 design fixtures | baseline | 10 | 21 | 2 | 0.323 | 0.833 | 0.465 |
-| 2 design fixtures | divergent | 10 | 19 | 2 | 0.345 | 0.833 | 0.488 |
+| 2 design fixtures | adhd | 10 | 19 | 2 | 0.345 | 0.833 | 0.488 |
 | 2 design fixtures | autistic | 10 | 19 | 2 | 0.345 | 0.833 | 0.488 |
-| 2 design fixtures | divergent→autistic | 11 | 14 | 1 | **0.440** | **0.917** | **0.595** |
+| 2 design fixtures | adhd→autistic | 11 | 14 | 1 | **0.440** | **0.917** | **0.595** |
 
 On the 10 bug-finding fixtures, **AUTISTIC alone is the best condition**
 (F1 0.633) and the combined condition is actually a bit worse than
@@ -148,13 +146,13 @@ a single ranked, falsified investigation. On the 2 design fixtures,
 **the combined condition wins outright on every metric** — highest
 precision, highest recall, highest F1, clearly ahead of the other three
 which are statistically indistinguishable from each other (0.465-0.488
-F1). This is exactly the shape the routing table predicts
-(`skills/autistic/references/divergence-bridge.md`: "design the best
-architecture for X" → diverge first, then AUTISTIC) — and it's the
-first result in this file that isn't just "AUTISTIC wins," which is
-itself worth noting: the benchmark is capable of showing the divergent
-or combined condition winning when the problem actually calls for it,
-not just confirming AUTISTIC by construction.
+F1). This is exactly the shape the source spec's routing table predicts
+(`skills/autistic/references/adhd-bridge.md`: "design the best
+architecture for X" → ADHD → AUTISTIC) — and it's the first result in
+this file that isn't just "AUTISTIC wins," which is itself worth
+noting: the benchmark is capable of showing ADHD/combined winning when
+the problem actually calls for it, not just confirming AUTISTIC by
+construction.
 
 **Known limitation of mechanical regex scoring, worth stating plainly:**
 even after the v1.1 correction described above, the scorer is still
@@ -172,53 +170,53 @@ what the no-cherry-picking rule exists to prevent.
 | Fixture | Condition | TP | FP | FN | Reported |
 |---|---|---|---|---|---|
 | api-contract-mismatch | baseline | 3 | 3 | 0 | 6 |
-| api-contract-mismatch | divergent | 2 | 3 | 1 | 5 |
+| api-contract-mismatch | adhd | 2 | 3 | 1 | 5 |
 | api-contract-mismatch | autistic | 2 | 0 | 1 | 2 |
-| api-contract-mismatch | divergent-autistic | 2 | 1 | 1 | 3 |
+| api-contract-mismatch | adhd-autistic | 2 | 1 | 1 | 3 |
 | architecture-soft-delete-inconsistency | baseline | 3 | 4 | 0 | 7 |
-| architecture-soft-delete-inconsistency | divergent | 2 | 4 | 1 | 6 |
+| architecture-soft-delete-inconsistency | adhd | 2 | 4 | 1 | 6 |
 | architecture-soft-delete-inconsistency | autistic | 3 | 3 | 0 | 5 |
-| architecture-soft-delete-inconsistency | divergent-autistic | 2 | 5 | 1 | 7 |
+| architecture-soft-delete-inconsistency | adhd-autistic | 2 | 5 | 1 | 7 |
 | concurrency-token-refresh | baseline | 3 | 7 | 0 | 10 |
-| concurrency-token-refresh | divergent | 3 | 2 | 0 | 4 |
+| concurrency-token-refresh | adhd | 3 | 2 | 0 | 4 |
 | concurrency-token-refresh | autistic | 3 | 2 | 0 | 3 |
-| concurrency-token-refresh | divergent-autistic | 3 | 1 | 0 | 3 |
+| concurrency-token-refresh | adhd-autistic | 3 | 1 | 0 | 3 |
 | configuration-stale-override | baseline | 3 | 6 | 0 | 9 |
-| configuration-stale-override | divergent | 3 | 4 | 0 | 7 |
+| configuration-stale-override | adhd | 3 | 4 | 0 | 7 |
 | configuration-stale-override | autistic | 1 | 4 | 2 | 5 |
-| configuration-stale-override | divergent-autistic | 3 | 3 | 0 | 6 |
+| configuration-stale-override | adhd-autistic | 3 | 3 | 0 | 6 |
 | data-nullability-mismatch | baseline | 3 | 4 | 0 | 6 |
-| data-nullability-mismatch | divergent | 3 | 3 | 0 | 6 |
+| data-nullability-mismatch | adhd | 3 | 3 | 0 | 6 |
 | data-nullability-mismatch | autistic | 3 | 2 | 0 | 4 |
-| data-nullability-mismatch | divergent-autistic | 3 | 2 | 0 | 4 |
+| data-nullability-mismatch | adhd-autistic | 3 | 2 | 0 | 4 |
 | design-multiregion-collab-editing | baseline | 4 | 12 | 2 | 15 |
-| design-multiregion-collab-editing | divergent | 4 | 10 | 2 | 14 |
+| design-multiregion-collab-editing | adhd | 4 | 10 | 2 | 14 |
 | design-multiregion-collab-editing | autistic | 4 | 11 | 2 | 13 |
-| design-multiregion-collab-editing | divergent-autistic | 5 | 7 | 1 | 11 |
+| design-multiregion-collab-editing | adhd-autistic | 5 | 7 | 1 | 11 |
 | design-order-fulfillment-queue | baseline | 6 | 9 | 0 | 14 |
-| design-order-fulfillment-queue | divergent | 6 | 9 | 0 | 13 |
+| design-order-fulfillment-queue | adhd | 6 | 9 | 0 | 13 |
 | design-order-fulfillment-queue | autistic | 6 | 8 | 0 | 13 |
-| design-order-fulfillment-queue | divergent-autistic | 6 | 7 | 0 | 11 |
+| design-order-fulfillment-queue | adhd-autistic | 6 | 7 | 0 | 11 |
 | documentation-misleading-ratelimit | baseline | 2 | 4 | 1 | 6 |
-| documentation-misleading-ratelimit | divergent | 2 | 3 | 1 | 5 |
+| documentation-misleading-ratelimit | adhd | 2 | 3 | 1 | 5 |
 | documentation-misleading-ratelimit | autistic | 2 | 2 | 1 | 4 |
-| documentation-misleading-ratelimit | divergent-autistic | 2 | 3 | 1 | 5 |
+| documentation-misleading-ratelimit | adhd-autistic | 2 | 3 | 1 | 5 |
 | integration-webhook-version-mismatch | baseline | 2 | 5 | 1 | 6 |
-| integration-webhook-version-mismatch | divergent | 2 | 5 | 1 | 7 |
+| integration-webhook-version-mismatch | adhd | 2 | 5 | 1 | 7 |
 | integration-webhook-version-mismatch | autistic | 3 | 3 | 0 | 5 |
-| integration-webhook-version-mismatch | divergent-autistic | 2 | 5 | 1 | 7 |
+| integration-webhook-version-mismatch | adhd-autistic | 2 | 5 | 1 | 7 |
 | performance-cascade-dashboard | baseline | 3 | 9 | 0 | 12 |
-| performance-cascade-dashboard | divergent | 3 | 4 | 0 | 7 |
+| performance-cascade-dashboard | adhd | 3 | 4 | 0 | 7 |
 | performance-cascade-dashboard | autistic | 2 | 4 | 1 | 6 |
-| performance-cascade-dashboard | divergent-autistic | 3 | 3 | 0 | 6 |
+| performance-cascade-dashboard | adhd-autistic | 3 | 3 | 0 | 6 |
 | requirements-missing-refund-policy | baseline | 3 | 8 | 0 | 11 |
-| requirements-missing-refund-policy | divergent | 3 | 2 | 0 | 4 |
+| requirements-missing-refund-policy | adhd | 3 | 2 | 0 | 4 |
 | requirements-missing-refund-policy | autistic | 3 | 2 | 0 | 4 |
-| requirements-missing-refund-policy | divergent-autistic | 2 | 5 | 1 | 7 |
+| requirements-missing-refund-policy | adhd-autistic | 2 | 5 | 1 | 7 |
 | security-trust-boundary | baseline | 3 | 7 | 0 | 10 |
-| security-trust-boundary | divergent | 3 | 5 | 0 | 8 |
+| security-trust-boundary | adhd | 3 | 5 | 0 | 8 |
 | security-trust-boundary | autistic | 3 | 2 | 0 | 5 |
-| security-trust-boundary | divergent-autistic | 3 | 2 | 0 | 5 |
+| security-trust-boundary | adhd-autistic | 3 | 2 | 0 | 5 |
 
 `concurrency-token-refresh`, `security-trust-boundary`, and
 `api-contract-mismatch` show the cleanest AUTISTIC win: equal or
