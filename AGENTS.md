@@ -7,9 +7,10 @@ this repository.
 
 A Claude Code Agent Skill (`skills/autistic/`) that implements
 depth-first systems reasoning, plus reference docs, JSON schemas for its
-intermediate objects, and a mechanically-scored benchmark suite. It has
-a companion, complementary skill, `adhd` (breadth-first ideation), which
-this repo does not vendor — see `skills/autistic/references/adhd-bridge.md`.
+intermediate objects, and a mechanically-scored benchmark suite. It's
+built to complement a breadth-first divergent-ideation skill, if one is
+installed, without vendoring or depending on any specific one — see
+`skills/autistic/references/divergence-bridge.md`.
 
 ## Editing the skill
 
@@ -40,8 +41,8 @@ quoted, not paraphrased into "the project's" voice.
 
 `bench/` contains seeded-defect fixtures with a `ground-truth.json`
 answer key per fixture (planted defects, not visible in the fixture
-content itself) and a harness that runs BASELINE / ADHD / AUTISTIC /
-ADHD→AUTISTIC conditions and scores mechanically (ID-matching against
+content itself) and a harness that runs BASELINE / DIVERGENT / AUTISTIC /
+DIVERGENT→AUTISTIC conditions and scores mechanically (ID-matching against
 the ground truth, not an LLM judge) into `bench/results/`. `EVALS.md`
 publishes the aggregate numbers, including losses — do not edit
 `EVALS.md` to remove an unfavorable result; add a new run instead and

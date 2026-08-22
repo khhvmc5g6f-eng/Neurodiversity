@@ -2,20 +2,20 @@
 
 ## Why this exists, and why it isn't "roleplay as an attacker"
 
-Stress-testing AUTISTIC against problems shaped by ADHD's own frame
-parameters (hostile-attacker framing, extreme-constraint framing,
-inversion, trap-detection, breadth-routing) found AUTISTIC strong
-across the board except one specific, repeatable gap: given a security
-question, AUTISTIC's specialist lenses *review* — they verify or refute
-a claim already on the table — but nothing in the skill *generates*
-novel attack surface before anything's been proposed. Falsification
-(`references/verification.md`) is excellent at "assume this claim is
-false and find evidence against it"; it has no counterpart for "what
-haven't we even considered yet."
+Stress-testing AUTISTIC against problems shaped by a divergent-ideation
+skill's own frame parameters (hostile-attacker framing, extreme-
+constraint framing, inversion, trap-detection, breadth-routing) found
+AUTISTIC strong across the board except one specific, repeatable gap:
+given a security question, AUTISTIC's specialist lenses *review* — they
+verify or refute a claim already on the table — but nothing in the
+skill *generates* novel attack surface before anything's been proposed.
+Falsification (`references/verification.md`) is excellent at "assume
+this claim is false and find evidence against it"; it has no
+counterpart for "what haven't we even considered yet."
 
-The tempting fix is to bolt on an ADHD-style adversarial-attacker
-persona (see the `adhd` skill's frame table: "you are a hostile
-competitor... generate approaches that exploit, fail, or sabotage").
+The tempting fix is to bolt on a creative adversarial-attacker persona
+("you are a hostile competitor... generate approaches that exploit,
+fail, or sabotage"), the kind a breadth-first divergent skill uses.
 That's the wrong fix for this skill specifically — creative, associative
 roleplay is exactly the breadth-first mechanism AUTISTIC exists to
 complement, not adopt. The fix that's actually *more* AUTISTIC, not

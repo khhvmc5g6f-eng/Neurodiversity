@@ -1,6 +1,6 @@
 ---
 name: autistic
-description: Depth-first systems reasoning for coding agents. Builds a system map, then drives sustained monotropic focus through one load-bearing question at a time — assumptions, invariants, contradictions, edge cases — until the model of the system stops changing materially. Use on /autistic, "AUTISTIC mode", repository audits, production bugs with no known root cause, architecture review, or "why does this happen" questions. Skip for syntax, lookups, bugs with an already-known root cause, or closed phrasing ("quick", "standard", "just fix"). Full pre-flight gate is in the skill body. Complementary to the adhd skill — see the bridge section below.
+description: Depth-first systems reasoning for coding agents. Builds a system map, then drives sustained monotropic focus through one load-bearing question at a time — assumptions, invariants, contradictions, edge cases — until the model of the system stops changing materially. Use on /autistic, "AUTISTIC mode", repository audits, production bugs with no known root cause, architecture review, or "why does this happen" questions. Skip for syntax, lookups, bugs with an already-known root cause, or closed phrasing ("quick", "standard", "just fix"). Full pre-flight gate is in the skill body. Complementary to a breadth-first divergent-ideation skill, if one is installed — see the bridge section below.
 license: MIT
 ---
 
@@ -8,14 +8,15 @@ license: MIT
 
 Deep Systems Reasoning for Agents
 
-ADHD prevents premature convergence: it keeps looking outward for options
-you haven't considered. AUTISTIC prevents premature understanding: it keeps
-looking inward until the model of the system holds together. ADHD finds
-options. AUTISTIC finds structure. ADHD asks *what else?* AUTISTIC asks
-*why, exactly where, what depends on that, is that always true, what
-breaks at the boundary, what contradicts it, what evidence proves it, what
-did we miss?* — then keeps asking until further investigation stops
-changing the material understanding of the system.
+Divergent ideation prevents premature convergence: it keeps looking
+outward for options you haven't considered. AUTISTIC prevents premature
+understanding: it keeps looking inward until the model of the system
+holds together. Divergence finds options. AUTISTIC finds structure.
+Divergence asks *what else?* AUTISTIC asks *why, exactly where, what
+depends on that, is that always true, what breaks at the boundary, what
+contradicts it, what evidence proves it, what did we miss?* — then keeps
+asking until further investigation stops changing the material
+understanding of the system.
 
 ## Neuroaffirming design rule
 
@@ -53,18 +54,18 @@ questions. If any answer is no, abort and answer directly.
 
 If all three pass, proceed to Phase 0.
 
-## Routing: AUTISTIC vs ADHD vs combined
+## Routing: AUTISTIC vs divergent ideation vs combined
 
 | Ask | Route |
 |---|---|
-| "Give me options / ideas / alternatives" | ADHD only |
+| "Give me options / ideas / alternatives" | Divergent ideation only |
 | "Why is this happening" / "audit this" / "what's wrong" | AUTISTIC only |
-| "Design the best architecture for X" | ADHD → AUTISTIC |
-| "This design is fundamentally broken, find another approach" | AUTISTIC → ADHD → AUTISTIC |
+| "Design the best architecture for X" | Divergent → AUTISTIC |
+| "This design is fundamentally broken, find another approach" | AUTISTIC → Divergent → AUTISTIC |
 
 Full heuristics and the shared JSON handoff shape are in
-`references/adhd-bridge.md`. Default to AUTISTIC only unless the ask is
-explicitly about generating or choosing between options.
+`references/divergence-bridge.md`. Default to AUTISTIC only unless the
+ask is explicitly about generating or choosing between options.
 
 ## Phase 0 — System Cartography
 
@@ -399,15 +400,15 @@ contradictions · `D4` recursive deep dive · `D5` forensic exhaustion.
 Adaptive by default — if a standard pass finds no material uncertainty,
 stop; don't run forensic mode on everything.
 
-## ADHD bridge
+## Divergence bridge
 
-AUTISTIC can consume ADHD's output directly (`ideas / clusters / traps /
-shortlist / deepened / nonObviousPick`) and turn each shortlisted
-candidate into assumptions, dependencies, invariants, failure modes,
-edge cases, security/operations concerns, cost, and a verification plan
-— see `references/adhd-bridge.md` for the exact transform and the
-`/adhd-autistic --loop` cycle (`understand → explore → verify → find new
-problem → …`, stopping at saturation).
+AUTISTIC can consume a divergent-ideation skill's output directly
+(`ideas / clusters / traps / shortlist / deepened / nonObviousPick`) and
+turn each shortlisted candidate into assumptions, dependencies,
+invariants, failure modes, edge cases, security/operations concerns,
+cost, and a verification plan — see `references/divergence-bridge.md`
+for the exact transform and the `--loop` cycle (`understand → explore →
+verify → find new problem → …`, stopping at saturation).
 
 ## Anti-patterns
 
@@ -424,8 +425,8 @@ problem → …`, stopping at saturation).
   synthesis time. Every unresolved question either gets a materiality
   rating in the output or an explicit reason it was dropped.
 - **Hyperfocus without the valve.** See Phase 2. This is the mirror image
-  of ADHD's "convergence disguised as divergence" — here it's "depth
-  disguised as progress."
+  of divergent ideation's own "convergence disguised as divergence"
+  failure mode — here it's "depth disguised as progress."
 - **Coordination theatre.** A specialist agent relaying another agent's
   output back through a chain of messages instead of producing its own
   result is not resilience, it's a stall waiting to happen. See
@@ -451,9 +452,10 @@ two-stage synthesis ≈ 12–30 Agent calls for a `--standard` run, more for
 
 Full spec, reference docs, cognitive-profile definitions, JSON schemas,
 and the seeded-defect benchmark suite (raw results, not cherry-picked)
-live at https://github.com/khhvmc5g6f-eng/autistic. Companion divergent
-skill: `adhd` (installed locally, also at
-https://github.com/UditAkhourii/adhd). Real-tool integration for
+live at https://github.com/khhvmc5g6f-eng/autistic. If a breadth-first
+divergent-ideation skill is installed locally, see
+`references/divergence-bridge.md` for how AUTISTIC hands off to and
+consumes its output. Real-tool integration for
 cartography/static-analysis/mutation/contract verification:
 `references/tooling.md`. Cross-run memory: `references/memory.md`.
 

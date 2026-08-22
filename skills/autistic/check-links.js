@@ -14,18 +14,24 @@ const SOURCES = [
   ...fs.readdirSync(path.join(ROOT, 'references')).map(f => path.join(ROOT, 'references', f)),
 ];
 
-const LINK_RE = /`((?:references|frames|schemas)\/[a-zA-Z0-9_-]+\.(?:md|json))`/g;
+const LINK_RE = /`((?:\.\.\/)?(?:references|frames|schemas)\/[a-zA-Z0-9_-]+\.(?:md|json))`/g;
 
 let missing = 0;
 let checked = 0;
 
 for (const source of SOURCES) {
   const text = fs.readFileSync(source, 'utf8');
+  const sourceDir = path.dirname(source);
   let match;
   while ((match = LINK_RE.exec(text)) !== null) {
     const rel = match[1];
     checked++;
-    const resolved = path.join(ROOT, rel);
+    // A bare `references/x.md`-style path (no ../) is always meant relative
+    // to the skill root, regardless of which file it appears in -- e.g.
+    // SKILL.md and a file inside references/ both write `references/x.md`
+    // to mean the same location. A `../`-prefixed path is relative to the
+    // referencing file's own directory instead.
+    const resolved = rel.startsWith('../') ? path.join(sourceDir, rel) : path.join(ROOT, rel);
     if (!fs.existsSync(resolved)) {
       console.error(`BROKEN LINK: ${path.relative(ROOT, source)} references "${rel}", which does not exist at ${resolved}`);
       missing++;

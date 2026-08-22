@@ -13,22 +13,25 @@
           {
             "id": "API-1",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "Server serialize() emits the US spelling \"canceled\" (single L) for sub.canceledAt truthy case, and also for sub.status when it presumably equals \"cancelled\" — but the documented contract requires the value \"cancelled\" (UK spelling, double L); the client's isCancelled() checks `sub.status === \"cancelled\"`, which will never match \"canceled\", so the cancelled banner never appears — this is the root cause of the QA bug."
           },
           {
             "id": "API-2",
             "hit": true,
+            "matchedIndex": 3,
             "matchedFinding": "Server returns `amount: sub.amountCents`, i.e. a cents-denominated integer, while the documented contract specifies `amount: number // dollars`; the client's formatAmount() does `sub.amount.toFixed(2)` assuming the value is already in dollars, so the displayed price will be shown as 100x too large (e.g. $1999.00 instead of $19.99) with no unit conversion anywhere in the pipeline."
           },
           {
             "id": "API-3",
             "hit": true,
+            "matchedIndex": 4,
             "matchedFinding": "There is no shared/generated type or schema (e.g. no shared TS interface, no OpenAPI/JSON-schema validation, no contract test) enforcing that server output matches the documented contract, so the spelling and units mismatches were not caught at compile time or by any automated check."
           }
         ],
         "reportedCount": 6
       },
-      "adhd": {
+      "divergent": {
         "tp": 2,
         "fp": 3,
         "fn": 1,
@@ -39,16 +42,19 @@
           {
             "id": "API-1",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "Server serializes cancelled subscriptions with status value \"canceled\" (US spelling, single L), but the documented contract's enum only contains \"cancelled\" (UK spelling, double L) — the server's own output is not a member of its documented enum."
           },
           {
             "id": "API-2",
             "hit": true,
+            "matchedIndex": 2,
             "matchedFinding": "Server returns amount: sub.amountCents (a cents value) while the documented contract specifies amount is in dollars; client's formatAmount() does `$${sub.amount.toFixed(2)}` assuming sub.amount is already dollars, so displayed amounts will be rendered 100x too large."
           },
           {
             "id": "API-3",
             "hit": false,
+            "matchedIndex": -1,
             "matchedFinding": null
           }
         ],
@@ -65,22 +71,25 @@
           {
             "id": "API-1",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "Server's serialize() emits the US spelling \"canceled\" (`sub.canceledAt ? \"canceled\" : sub.status`) while the documented contract and the client's isCancelled() both use the UK spelling \"cancelled\" (`sub.status === \"cancelled\"`). Because the server never emits the string \"cancelled\", isCancelled() is always false for every subscription, including ones with canceledAt set — this is the exact root cause of the QA-reported bug that the cancelled banner never appears."
           },
           {
             "id": "API-2",
             "hit": true,
+            "matchedIndex": 1,
             "matchedFinding": "Server's serialize() returns `amount: sub.amountCents` verbatim (a cents-denominated integer per its own field name) but the documented contract declares `amount: number // dollars`, and the client's formatAmount() trusts that contract, computing `$${sub.amount.toFixed(2)}` with no /100 conversion. This means any subscription amount will be displayed 100x too large (e.g. amountCents=1999 renders as \"$1999.00\" instead of \"$19.99\"), a second, independent violation of the documented contract that will silently corrupt every displayed price."
           },
           {
             "id": "API-3",
             "hit": false,
+            "matchedIndex": -1,
             "matchedFinding": null
           }
         ],
         "reportedCount": 2
       },
-      "adhd-autistic": {
+      "divergent-autistic": {
         "tp": 2,
         "fp": 1,
         "fn": 1,
@@ -91,16 +100,19 @@
           {
             "id": "API-1",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "Server spells the cancelled status as \"canceled\" (US spelling, in serialize(): `sub.canceledAt ? \"canceled\" : sub.status`) while the client's isCancelled() does a strict equality check against \"cancelled\" (UK spelling, matching the documented contract). Because the server never emits the literal string \"cancelled\", isCancelled() returns false for every subscription regardless of actual cancellation state, which is the direct root cause of the banner never appearing — confirmed by the spelling called out in both code comments."
           },
           {
             "id": "API-2",
             "hit": true,
+            "matchedIndex": 1,
             "matchedFinding": "Independent of the status bug, the documented contract specifies `amount` as dollars, but serialize() returns `sub.amountCents` unconverted (no division by 100) under the `amount` key, and the client's formatAmount() does `$${sub.amount.toFixed(2)}` assuming the value is already dollars. This produces a dollar amount inflated 100x (e.g. 500 cents rendered as \"$500.00\" instead of \"$5.00\") for every subscription, not just cancelled ones — a second, separate contract violation with financial-display impact and broader reach than the banner bug."
           },
           {
             "id": "API-3",
             "hit": false,
+            "matchedIndex": -1,
             "matchedFinding": null
           }
         ],
@@ -119,22 +131,25 @@
           {
             "id": "ARCH-1",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "genericSearch.ts's excludeDeleted() hardcodes the column name 'deleted_at', but the users table has no deleted_at column at all (only is_deleted BOOLEAN) — the exclusion filter can never match anything on 'users'."
           },
           {
             "id": "ARCH-2",
             "hit": true,
+            "matchedIndex": 1,
             "matchedFinding": "Because the ORM is configured with unknownColumnMode: 'silent-skip', the where('deleted_at', 'IS', null) clause against the users table is silently dropped instead of erroring, so search('users', …) runs with no soft-delete filter whatsoever — this is the direct cause of deleted accounts appearing in search results."
           },
           {
             "id": "ARCH-3",
             "hit": true,
+            "matchedIndex": 6,
             "matchedFinding": "Nothing in the described system (types, tests, schema validation, or the query builder) enforces that excludeDeleted() references a column that actually exists on the target table, so the same class of bug (filter silently no-ops due to column mismatch) can recur for any other filter, not just deleted_at."
           }
         ],
         "reportedCount": 7
       },
-      "adhd": {
+      "divergent": {
         "tp": 2,
         "fp": 4,
         "fn": 1,
@@ -145,16 +160,19 @@
           {
             "id": "ARCH-1",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "excludeDeleted() hardcodes the column name 'deleted_at' and is applied uniformly to every table by the shared search() function, but the users table has no deleted_at column at all — it uses is_deleted instead — so the filter's column assumption doesn't match the real per-table schema."
           },
           {
             "id": "ARCH-2",
             "hit": true,
+            "matchedIndex": 1,
             "matchedFinding": "Because unknownColumnMode is 'silent-skip', the query builder silently drops the deleted_at clause when it runs against users instead of raising an error, so no soft-delete filter is applied to user search at all — this is the direct mechanism causing deleted accounts to leak into results while orders (which does have deleted_at) is correctly filtered."
           },
           {
             "id": "ARCH-3",
             "hit": false,
+            "matchedIndex": -1,
             "matchedFinding": null
           }
         ],
@@ -171,22 +189,25 @@
           {
             "id": "ARCH-1",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "Root cause of the reported bug: excludeDeleted() in genericSearch.ts hardcodes `where('deleted_at', 'IS', null)` and is applied uniformly (per the code's own comment) to both the orders and users searches. The users table has no deleted_at column at all (per the schema comment), and the ORM's unknownColumnMode: 'silent-skip', which is configured for all search endpoints, silently drops that predicate when it hits a nonexistent column instead of erroring. The result is that the users search runs with no deletion filter whatsoever, so soft-deleted users (is_deleted = true) leak into results — while orders, which really has deleted_at, is filtered correctly. This exactly matches the reported symptom."
           },
           {
             "id": "ARCH-2",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "Root cause of the reported bug: excludeDeleted() in genericSearch.ts hardcodes `where('deleted_at', 'IS', null)` and is applied uniformly (per the code's own comment) to both the orders and users searches. The users table has no deleted_at column at all (per the schema comment), and the ORM's unknownColumnMode: 'silent-skip', which is configured for all search endpoints, silently drops that predicate when it hits a nonexistent column instead of erroring. The result is that the users search runs with no deletion filter whatsoever, so soft-deleted users (is_deleted = true) leak into results — while orders, which really has deleted_at, is filtered correctly. This exactly matches the reported symptom."
           },
           {
             "id": "ARCH-3",
             "hit": true,
+            "matchedIndex": 4,
             "matchedFinding": "Missing safeguard: there is no schema-aware check or test asserting that excludeDeleted actually narrows results per table (e.g., validating the exclusion column exists before executing, or a test that soft-deleted users are excluded from search). That gap is precisely why a filter that has been a silent no-op for every users-table search went undetected until support reported it manually."
           }
         ],
         "reportedCount": 5
       },
-      "adhd-autistic": {
+      "divergent-autistic": {
         "tp": 2,
         "fp": 5,
         "fn": 1,
@@ -197,16 +218,19 @@
           {
             "id": "ARCH-1",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "Root cause: users table has no deleted_at column (only is_deleted boolean), but excludeDeleted() in genericSearch.ts hardcodes .where('deleted_at','IS',null) for every table — a column that simply doesn't exist on users."
           },
           {
             "id": "ARCH-2",
             "hit": true,
+            "matchedIndex": 1,
             "matchedFinding": "The ORM's unknownColumnMode:'silent-skip' (enabled for all search endpoints) converts that invalid column reference into a silent no-op instead of an error, so the soft-delete filter is dropped entirely for users searches while working correctly for orders (which does have deleted_at) — this is the direct mechanism producing the reported bug."
           },
           {
             "id": "ARCH-3",
             "hit": false,
+            "matchedIndex": -1,
             "matchedFinding": null
           }
         ],
@@ -225,22 +249,25 @@
           {
             "id": "CONC-1",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "No try/catch/finally around `await refreshToken(oldToken)` (lines 19-21 of tokenService.js): if `api.post('/auth/refresh', ...)` rejects (network error, 5xx, timeout), the exception propagates up uncaught and `refreshing` is never reset to `false`. Every subsequent `getToken()` call then permanently falls into the 'wait a bit and use whatever we have' branch, forever returning the same stale `currentToken` (or `null`) — a single failed refresh permanently breaks the client until a full page reload."
           },
           {
             "id": "CONC-2",
             "hit": true,
+            "matchedIndex": 2,
             "matchedFinding": "Worse than merely 'stale': per the code comment, 'the server invalidates oldToken the moment it receives this request' — so as soon as the refreshing call's POST lands, `currentToken` (still holding the old value) is guaranteed-revoked server-side, not just close to expiry. Any concurrent caller that reads `currentToken` in that window (either via the sleep(50) branch or via the initiating call's own in-flight requests started before refresh) will deterministically get a 401, not just probabilistically."
           },
           {
             "id": "CONC-3",
             "hit": true,
+            "matchedIndex": 1,
             "matchedFinding": "The 'someone else is refreshing' branch (`await sleep(50); return currentToken;`) is a single fixed-duration poll, not a loop or a subscription to the in-flight refresh. If the actual `/auth/refresh` round-trip takes longer than 50ms (entirely plausible on a slow network, which is exactly when refreshes matter most), the waiting caller returns before `currentToken` has been updated, handing back an expired/invalid token to its caller and causing the downstream authenticated request to fail with a spurious 401."
           }
         ],
         "reportedCount": 10
       },
-      "adhd": {
+      "divergent": {
         "tp": 3,
         "fp": 2,
         "fn": 0,
@@ -251,16 +278,19 @@
           {
             "id": "CONC-1",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "Concurrent requests already using the current token race against a parallel refresh: refreshToken() invalidates oldToken server-side 'the moment it receives the request', but since every call site invokes getToken() independently with no shared request queue, any request already in flight (or dispatched moments later) with that same token gets rejected once the refresh lands — this is the direct mechanism behind the reported intermittent logouts."
           },
           {
             "id": "CONC-2",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "Concurrent requests already using the current token race against a parallel refresh: refreshToken() invalidates oldToken server-side 'the moment it receives the request', but since every call site invokes getToken() independently with no shared request queue, any request already in flight (or dispatched moments later) with that same token gets rejected once the refresh lands — this is the direct mechanism behind the reported intermittent logouts."
           },
           {
             "id": "CONC-3",
             "hit": true,
+            "matchedIndex": 2,
             "matchedFinding": "The 'wait' branch synchronizes via a boolean flag plus a single fixed 50ms sleep rather than awaiting the actual in-flight refresh's result/promise. If the refresh takes longer than 50ms (routine on a slow network), the waiting caller unconditionally returns whatever is currently in 'currentToken' — still expired — with no re-check loop and no re-validation of expiry."
           }
         ],
@@ -277,22 +307,25 @@
           {
             "id": "CONC-1",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "The refresh-in-progress branch (`await sleep(50); return currentToken;`) does not actually wait for the in-flight refresh to finish — it waits a fixed 50ms and then returns whatever `currentToken` currently holds, without re-checking `refreshing` or the token's validity. If the real `/auth/refresh` round trip takes longer than 50ms (entirely normal under network latency/congestion), waiting callers return the OLD token value before `currentToken = newToken` has run. Since the docstring states the server invalidates `oldToken` the instant it receives the refresh request, that returned token is already dead server-side, so the caller's subsequent authenticated request gets a 401 — this is exactly the 'intermittent logout with no clear repro' symptom, since it only triggers when refresh latency happens to exceed the hardcoded 50ms window."
           },
           {
             "id": "CONC-2",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "The refresh-in-progress branch (`await sleep(50); return currentToken;`) does not actually wait for the in-flight refresh to finish — it waits a fixed 50ms and then returns whatever `currentToken` currently holds, without re-checking `refreshing` or the token's validity. If the real `/auth/refresh` round trip takes longer than 50ms (entirely normal under network latency/congestion), waiting callers return the OLD token value before `currentToken = newToken` has run. Since the docstring states the server invalidates `oldToken` the instant it receives the refresh request, that returned token is already dead server-side, so the caller's subsequent authenticated request gets a 401 — this is exactly the 'intermittent logout with no clear repro' symptom, since it only triggers when refresh latency happens to exceed the hardcoded 50ms window."
           },
           {
             "id": "CONC-3",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "The refresh-in-progress branch (`await sleep(50); return currentToken;`) does not actually wait for the in-flight refresh to finish — it waits a fixed 50ms and then returns whatever `currentToken` currently holds, without re-checking `refreshing` or the token's validity. If the real `/auth/refresh` round trip takes longer than 50ms (entirely normal under network latency/congestion), waiting callers return the OLD token value before `currentToken = newToken` has run. Since the docstring states the server invalidates `oldToken` the instant it receives the refresh request, that returned token is already dead server-side, so the caller's subsequent authenticated request gets a 401 — this is exactly the 'intermittent logout with no clear repro' symptom, since it only triggers when refresh latency happens to exceed the hardcoded 50ms window."
           }
         ],
         "reportedCount": 3
       },
-      "adhd-autistic": {
+      "divergent-autistic": {
         "tp": 3,
         "fp": 1,
         "fn": 0,
@@ -303,16 +336,19 @@
           {
             "id": "CONC-1",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "Non-initiating callers (the `else` branch) only `sleep(50)` once and then unconditionally return whatever `currentToken` currently holds — they never re-check whether the in-flight refresh actually completed, and there is no shared promise/queue at the call sites (the file explicitly says every request calls `getToken()` independently). Since refresh is a network round trip typically well over 50ms, these callers systematically return the same token that was already judged expired by the caller that triggered the refresh, so their authenticated request fails and the app surfaces this as a logout. This is the primary root cause of the 'intermittent logout' reports, with severity scaling with request concurrency and refresh latency."
           },
           {
             "id": "CONC-2",
             "hit": true,
+            "matchedIndex": 2,
             "matchedFinding": "The comment states the server invalidates `oldToken` the instant it receives the `/auth/refresh` POST, i.e. before the refresh response (and therefore the new token) is even available client-side. Combined with the architecture where every authenticated request calls `getToken()' independently with no shared in-flight-request tracking, any other request that grabbed the still-valid old token just before a refresh was triggered elsewhere on the page can fail collaterally the moment the refresh request lands server-side — a structural race between token invalidation and concurrent in-flight request usage that is not mitigated anywhere in this code."
           },
           {
             "id": "CONC-3",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "Non-initiating callers (the `else` branch) only `sleep(50)` once and then unconditionally return whatever `currentToken` currently holds — they never re-check whether the in-flight refresh actually completed, and there is no shared promise/queue at the call sites (the file explicitly says every request calls `getToken()` independently). Since refresh is a network round trip typically well over 50ms, these callers systematically return the same token that was already judged expired by the caller that triggered the refresh, so their authenticated request fails and the app surfaces this as a logout. This is the primary root cause of the 'intermittent logout' reports, with severity scaling with request concurrency and refresh latency."
           }
         ],
@@ -331,22 +367,25 @@
           {
             "id": "CFG-1",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "config/production.env sets CACHE_TTL_SECONDS=0, which unconditionally overrides base.env's 300 via the `{...base, ...override}` spread in loadConfig, so production silently runs with caching disabled while docs/base config claim 300s"
           },
           {
             "id": "CFG-2",
             "hit": true,
+            "matchedIndex": 2,
             "matchedFinding": "The debug CACHE_TTL_SECONDS=0 change was never reverted after issue #412 was resolved — it has persisted undetected in production for eight months"
           },
           {
             "id": "CFG-3",
             "hit": true,
+            "matchedIndex": 3,
             "matchedFinding": "The debug cache change was bundled into the same commit as an unrelated, intentional DB_POOL_SIZE=50 change, violating single-purpose/atomic commit practice; this makes the diff harder to review, makes `git revert` impossible without also undoing the legitimate pool-size change, and likely let the debug line slip past reviewers who were focused on the pool-size change"
           }
         ],
         "reportedCount": 9
       },
-      "adhd": {
+      "divergent": {
         "tp": 3,
         "fp": 4,
         "fn": 0,
@@ -357,16 +396,19 @@
           {
             "id": "CFG-1",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "Root cause: config/production.env sets CACHE_TTL_SECONDS=0, and loadConfig's merge order (`{...base, ...override}`) applies it after base.env's 300, silently overriding the documented 300s TTL and disabling caching entirely in production."
           },
           {
             "id": "CFG-2",
             "hit": true,
+            "matchedIndex": 1,
             "matchedFinding": "The override originated as an explicitly temporary debug change (commit titled \"debug: temporarily disable cache to reproduce issue #412\") made eight months ago and was never reverted — there is no expiry mechanism or tracking for temporary debug config flags."
           },
           {
             "id": "CFG-3",
             "hit": true,
+            "matchedIndex": 2,
             "matchedFinding": "The debug cache-disable was bundled into the same commit as an unrelated, intentional DB_POOL_SIZE change, making the commit non-atomic and harder to safely review, isolate, or revert."
           }
         ],
@@ -383,22 +425,25 @@
           {
             "id": "CFG-1",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "Root cause: config/production.env still sets CACHE_TTL_SECONDS=0 from an 8-month-old commit titled 'debug: temporarily disable cache to reproduce issue #412'. Since loadConfig() does `{...base, ...override}` and production.env is loaded after base.env, this stale debug value permanently wins over the documented 300s default — caching has been a no-op in production ever since, and the debug change was never paired with a follow-up commit that restored it (a missing enable/disable counterpart operation)."
           },
           {
             "id": "CFG-2",
             "hit": false,
+            "matchedIndex": -1,
             "matchedFinding": null
           },
           {
             "id": "CFG-3",
             "hit": false,
+            "matchedIndex": -1,
             "matchedFinding": null
           }
         ],
         "reportedCount": 5
       },
-      "adhd-autistic": {
+      "divergent-autistic": {
         "tp": 3,
         "fp": 3,
         "fn": 0,
@@ -409,16 +454,19 @@
           {
             "id": "CFG-1",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "Root cause is confirmed in code: loadConfig performs a shallow merge `{...base, ...override}`, so any key present in production.env unconditionally wins over base.env. CACHE_TTL_SECONDS=0 in production.env therefore overrides the documented 300s value in every production request — this is the direct, sole cause of caching being ineffective, and configLoader.ts itself is working exactly as designed (the bug is stale data, not merge logic)."
           },
           {
             "id": "CFG-2",
             "hit": true,
+            "matchedIndex": 1,
             "matchedFinding": "The override's origin is a 'temporary debug: disable cache to reproduce issue #412' commit from 8 months ago that was never reverted. This is a classic stale-debug-flag defect: a change meant to be transient was left in a permanent, always-loaded production config file with no expiry, no linked follow-up/cleanup task, and no marker distinguishing it from a permanent setting."
           },
           {
             "id": "CFG-3",
             "hit": true,
+            "matchedIndex": 2,
             "matchedFinding": "The debug CACHE_TTL_SECONDS=0 change was committed together with an unrelated, intentional DB_POOL_SIZE=20→50 change in the same commit. This coupling means a naive fix (git revert of that commit) would also undo the legitimate pool-size increase — the fix must surgically remove only the CACHE_TTL_SECONDS line, not revert the commit wholesale."
           }
         ],
@@ -437,22 +485,25 @@
           {
             "id": "DATA-1",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "`phone` is declared `TEXT NULL` in schema.sql (line 14) but the `User` TypeScript interface declares `phone: string` as non-optional/non-null (User.ts line 24); `listActiveUsers()` returns raw query rows cast to `User[]` with no null-check or coalescing, so any row with `phone IS NULL` will silently violate the type contract and crash any downstream code that calls string methods on `user.phone`."
           },
           {
             "id": "DATA-2",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "`phone` is declared `TEXT NULL` in schema.sql (line 14) but the `User` TypeScript interface declares `phone: string` as non-optional/non-null (User.ts line 24); `listActiveUsers()` returns raw query rows cast to `User[]` with no null-check or coalescing, so any row with `phone IS NULL` will silently violate the type contract and crash any downstream code that calls string methods on `user.phone`."
           },
           {
             "id": "DATA-3",
             "hit": true,
+            "matchedIndex": 1,
             "matchedFinding": "`signup()` performs a non-atomic check-then-insert for email uniqueness (SELECT at line 35, INSERT at lines 37-40) against a table with no UNIQUE constraint on email (explicitly noted at schema.sql line 16); two concurrent signup calls with the same email can both pass the SELECT check before either INSERT commits, producing duplicate email rows (TOCTOU race)."
           }
         ],
         "reportedCount": 6
       },
-      "adhd": {
+      "divergent": {
         "tp": 3,
         "fp": 3,
         "fn": 0,
@@ -463,16 +514,19 @@
           {
             "id": "DATA-1",
             "hit": true,
+            "matchedIndex": 2,
             "matchedFinding": "phone is declared TEXT NULL in the schema but the User TypeScript interface declares phone: string as required/non-nullable -- a nullability mismatch that lets a null value silently violate the type contract."
           },
           {
             "id": "DATA-2",
             "hit": true,
+            "matchedIndex": 3,
             "matchedFinding": "listActiveUsers() never filters on deleted_at IS NULL despite its name, so soft-deleted users are returned as if they were active."
           },
           {
             "id": "DATA-3",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "Check-then-insert TOCTOU race in signup(): two concurrent signup calls for the same email can both pass the SELECT check before either INSERT commits, producing duplicate accounts, because there is no transaction, lock, or unique index enforcing it."
           }
         ],
@@ -489,22 +543,25 @@
           {
             "id": "DATA-1",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "User.ts declares `phone: string` as required/non-null, but schema.sql defines `phone TEXT NULL`. listActiveUsers() in userRepo.ts does `SELECT id, email, phone FROM users` and casts the result to `Promise<User[]>` with no null-check or COALESCE — any row with a NULL phone will silently violate the type contract, so downstream code that trusts `user.phone` as a string (e.g. calling `.toUpperCase()` or formatting it) will throw or misbehave at runtime for exactly the rows the schema says are legal."
           },
           {
             "id": "DATA-2",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "User.ts declares `phone: string` as required/non-null, but schema.sql defines `phone TEXT NULL`. listActiveUsers() in userRepo.ts does `SELECT id, email, phone FROM users` and casts the result to `Promise<User[]>` with no null-check or COALESCE — any row with a NULL phone will silently violate the type contract, so downstream code that trusts `user.phone` as a string (e.g. calling `.toUpperCase()` or formatting it) will throw or misbehave at runtime for exactly the rows the schema says are legal."
           },
           {
             "id": "DATA-3",
             "hit": true,
+            "matchedIndex": 2,
             "matchedFinding": "signup() enforces 'no duplicate email' via a check-then-insert pattern (`SELECT id ... WHERE email=$1` followed by a separate `INSERT`) with no transaction, locking, or advisory lock, and schema.sql explicitly notes 'no UNIQUE constraint on email'. Two concurrent signup calls with the same email can both pass the SELECT (finding zero rows) before either INSERT commits, producing two rows with the same email — the 'email taken' invariant is not actually enforced under concurrency, and there is no DB-level backstop since the column isn't UNIQUE."
           }
         ],
         "reportedCount": 4
       },
-      "adhd-autistic": {
+      "divergent-autistic": {
         "tp": 3,
         "fp": 2,
         "fn": 0,
@@ -515,16 +572,19 @@
           {
             "id": "DATA-1",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "The `User` interface declares `phone: string` (required, non-null) but the `users` table defines `phone TEXT NULL`; `listActiveUsers` does `SELECT id, email, phone FROM users` and casts the raw rows straight to `User[]` with no null-check or validation layer, so any row with a NULL phone silently violates the TS contract at runtime — code trusting `user.phone` as a string (e.g. calling string methods on it) will crash or misbehave, and this stays invisible in staging until a row with a null phone (e.g. a legacy user, or one from before phone was collected) is hit."
           },
           {
             "id": "DATA-2",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "The `User` interface declares `phone: string` (required, non-null) but the `users` table defines `phone TEXT NULL`; `listActiveUsers` does `SELECT id, email, phone FROM users` and casts the raw rows straight to `User[]` with no null-check or validation layer, so any row with a NULL phone silently violates the TS contract at runtime — code trusting `user.phone` as a string (e.g. calling string methods on it) will crash or misbehave, and this stays invisible in staging until a row with a null phone (e.g. a legacy user, or one from before phone was collected) is hit."
           },
           {
             "id": "DATA-3",
             "hit": true,
+            "matchedIndex": 3,
             "matchedFinding": "Email uniqueness is enforced only in application code via a check-then-insert pattern (`SELECT ... WHERE email=$1` followed by a separate `INSERT`), with no transaction or locking, and the schema explicitly has no UNIQUE constraint on email (per the schema.sql comment) — two concurrent signup calls with the same email can both pass the existence check before either INSERT completes, producing duplicate email rows that nothing in the DB or code prevents."
           }
         ],
@@ -543,37 +603,43 @@
           {
             "id": "DES-C-1",
             "hit": true,
+            "matchedIndex": 2,
             "matchedFinding": "Data residency is enforced by regional data domiciling, not application-level filtering: each tenant is assigned a home region (US or EU) at provisioning time, and that tenant's document content, CRDT operation log, and audit log are stored and processed exclusively on infrastructure physically located in that region."
           },
           {
             "id": "DES-C-2",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "Use CRDTs (e.g. Yjs/Automerge-style RGA or Peritext for rich text) rather than centralized Operational Transformation, because CRDTs guarantee mathematically that concurrent edits converge without a single serializing authority, which is what makes zero-data-loss merging survive a regional outage instead of just a network blip."
           },
           {
             "id": "DES-C-3",
             "hit": false,
+            "matchedIndex": -1,
             "matchedFinding": null
           },
           {
             "id": "DES-C-4",
             "hit": true,
+            "matchedIndex": 5,
             "matchedFinding": "Regional collaboration servers are relay/persistence nodes, not merge arbiters: they append incoming CRDT updates to a durable per-document operation log and fan them out to other connected clients, while the actual conflict-free merge happens independently on each replica — this keeps the server simple and avoids making it a single point of correctness failure."
           },
           {
             "id": "DES-C-5",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "Use CRDTs (e.g. Yjs/Automerge-style RGA or Peritext for rich text) rather than centralized Operational Transformation, because CRDTs guarantee mathematically that concurrent edits converge without a single serializing authority, which is what makes zero-data-loss merging survive a regional outage instead of just a network blip."
           },
           {
             "id": "DES-C-6",
             "hit": false,
+            "matchedIndex": -1,
             "matchedFinding": null
           }
         ],
         "reportedCount": 15
       },
-      "adhd": {
+      "divergent": {
         "tp": 4,
         "fp": 10,
         "fn": 2,
@@ -584,31 +650,37 @@
           {
             "id": "DES-C-1",
             "hit": true,
+            "matchedIndex": 3,
             "matchedFinding": "EU workspaces run on an entirely separate regional deployment (isolated cluster/account/network), not shared infra with row-level region tags, so residency is enforced at the infrastructure boundary rather than by application logic alone."
           },
           {
             "id": "DES-C-2",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "Document state is represented as a CRDT (e.g. Yjs/Automerge) so concurrent edits merge deterministically and commutatively with no data loss, avoiding any locking coordinator."
           },
           {
             "id": "DES-C-3",
             "hit": false,
+            "matchedIndex": -1,
             "matchedFinding": null
           },
           {
             "id": "DES-C-4",
             "hit": true,
+            "matchedIndex": 6,
             "matchedFinding": "Every accepted edit is appended to a per-region, multi-AZ durable append-only log (quorum-acknowledged, e.g. Kafka/Kinesis-style) before being confirmed committed, giving durability without any cross-region synchronous write."
           },
           {
             "id": "DES-C-5",
             "hit": true,
+            "matchedIndex": 9,
             "matchedFinding": "On reconnect after a partition, queued local CRDT ops are replayed and re-logged idempotently (deduplicated via op IDs) so no buffered edit or audit event is silently dropped across a regional blip."
           },
           {
             "id": "DES-C-6",
             "hit": false,
+            "matchedIndex": -1,
             "matchedFinding": null
           }
         ],
@@ -625,37 +697,43 @@
           {
             "id": "DES-C-1",
             "hit": true,
+            "matchedIndex": 1,
             "matchedFinding": "EU residency is enforced as full data-plane isolation, not a policy flag: separate compute clusters, document/CRDT storage, blob storage, KMS/encryption keys, backups, and DR replicas live entirely within EU cloud regions (e.g. eu-west-1 with eu-central-1 as EU-only warm standby), with zero replication or failover path to US infrastructure."
           },
           {
             "id": "DES-C-2",
             "hit": true,
+            "matchedIndex": 1,
             "matchedFinding": "EU residency is enforced as full data-plane isolation, not a policy flag: separate compute clusters, document/CRDT storage, blob storage, KMS/encryption keys, backups, and DR replicas live entirely within EU cloud regions (e.g. eu-west-1 with eu-central-1 as EU-only warm standby), with zero replication or failover path to US infrastructure."
           },
           {
             "id": "DES-C-3",
             "hit": false,
+            "matchedIndex": -1,
             "matchedFinding": null
           },
           {
             "id": "DES-C-4",
             "hit": true,
+            "matchedIndex": 6,
             "matchedFinding": "Audit-event durability is decoupled into two tiers: a synchronous, multi-AZ-replicated regional append-only log (Raft- or Kafka/Kinesis-style) that must durably persist an edit's audit event before the collab server acknowledges the edit as committed, and a separate asynchronous indexing/query consumer that reads off this log — so an outage of the indexing/analytics layer cannot lose events, since the durable log (with 7+ day retention) is the source of truth and gets replayed on recovery."
           },
           {
             "id": "DES-C-5",
             "hit": true,
+            "matchedIndex": 1,
             "matchedFinding": "EU residency is enforced as full data-plane isolation, not a policy flag: separate compute clusters, document/CRDT storage, blob storage, KMS/encryption keys, backups, and DR replicas live entirely within EU cloud regions (e.g. eu-west-1 with eu-central-1 as EU-only warm standby), with zero replication or failover path to US infrastructure."
           },
           {
             "id": "DES-C-6",
             "hit": false,
+            "matchedIndex": -1,
             "matchedFinding": null
           }
         ],
         "reportedCount": 13
       },
-      "adhd-autistic": {
+      "divergent-autistic": {
         "tp": 5,
         "fp": 7,
         "fn": 1,
@@ -666,31 +744,37 @@
           {
             "id": "DES-C-1",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "Each document is assigned a fixed home jurisdiction at creation time (EU or US) based on the owning customer's contract; all content — snapshots, CRDT op log, and audit log — is stored and durably replicated only within that jurisdiction's infrastructure, never cross-region."
           },
           {
             "id": "DES-C-2",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "Each document is assigned a fixed home jurisdiction at creation time (EU or US) based on the owning customer's contract; all content — snapshots, CRDT op log, and audit log — is stored and durably replicated only within that jurisdiction's infrastructure, never cross-region."
           },
           {
             "id": "DES-C-3",
             "hit": false,
+            "matchedIndex": -1,
             "matchedFinding": null
           },
           {
             "id": "DES-C-4",
             "hit": true,
+            "matchedIndex": 4,
             "matchedFinding": "The audit log is not a separate write path: it is the same durable, append-only, hash-chained op log that drives CRDT sync, so there is a single source of truth and no dual-write divergence between 'what synced' and 'what got audited'."
           },
           {
             "id": "DES-C-5",
             "hit": true,
+            "matchedIndex": 5,
             "matchedFinding": "Durability is achieved via synchronous multi-AZ (or multi-region-within-jurisdiction, e.g. eu-west-1 + eu-central-1) replication of the op log before an edit is acknowledged, bounding loss to a same-jurisdiction AZ failure, not a full regional outage."
           },
           {
             "id": "DES-C-6",
             "hit": true,
+            "matchedIndex": 7,
             "matchedFinding": "A global, jurisdiction-agnostic control plane (org-to-region routing table, user directory) is the only component replicated worldwide, since it carries no regulated document content, and it is what lets one global entry point route every session to the correct regional cluster."
           }
         ],
@@ -709,37 +793,43 @@
           {
             "id": "DES-Q-1",
             "hit": true,
+            "matchedIndex": 5,
             "matchedFinding": "Guarantee 'never fulfilled twice' via idempotency keyed on order ID rather than via exactly-once delivery: since queues realistically offer at-least-once delivery, the fulfillment worker must do a conditional/compare-and-swap update (e.g. UPDATE ... WHERE status='processing' SET status='fulfilling') so a redelivered or duplicate message is a safe no-op."
           },
           {
             "id": "DES-Q-2",
             "hit": true,
+            "matchedIndex": 3,
             "matchedFinding": "Put a durable, horizontally-scalable log/queue (Kafka, Kinesis, or SQS) between ingestion and fulfillment specifically to absorb the 50x Black Friday burst: producers (API writes) are decoupled from consumer (fulfillment worker) throughput, so a traffic spike becomes queue depth/latency rather than dropped requests or overloaded downstream systems."
           },
           {
             "id": "DES-Q-3",
             "hit": true,
+            "matchedIndex": 1,
             "matchedFinding": "Use the order database write itself (not the queue) as the durable source of truth and point of no return: the API handler inserts the order row (status=received) and only then returns success to the customer, so no order can be lost even if everything downstream of that write fails."
           },
           {
             "id": "DES-Q-4",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "Split the pipeline into two phases with different SLAs: a synchronous 'accept' path that durably persists the order and flips status to processing within the 5s budget, and an asynchronous 'fulfill' path that talks to warehouse/shipping systems with no tight latency bound — this decouples the customer-facing SLA from the slow, failure-prone external call."
           },
           {
             "id": "DES-Q-5",
             "hit": true,
+            "matchedIndex": 9,
             "matchedFinding": "Partition the queue/log by order ID (or a derived key) where per-order ordering matters, while allowing full parallelism across different orders, so the burst can be spread across many partitions/consumers without violating any single order's event ordering."
           },
           {
             "id": "DES-Q-6",
             "hit": true,
+            "matchedIndex": 3,
             "matchedFinding": "Put a durable, horizontally-scalable log/queue (Kafka, Kinesis, or SQS) between ingestion and fulfillment specifically to absorb the 50x Black Friday burst: producers (API writes) are decoupled from consumer (fulfillment worker) throughput, so a traffic spike becomes queue depth/latency rather than dropped requests or overloaded downstream systems."
           }
         ],
         "reportedCount": 14
       },
-      "adhd": {
+      "divergent": {
         "tp": 6,
         "fp": 9,
         "fn": 0,
@@ -750,31 +840,37 @@
           {
             "id": "DES-Q-1",
             "hit": true,
+            "matchedIndex": 3,
             "matchedFinding": "Enforce exactly-once acceptance with a unique constraint / conditional write on order ID at persistence time, guaranteeing no order is ever silently dropped or double-inserted even under retried client requests"
           },
           {
             "id": "DES-Q-2",
             "hit": true,
+            "matchedIndex": 1,
             "matchedFinding": "Use a durable, horizontally-scalable queue (e.g. Kafka or SQS) as the buffer between order acceptance and fulfillment workers, so a 50x Black Friday burst is absorbed by queue depth rather than causing rejected orders or timeouts"
           },
           {
             "id": "DES-Q-3",
             "hit": true,
+            "matchedIndex": 6,
             "matchedFinding": "Give the fulfillment step its own retry policy with exponential backoff plus a dead-letter queue for calls to warehouse/shipping systems, since those calls are explicitly allowed to be slow and to fail transiently"
           },
           {
             "id": "DES-Q-4",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "Split the flow into a fast synchronous accept path (validate order, persist it durably, return \"processing\" to the customer) and a fully decoupled asynchronous fulfillment path, so the 5-second UX guarantee never depends on warehouse/shipping latency"
           },
           {
             "id": "DES-Q-5",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "Split the flow into a fast synchronous accept path (validate order, persist it durably, return \"processing\" to the customer) and a fully decoupled asynchronous fulfillment path, so the 5-second UX guarantee never depends on warehouse/shipping latency"
           },
           {
             "id": "DES-Q-6",
             "hit": true,
+            "matchedIndex": 1,
             "matchedFinding": "Use a durable, horizontally-scalable queue (e.g. Kafka or SQS) as the buffer between order acceptance and fulfillment workers, so a 50x Black Friday burst is absorbed by queue depth rather than causing rejected orders or timeouts"
           }
         ],
@@ -791,37 +887,43 @@
           {
             "id": "DES-Q-1",
             "hit": true,
+            "matchedIndex": 3,
             "matchedFinding": "Achieve 'never duplicated' via idempotent consumers, not exactly-once delivery: consumers commit their queue offset only after processing succeeds (at-least-once delivery), and fulfillment itself is made idempotent by a conditional/compare-and-swap status transition in the order-status store (e.g. UPDATE ... WHERE status='processing' -> 'fulfilling') so a redelivered or concurrently-processed message can never trigger a second fulfillment."
           },
           {
             "id": "DES-Q-2",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "Decouple the customer-facing 'processing' acknowledgment from the actual fulfillment call: the order-ingest API only durably persists the order and publishes an event, then immediately returns; it never waits on the warehouse/shipping call, so the 5s UX target is met by a millisecond-scale DB write + enqueue rather than by the slow, failure-prone downstream integration."
           },
           {
             "id": "DES-Q-3",
             "hit": true,
+            "matchedIndex": 4,
             "matchedFinding": "Pass the order_id as an idempotency key to the warehouse/shipping system's API when it supports one, so even a network-level retry of the outbound fulfillment call cannot create two shipments on the provider side."
           },
           {
             "id": "DES-Q-4",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "Decouple the customer-facing 'processing' acknowledgment from the actual fulfillment call: the order-ingest API only durably persists the order and publishes an event, then immediately returns; it never waits on the warehouse/shipping call, so the 5s UX target is met by a millisecond-scale DB write + enqueue rather than by the slow, failure-prone downstream integration."
           },
           {
             "id": "DES-Q-5",
             "hit": true,
+            "matchedIndex": 2,
             "matchedFinding": "Pick a partitioned, replicated durable log/queue (e.g. Kafka with replication factor >=3, min.insync.replicas=2, producer acks=all, or an equivalent managed service) partitioned by order_id, sized with enough partitions pre-provisioned for 50x peak throughput so ingestion scales horizontally without a single hot partition becoming a bottleneck."
           },
           {
             "id": "DES-Q-6",
             "hit": true,
+            "matchedIndex": 9,
             "matchedFinding": "Never let the DLQ path silently drop an order: DLQ entries keep the order visibly in a 'processing/retrying' state with alerting for operator/automated remediation, so 'never lost' holds even for orders whose downstream fulfillment call keeps failing."
           }
         ],
         "reportedCount": 13
       },
-      "adhd-autistic": {
+      "divergent-autistic": {
         "tp": 6,
         "fp": 7,
         "fn": 0,
@@ -832,31 +934,37 @@
           {
             "id": "DES-Q-1",
             "hit": true,
+            "matchedIndex": 5,
             "matchedFinding": "Enforce no-double-fulfillment via a conditional/idempotent write (unique constraint or conditional put on order_id in a \"fulfillment_started\" ledger) performed by the consumer before calling the external warehouse API — this converts at-least-once delivery into effectively-once processing."
           },
           {
             "id": "DES-Q-2",
             "hit": true,
+            "matchedIndex": 2,
             "matchedFinding": "Relay outbox rows to a durable, horizontally partitioned stream (Kafka topic or SQS FIFO) keyed by order_id, so per-order ordering is preserved while throughput scales out across many partitions/consumers during a 50x burst."
           },
           {
             "id": "DES-Q-3",
             "hit": true,
+            "matchedIndex": 7,
             "matchedFinding": "After a bounded number of retries, route the event to a dead-letter queue instead of dropping it or retrying forever, with alerting on DLQ depth and a replay runbook for on-call."
           },
           {
             "id": "DES-Q-4",
             "hit": true,
+            "matchedIndex": 1,
             "matchedFinding": "Flip order status to \"processing\" synchronously at the moment the DB transaction commits, not after the event reaches a consumer — this decouples the 5-second customer-facing SLA from downstream queue depth or fulfillment latency entirely."
           },
           {
             "id": "DES-Q-5",
             "hit": true,
+            "matchedIndex": 2,
             "matchedFinding": "Relay outbox rows to a durable, horizontally partitioned stream (Kafka topic or SQS FIFO) keyed by order_id, so per-order ordering is preserved while throughput scales out across many partitions/consumers during a 50x burst."
           },
           {
             "id": "DES-Q-6",
             "hit": true,
+            "matchedIndex": 1,
             "matchedFinding": "Flip order status to \"processing\" synchronously at the moment the DB transaction commits, not after the event reaches a consumer — this decouples the 5-second customer-facing SLA from downstream queue depth or fulfillment latency entirely."
           }
         ],
@@ -875,22 +983,25 @@
           {
             "id": "DOC-1",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "Rate limit key is req.ip, not the API key as documented ('Each API key is limited to 100 requests per minute') — this directly explains the reported symptom: a shared-office customer behind NAT/a single egress IP has all users' requests pooled into one bucket, exhausting the limit far faster than the doc implies."
           },
           {
             "id": "DOC-2",
             "hit": true,
+            "matchedIndex": 2,
             "matchedFinding": "No Retry-After header (or any header) is ever produced by checkLimit — the function only returns {limited: true}, so the documented 'returns HTTP 429 ... with a Retry-After header indicating when to retry' is not implemented anywhere in the shown code."
           },
           {
             "id": "DOC-3",
             "hit": false,
+            "matchedIndex": -1,
             "matchedFinding": null
           }
         ],
         "reportedCount": 6
       },
-      "adhd": {
+      "divergent": {
         "tp": 2,
         "fp": 3,
         "fn": 1,
@@ -901,16 +1012,19 @@
           {
             "id": "DOC-1",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "The limiter keys buckets by `req.ip`, not by API key as the documentation claims (\"Each API key is limited to 100 requests per minute\"); customers behind a shared office IP/NAT collapse into a single bucket and share one 100-request allowance across all their API keys, directly explaining why the customer is rate-limited far more easily than the docs suggest."
           },
           {
             "id": "DOC-2",
             "hit": true,
+            "matchedIndex": 3,
             "matchedFinding": "The documentation states exceeding the limit \"returns HTTP 429 ... with a Retry-After header indicating when to retry,\" but `checkLimit` only returns `{ limited: boolean }` — it never computes a retry time, never builds a 429 response, and never sets any header, so the documented Retry-After behavior is not implemented anywhere in this code."
           },
           {
             "id": "DOC-3",
             "hit": false,
+            "matchedIndex": -1,
             "matchedFinding": null
           }
         ],
@@ -927,22 +1041,25 @@
           {
             "id": "DOC-1",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "The limiter buckets by `req.ip` (`const key = req.ip`) instead of by API key as documented (\"Each API key is limited to 100 requests per minute\"). In a shared-office scenario, many distinct API keys/users sit behind one NATed public IP, so they all share a single counter and collectively exhaust the 100-request bucket far faster than any single key should — exactly the reported symptom."
           },
           {
             "id": "DOC-2",
             "hit": true,
+            "matchedIndex": 2,
             "matchedFinding": "`checkLimit` returns only `{ limited: boolean }` with no timestamp or reset time recorded anywhere in the bucket, so there is no data available to compute the documented `Retry-After` header value. Since no window start/expiry is ever tracked, it is structurally impossible for any caller of this function to produce a correct `Retry-After`, contradicting the documented contract that a 429 response includes one."
           },
           {
             "id": "DOC-3",
             "hit": false,
+            "matchedIndex": -1,
             "matchedFinding": null
           }
         ],
         "reportedCount": 4
       },
-      "adhd-autistic": {
+      "divergent-autistic": {
         "tp": 2,
         "fp": 3,
         "fn": 1,
@@ -953,16 +1070,19 @@
           {
             "id": "DOC-1",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "Rate limiter buckets by `req.ip` (`const key = req.ip`) instead of by API key, directly contradicting the docs' claim that \"Each API key is limited to 100 requests per minute\" — no API key/token is referenced anywhere in checkLimit. On a shared-office network, all users/API keys behind the same NAT'd public IP share one bucket, so the effective per-key budget becomes 100/N (N = concurrent users on that IP) instead of 100, exactly matching the reported symptom of being rate-limited far more easily than documented."
           },
           {
             "id": "DOC-2",
             "hit": true,
+            "matchedIndex": 3,
             "matchedFinding": "The docs promise a `Retry-After` header telling the client when to retry, but checkLimit has no timestamp/window-start data to compute such a value from (it returns only `{limited: true}`); with no per-minute window tracked, there is no correct value that could be produced for Retry-After, so the documented retry guidance cannot actually be honored by this implementation."
           },
           {
             "id": "DOC-3",
             "hit": false,
+            "matchedIndex": -1,
             "matchedFinding": null
           }
         ],
@@ -981,22 +1101,25 @@
           {
             "id": "INT-1",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "legacyImportSender.ts (bulk CSV import path) sends a payload with only orderId and amount, omitting the currency field that the v2 docs declare as 'always present' — the sender was never updated when the schema moved from v1 to v2."
           },
           {
             "id": "INT-2",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "legacyImportSender.ts (bulk CSV import path) sends a payload with only orderId and amount, omitting the currency field that the v2 docs declare as 'always present' — the sender was never updated when the schema moved from v1 to v2."
           },
           {
             "id": "INT-3",
             "hit": false,
+            "matchedIndex": -1,
             "matchedFinding": null
           }
         ],
         "reportedCount": 6
       },
-      "adhd": {
+      "divergent": {
         "tp": 2,
         "fp": 5,
         "fn": 1,
@@ -1007,16 +1130,19 @@
           {
             "id": "INT-1",
             "hit": false,
+            "matchedIndex": -1,
             "matchedFinding": null
           },
           {
             "id": "INT-2",
             "hit": true,
+            "matchedIndex": 2,
             "matchedFinding": "The v2 docs assert currency is 'always present,' but that's false in practice: legacyImportSender.ts predates v2 and was never updated to include it, so the documented contract and the actual code have silently diverged for one of the two producers."
           },
           {
             "id": "INT-3",
             "hit": true,
+            "matchedIndex": 5,
             "matchedFinding": "Because legacyImportSender.ts sends amount with no currency, even a consumer that didn't crash would still have to guess the currency for bulk-import orders -- the missing field is a genuine data-ambiguity risk for financial processing, not just a crash trigger."
           }
         ],
@@ -1033,22 +1159,25 @@
           {
             "id": "INT-1",
             "hit": true,
+            "matchedIndex": 2,
             "matchedFinding": "legacyImportSender.ts is explicitly noted as 'written before v2 existed' and was never updated when the v2 currency field was introduced -- webhookSender.ts (checkout) was migrated to the v2 shape but its legacy counterpart was not, so the codebase silently has two senders emitting two different (v1 vs v2) payload shapes at the same documented v2 endpoint with no payload version field or content-based way for the consumer to discriminate which shape it received."
           },
           {
             "id": "INT-2",
             "hit": true,
+            "matchedIndex": 2,
             "matchedFinding": "legacyImportSender.ts is explicitly noted as 'written before v2 existed' and was never updated when the v2 currency field was introduced -- webhookSender.ts (checkout) was migrated to the v2 shape but its legacy counterpart was not, so the codebase silently has two senders emitting two different (v1 vs v2) payload shapes at the same documented v2 endpoint with no payload version field or content-based way for the consumer to discriminate which shape it received."
           },
           {
             "id": "INT-3",
             "hit": true,
+            "matchedIndex": 3,
             "matchedFinding": "This exactly reproduces the reported symptom: crashes occur only for bulk CSV import orders (via legacyImportSender, missing currency) and never for normal checkout orders (via webhookSender, which includes currency), confirming the root cause is the unmigrated legacy sender rather than any consumer-side defect."
           }
         ],
         "reportedCount": 5
       },
-      "adhd-autistic": {
+      "divergent-autistic": {
         "tp": 2,
         "fp": 5,
         "fn": 1,
@@ -1059,16 +1188,19 @@
           {
             "id": "INT-1",
             "hit": true,
+            "matchedIndex": 3,
             "matchedFinding": "Two independent, divergent implementations (`sendOrderCreated` and `sendOrderCreatedFromImport`) both POST to the same `/webhooks/order-created` endpoint with no shared payload-construction or schema-validation layer between them; this structural duplication is why the v2 field addition landed in only one sender, and it creates risk that a future v3 change will again be applied inconsistently."
           },
           {
             "id": "INT-2",
             "hit": true,
+            "matchedIndex": 4,
             "matchedFinding": "`sendOrderCreatedFromImport` predates v2 ('written before v2 existed') and was evidently never migrated when the currency field was introduced — this looks like a missed rollout/migration step rather than an isolated coding slip, and simply appending `order.currency` may be insufficient if bulk-imported orders don't reliably capture a currency value at the source (CSV import may need an explicit currency default or backfill in addition to a payload fix)."
           },
           {
             "id": "INT-3",
             "hit": false,
+            "matchedIndex": -1,
             "matchedFinding": null
           }
         ],
@@ -1087,22 +1219,25 @@
           {
             "id": "PERF-1",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "`getDashboard` awaits `fetchLivePrice` sequentially inside a `for` loop instead of issuing the calls concurrently (e.g. `Promise.all`), so total latency scales linearly with the number of orders — an O(n) chain of network round-trips per request."
           },
           {
             "id": "PERF-2",
             "hit": true,
+            "matchedIndex": 3,
             "matchedFinding": "The retry has no backoff/jitter — it re-issues the request immediately in a tight loop, which under load turns a single slow dependency into a retry storm that amplifies pressure on `pricingApi` (thundering-herd/retry-amplification), making the outage worse for all concurrent dashboard requests."
           },
           {
             "id": "PERF-3",
             "hit": true,
+            "matchedIndex": 1,
             "matchedFinding": "`pricingApi.get(sku)` is called with no timeout configured on the client, so any single slow or hung upstream call blocks that iteration indefinitely with no way to time out."
           }
         ],
         "reportedCount": 12
       },
-      "adhd": {
+      "divergent": {
         "tp": 3,
         "fp": 4,
         "fn": 0,
@@ -1113,16 +1248,19 @@
           {
             "id": "PERF-1",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "getDashboard awaits fetchLivePrice sequentially inside a for-loop instead of running the calls concurrently (e.g. Promise.all), so total request latency scales linearly with the number of orders on that account — this is the direct mechanism behind 'slow under load.'"
           },
           {
             "id": "PERF-2",
             "hit": true,
+            "matchedIndex": 3,
             "matchedFinding": "The retry has no maximum attempt count and no backoff/delay — a failing pricingApi is hit with immediate, unbounded, back-to-back retries as fast as the network allows, rather than failing fast or backing off."
           },
           {
             "id": "PERF-3",
             "hit": true,
+            "matchedIndex": 1,
             "matchedFinding": "pricingApi.get is called with no timeout configured (explicitly flagged in the code comment), so a single slow or hung downstream response blocks the entire dashboard request indefinitely with no upper bound on latency."
           }
         ],
@@ -1139,22 +1277,25 @@
           {
             "id": "PERF-1",
             "hit": false,
+            "matchedIndex": -1,
             "matchedFinding": null
           },
           {
             "id": "PERF-2",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "fetchLivePrice recurses on ANY caught error with no maximum attempt count, no backoff/jitter, and no distinction between transient and permanent failures (e.g. HTTP 429/5xx vs a 400/404 for an invalid or missing sku). For any permanently-failing order (a null/undefined order.sku, a delisted SKU, a malformed request) this becomes an infinite retry loop that never resolves or rejects, which directly explains 'occasionally times out entirely' rather than the request ever cleanly failing."
           },
           {
             "id": "PERF-3",
             "hit": true,
+            "matchedIndex": 1,
             "matchedFinding": "pricingApi has no timeout configured (acknowledged in the code's own comment). A hung/slow upstream call never throws, so the try/catch retry logic never even engages — the await simply blocks forever. This means the retry mechanism gives a false sense of resilience: the actual unbounded-latency failure mode (a stalled TCP connection or a pricingApi instance that accepts but never responds) is not retried, it is just hung on indefinitely."
           }
         ],
         "reportedCount": 6
       },
-      "adhd-autistic": {
+      "divergent-autistic": {
         "tp": 3,
         "fp": 3,
         "fn": 0,
@@ -1165,16 +1306,19 @@
           {
             "id": "PERF-1",
             "hit": true,
+            "matchedIndex": 2,
             "matchedFinding": "getDashboard awaits fetchLivePrice sequentially inside a for-loop over all of the user's orders, so total request latency scales linearly with order count (N x per-call pricing-API latency) — a serial N+1-style external-call pattern that alone explains general slowness, independent of any errors."
           },
           {
             "id": "PERF-2",
             "hit": true,
+            "matchedIndex": 1,
             "matchedFinding": "fetchLivePrice's catch block retries unconditionally on any error ('retry on any error'), with no maximum attempt count, no backoff, and no jitter. A permanent/non-retryable failure (invalid SKU, auth error, malformed request) causes an infinite recursive retry loop that never returns, and correlated failures across concurrent requests create a synchronized retry storm against the already-struggling pricing API, preventing it from recovering."
           },
           {
             "id": "PERF-3",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "fetchLivePrice calls pricingApi.get with no timeout configured (explicitly noted in the code), so a single hung or slow call to the pricing API blocks that request indefinitely — this is the direct mechanism behind requests that time out entirely rather than merely running slow."
           }
         ],
@@ -1193,22 +1337,25 @@
           {
             "id": "REQ-1",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "The requirements doc (lines 9-13) says nothing about refunds at all — it only specifies status change to 'cancelled' and slot release — yet both implementations perform payment refund logic (`refund(booking.payment)`), so the actual refund behavior is entirely unspecified/undocumented."
           },
           {
             "id": "REQ-2",
             "hit": true,
+            "matchedIndex": 9,
             "matchedFinding": "The boundary condition `hoursUntil(booking.start) > 24` is strictly greater-than, so a cancellation at exactly 24 hours out is treated as within the no-refund window; this edge case is not specified in the requirements, so correctness of the boundary can't be confirmed."
           },
           {
             "id": "REQ-3",
             "hit": true,
+            "matchedIndex": 1,
             "matchedFinding": "The two implementations of the same operation diverge on refund eligibility: `api/cancelBooking.ts` (line 20) only refunds if `hoursUntil(booking.start) > 24`, while `admin/cancelBooking.ts` (line 29) refunds unconditionally on every cancellation, regardless of timing."
           }
         ],
         "reportedCount": 11
       },
-      "adhd": {
+      "divergent": {
         "tp": 3,
         "fp": 2,
         "fn": 0,
@@ -1219,16 +1366,19 @@
           {
             "id": "REQ-1",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "Requirements doc has zero mention of a refund policy even though cancellation involves payment (booking.payment) — the spec never says whether, or under what conditions, a refund should occur."
           },
           {
             "id": "REQ-2",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "Requirements doc has zero mention of a refund policy even though cancellation involves payment (booking.payment) — the spec never says whether, or under what conditions, a refund should occur."
           },
           {
             "id": "REQ-3",
             "hit": true,
+            "matchedIndex": 1,
             "matchedFinding": "The two 'cancel a booking' implementations diverge on refund behavior for the same requirement: api/cancelBooking.ts only refunds if hoursUntil(booking.start) > 24, while admin/cancelBooking.ts calls refund(booking.payment) unconditionally — the same cancellation done through the account page vs. the admin panel produces different refund outcomes (e.g. cancelling 2 hours before start yields no refund via the customer path but a full refund via the admin path)."
           }
         ],
@@ -1245,22 +1395,25 @@
           {
             "id": "REQ-1",
             "hit": true,
+            "matchedIndex": 1,
             "matchedFinding": "The requirements doc ('When a booking is cancelled, its status becomes \"cancelled\" and the slot is released') says nothing about payment/refund handling at all, yet both implementations independently invented refund logic (one conditional, one unconditional) to fill that gap. Because there is no authoritative spec for refund eligibility, timing window, or amount, there is no way to determine which implementation (if either) is correct — the feature cannot be certified ready since the actual financial behavior of 'cancel a booking' is undocumented and was left to each implementer's own judgment."
           },
           {
             "id": "REQ-2",
             "hit": true,
+            "matchedIndex": 1,
             "matchedFinding": "The requirements doc ('When a booking is cancelled, its status becomes \"cancelled\" and the slot is released') says nothing about payment/refund handling at all, yet both implementations independently invented refund logic (one conditional, one unconditional) to fill that gap. Because there is no authoritative spec for refund eligibility, timing window, or amount, there is no way to determine which implementation (if either) is correct — the feature cannot be certified ready since the actual financial behavior of 'cancel a booking' is undocumented and was left to each implementer's own judgment."
           },
           {
             "id": "REQ-3",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "The two 'cancel a booking' implementations enforce contradictory refund policies with no requirement documenting either: api/cancelBooking.ts (customer self-service) only refunds if hoursUntil(booking.start) > 24, while admin/cancelBooking.ts (support-staff panel) refunds unconditionally regardless of timing. This is directly exploitable: a customer cancelling 2 hours before their booking via the account page forfeits the refund, but the same cancellation performed by support staff (e.g. after the customer calls in) always refunds. Nothing in the requirements doc justifies staff having discretion to waive the 24-hour cutoff, so this reads as an unintentional divergence rather than a documented policy exception, and creates a direct incentive to route cancellations through support to bypass the refund cutoff."
           }
         ],
         "reportedCount": 4
       },
-      "adhd-autistic": {
+      "divergent-autistic": {
         "tp": 2,
         "fp": 5,
         "fn": 1,
@@ -1271,16 +1424,19 @@
           {
             "id": "REQ-1",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "Requirements doc (booking cancellation) contains zero mention of refunds, payment, or money — only status change and slot release are specified — yet both implementations move money via refund(booking.payment), meaning the refund policy was invented ad hoc in each codebase rather than derived from any spec."
           },
           {
             "id": "REQ-2",
             "hit": true,
+            "matchedIndex": 3,
             "matchedFinding": "The 24-hour refund threshold ('hoursUntil(booking.start) > 24') is a hardcoded magic number that exists only inside api/cancelBooking.ts's code — it is not stated anywhere in the requirements doc, is not configurable, and its exact boundary behavior (a booking exactly 24 hours out) is defined only implicitly by the '>' comparison."
           },
           {
             "id": "REQ-3",
             "hit": false,
+            "matchedIndex": -1,
             "matchedFinding": null
           }
         ],
@@ -1299,22 +1455,25 @@
           {
             "id": "SEC-1",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "adminRoutes.ts authorizes solely by reading the client-supplied request header `x-internal-role` (`req.headers['x-internal-role']`); HTTP headers are fully attacker-controlled and trivially spoofed by any caller (e.g. `curl -H 'x-internal-role: admin'`), so this is not an authentication check at all."
           },
           {
             "id": "SEC-2",
             "hit": true,
+            "matchedIndex": 1,
             "matchedFinding": "infra/network.yaml sets `public: true` on `api-service`, meaning the service backing `/admin/*` is reachable directly from the public internet — this directly contradicts the routes.yaml comment '# no auth middleware attached here; relies on the internal network for isolation', so the one security control the design depends on (network isolation) does not exist."
           },
           {
             "id": "SEC-3",
             "hit": true,
+            "matchedIndex": 5,
             "matchedFinding": "There is no validation on `req.body.amount` (type, sign, or bounds) before passing it to `processRefund` — e.g. no check against the order's actual charged amount, no rejection of negative or zero values, allowing arbitrary/duplicate/over-refunds."
           }
         ],
         "reportedCount": 10
       },
-      "adhd": {
+      "divergent": {
         "tp": 3,
         "fp": 5,
         "fn": 0,
@@ -1325,16 +1484,19 @@
           {
             "id": "SEC-1",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "Authorization relies entirely on a client-supplied header (`x-internal-role`) with no cryptographic or session-based identity check, which is not authentication."
           },
           {
             "id": "SEC-2",
             "hit": true,
+            "matchedIndex": 1,
             "matchedFinding": "`infra/network.yaml` sets `api-service.public: true`, directly contradicting the code comment's assumption ('relies on the internal network for isolation') — the trust boundary the auth check depends on does not actually exist."
           },
           {
             "id": "SEC-3",
             "hit": true,
+            "matchedIndex": 4,
             "matchedFinding": "`processRefund(req.body.orderId, req.body.amount)` is invoked with no validation or sanitization of `orderId` or `amount` — arbitrary, negative, zero, or oversized values are accepted as-is."
           }
         ],
@@ -1351,22 +1513,25 @@
           {
             "id": "SEC-1",
             "hit": true,
+            "matchedIndex": 1,
             "matchedFinding": "Because the service is directly internet-reachable, adminRoutes.ts's only authorization check — `req.headers['x-internal-role'] !== 'admin'` — trusts a client-supplied HTTP header with zero verification (no mTLS, no gateway that injects/strips this header from external traffic, no signature/token check). Any unauthenticated internet client can send `x-internal-role: admin` on the request and pass the check, giving full public, unauthenticated access to the refund endpoint."
           },
           {
             "id": "SEC-2",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "Trust-boundary contradiction between config files: infra/routes.yaml comments that /admin/* has no auth middleware because it 'relies on the internal network for isolation', but infra/network.yaml sets api-service `public: true` ('reachable directly from the public internet'). The isolation the routing layer assumes does not exist, so the stated compensating control for the missing auth middleware is absent."
           },
           {
             "id": "SEC-3",
             "hit": true,
+            "matchedIndex": 2,
             "matchedFinding": "processRefund(req.body.orderId, req.body.amount) performs no authorization scoping or amount validation: there's no check that the caller/role is entitled to refund that specific orderId, and no check that amount is bounded by or matches the order's original charge. Combined with the header-spoofing bypass, an unauthenticated attacker can trigger refunds for arbitrary amounts on arbitrary orders — direct financial fraud, not just an access-control gap."
           }
         ],
         "reportedCount": 5
       },
-      "adhd-autistic": {
+      "divergent-autistic": {
         "tp": 3,
         "fp": 2,
         "fn": 0,
@@ -1377,16 +1542,19 @@
           {
             "id": "SEC-1",
             "hit": true,
+            "matchedIndex": 1,
             "matchedFinding": "The only access control on POST /admin/refund is comparing the client-supplied `x-internal-role` header to the literal string 'admin'; since infra/routes.yaml attaches no auth middleware to /admin/* and the upstream service is publicly reachable, any external caller can simply set that header themselves and pass the check, gaining full admin refund capability with zero real authentication."
           },
           {
             "id": "SEC-2",
             "hit": true,
+            "matchedIndex": 0,
             "matchedFinding": "The route comment in infra/routes.yaml says admin protection 'relies on the internal network for isolation,' but infra/network.yaml sets `api-service.public: true`, directly contradicting that assumption — /admin/refund is reachable straight from the public internet with no network-layer restriction backing it up."
           },
           {
             "id": "SEC-3",
             "hit": true,
+            "matchedIndex": 2,
             "matchedFinding": "processRefund(req.body.orderId, req.body.amount) is invoked directly from unvalidated request-body fields — there's no check that orderId refers to a real/owned order or that amount is positive, bounded, or matches the order's actual value, so a spoofed request can refund an arbitrary amount to an arbitrary order."
           }
         ],
@@ -1404,7 +1572,7 @@
       "recall": 0.9047619047619048,
       "f1": 0.48101265822784806
     },
-    "adhd": {
+    "divergent": {
       "tp": 36,
       "fp": 54,
       "fn": 6,
@@ -1422,7 +1590,7 @@
       "recall": 0.8333333333333334,
       "f1": 0.5833333333333333
     },
-    "adhd-autistic": {
+    "divergent-autistic": {
       "tp": 36,
       "fp": 44,
       "fn": 6,

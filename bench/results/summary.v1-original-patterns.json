@@ -28,7 +28,7 @@
         ],
         "reportedCount": 6
       },
-      "adhd": {
+      "divergent": {
         "tp": 2,
         "fp": 3,
         "fn": 1,
@@ -80,7 +80,7 @@
         ],
         "reportedCount": 2
       },
-      "adhd-autistic": {
+      "divergent-autistic": {
         "tp": 2,
         "fp": 1,
         "fn": 1,
@@ -134,7 +134,7 @@
         ],
         "reportedCount": 7
       },
-      "adhd": {
+      "divergent": {
         "tp": 2,
         "fp": 4,
         "fn": 1,
@@ -186,7 +186,7 @@
         ],
         "reportedCount": 5
       },
-      "adhd-autistic": {
+      "divergent-autistic": {
         "tp": 2,
         "fp": 5,
         "fn": 1,
@@ -240,7 +240,7 @@
         ],
         "reportedCount": 10
       },
-      "adhd": {
+      "divergent": {
         "tp": 3,
         "fp": 2,
         "fn": 0,
@@ -292,7 +292,7 @@
         ],
         "reportedCount": 3
       },
-      "adhd-autistic": {
+      "divergent-autistic": {
         "tp": 3,
         "fp": 1,
         "fn": 0,
@@ -346,7 +346,7 @@
         ],
         "reportedCount": 9
       },
-      "adhd": {
+      "divergent": {
         "tp": 3,
         "fp": 4,
         "fn": 0,
@@ -398,7 +398,7 @@
         ],
         "reportedCount": 5
       },
-      "adhd-autistic": {
+      "divergent-autistic": {
         "tp": 3,
         "fp": 3,
         "fn": 0,
@@ -452,7 +452,7 @@
         ],
         "reportedCount": 6
       },
-      "adhd": {
+      "divergent": {
         "tp": 3,
         "fp": 3,
         "fn": 0,
@@ -504,7 +504,7 @@
         ],
         "reportedCount": 4
       },
-      "adhd-autistic": {
+      "divergent-autistic": {
         "tp": 3,
         "fp": 2,
         "fn": 0,
@@ -558,7 +558,7 @@
         ],
         "reportedCount": 6
       },
-      "adhd": {
+      "divergent": {
         "tp": 2,
         "fp": 3,
         "fn": 1,
@@ -610,7 +610,7 @@
         ],
         "reportedCount": 4
       },
-      "adhd-autistic": {
+      "divergent-autistic": {
         "tp": 2,
         "fp": 3,
         "fn": 1,
@@ -664,7 +664,7 @@
         ],
         "reportedCount": 6
       },
-      "adhd": {
+      "divergent": {
         "tp": 2,
         "fp": 5,
         "fn": 1,
@@ -716,7 +716,7 @@
         ],
         "reportedCount": 5
       },
-      "adhd-autistic": {
+      "divergent-autistic": {
         "tp": 2,
         "fp": 5,
         "fn": 1,
@@ -770,7 +770,7 @@
         ],
         "reportedCount": 12
       },
-      "adhd": {
+      "divergent": {
         "tp": 3,
         "fp": 4,
         "fn": 0,
@@ -822,7 +822,7 @@
         ],
         "reportedCount": 6
       },
-      "adhd-autistic": {
+      "divergent-autistic": {
         "tp": 3,
         "fp": 3,
         "fn": 0,
@@ -876,7 +876,7 @@
         ],
         "reportedCount": 11
       },
-      "adhd": {
+      "divergent": {
         "tp": 1,
         "fp": 3,
         "fn": 2,
@@ -928,7 +928,7 @@
         ],
         "reportedCount": 4
       },
-      "adhd-autistic": {
+      "divergent-autistic": {
         "tp": 1,
         "fp": 6,
         "fn": 2,
@@ -982,7 +982,7 @@
         ],
         "reportedCount": 10
       },
-      "adhd": {
+      "divergent": {
         "tp": 3,
         "fp": 5,
         "fn": 0,
@@ -1034,7 +1034,7 @@
         ],
         "reportedCount": 5
       },
-      "adhd-autistic": {
+      "divergent-autistic": {
         "tp": 3,
         "fp": 2,
         "fn": 0,
@@ -1072,7 +1072,7 @@
       "recall": 0.8666666666666667,
       "f1": 0.4521739130434783
     },
-    "adhd": {
+    "divergent": {
       "tp": 24,
       "fp": 36,
       "fn": 6,
@@ -1090,7 +1090,7 @@
       "recall": 0.7333333333333333,
       "f1": 0.5641025641025641
     },
-    "adhd-autistic": {
+    "divergent-autistic": {
       "tp": 24,
       "fp": 31,
       "fn": 6,

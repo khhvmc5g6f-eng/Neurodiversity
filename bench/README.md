@@ -1,7 +1,7 @@
 # bench/
 
-Seeded-defect benchmark suite comparing BASELINE / ADHD / AUTISTIC /
-ADHD→AUTISTIC. See [`../EVALS.md`](../EVALS.md) for results and
+Seeded-defect benchmark suite comparing BASELINE / DIVERGENT / AUTISTIC /
+DIVERGENT→AUTISTIC. See [`../EVALS.md`](../EVALS.md) for results and
 methodology; this file just covers the mechanics.
 
 ```
@@ -55,7 +55,7 @@ from the source spec's stress-test list (§145):
 `concurrency · data · api · security · requirements · performance ·
 integration · documentation · configuration · architecture`, plus 2
 open-ended architecture-design fixtures (`design-*`) specifically added
-to test the ADHD→AUTISTIC combined condition on the problem type it's
+to test the DIVERGENT→AUTISTIC combined condition on the problem type it's
 built for. The spec's full stress suite calls for exhaustive coverage
 per category — this is deliberately a first pass, not the ceiling. See
 `../AGENTS.md` → "Deferred scope" before adding more; extend by picking

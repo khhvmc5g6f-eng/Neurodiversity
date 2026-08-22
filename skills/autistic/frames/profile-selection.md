@@ -1,7 +1,8 @@
 # Profile selection heuristics
 
-Unlike ADHD's frame picking (which deliberately varies to widen the
-candidate pool), AUTISTIC selects profiles *for* the problem, not
+Unlike a divergent-ideation skill's frame picking (which deliberately
+varies to widen the candidate pool), AUTISTIC selects profiles *for* the
+problem, not
 against it. Don't rotate for variety's sake — a repository audit gets
 the repository-audit set every time, because the set is chosen for fit,
 not novelty.
@@ -33,9 +34,10 @@ not novelty.
 
 ## What NOT to do
 
-Do not pick profiles the way ADHD picks frames (bias toward variety,
-always include one wild card). A "wild card" lens on a production
-incident wastes the run's budget on an angle the problem doesn't need.
-If a wide, unconstrained search for *angles* is actually what's wanted,
-that's the ADHD → AUTISTIC route (see `../references/adhd-bridge.md`),
-not a reason to make AUTISTIC's own selection random.
+Do not pick profiles the way a divergent-ideation skill picks frames
+(bias toward variety, always include one wild card). A "wild card" lens
+on a production incident wastes the run's budget on an angle the
+problem doesn't need. If a wide, unconstrained search for *angles* is
+actually what's wanted, that's the diverge-then-AUTISTIC route (see
+`../references/divergence-bridge.md`), not a reason to make AUTISTIC's
+own selection random.
