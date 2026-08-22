@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/khhvmc5g6f-eng/autistic/schemas/memory-ledger.schema.json",
+  "$id": "https://github.com/khhvmc5g6f-eng/neurodiversity-coding/schemas/memory-ledger.schema.json",
   "title": "Cross-run memory ledger",
   "description": "Persisted at .autistic/memory.json in the TARGET repo being analysed (not this skill's own directory). See references/memory.md.",
   "type": "object",

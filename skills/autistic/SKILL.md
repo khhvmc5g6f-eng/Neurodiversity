@@ -465,7 +465,7 @@ passes existed and understated the current skill; scale down with
 
 Full spec, reference docs, cognitive-profile definitions, JSON schemas,
 and the seeded-defect benchmark suite (raw results, not cherry-picked)
-live at https://github.com/khhvmc5g6f-eng/autistic. Companion
+live at https://github.com/khhvmc5g6f-eng/neurodiversity-coding. Companion
 breadth-first ideation skill: `adhd` (installed locally, also at
 https://github.com/UditAkhourii/adhd). Real-tool integration for
 cartography/static-analysis/mutation/contract verification:

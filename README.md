@@ -4,7 +4,12 @@
 
 *Explore wider. Understand deeper. Build better.*
 
-![AUTISTIC — Deep Systems Reasoning for Agents. ADHD explores the possibilities (divergent thinking, wide exploration, creative connections, alternative ideas, break patterns, find the unseen). AUTISTIC understands the system (deep system analysis, pattern recognition, contradiction detection, dependency mapping, invariant discovery, edge-case hunting, truth and verification). Two minds, one unstoppable system.](docs/banner.png)
+![Neurodiversity: Deep Systems Reasoning for Agents. Two minds, one system, limitless potential. ADHD is the divergent-thinking engine — explore the possibilities, wide exploration, creative connections, alternative ideas, break patterns, find the unseen. AUTISTIC is the depth-first reasoning engine — understand the system, deep system analysis, pattern recognition, contradiction detection, dependency mapping, invariant discovery, edge-case hunting, truth and verification. Bridge the gap, combine strengths: explore widely, understand deeply, build better.](docs/banner.png)
+
+This repo is named **Neurodiversity Coding** because it's one half of
+that pairing: AUTISTIC lives here; ADHD lives at
+[`UditAkhourii/adhd`](https://github.com/UditAkhourii/adhd) and is
+never vendored in, only bridged to (see the ADHD bridge below).
 
 AUTISTIC is a depth-first systems-reasoning Agent Skill for coding
 agents, built as the complementary architecture to
