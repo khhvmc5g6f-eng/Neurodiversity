@@ -47,7 +47,7 @@ together.
 > tool built out of my own struggle with this, for anyone else who wants
 > the same kind of sustained, structured depth from their coding agent.
 >
-> — HAUSOFASTHETIK
+> — Owen
 
 This is the author's own self-description, in their own words. It is
 separate from — and does not change — the neuroaffirming design rule
