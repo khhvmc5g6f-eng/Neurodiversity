@@ -1,0 +1,75 @@
+{
+  "fixtureId": "design-order-fulfillment-queue",
+  "category": "ARCHITECTURE-DESIGN",
+  "title": "Design: order fulfillment event processing",
+  "defects": [
+    {
+      "id": "DES-Q-1",
+      "description": "Addresses idempotency / exactly-once-effect handling to prevent double-fulfillment under retries.",
+      "mustMatchAny": [
+        "idempoten",
+        "dedup",
+        "exactly.once",
+        "double.fulfil",
+        "at.least.once.*idempot"
+      ]
+    },
+    {
+      "id": "DES-Q-2",
+      "description": "Addresses backpressure/autoscaling for the bursty 50x load spike rather than assuming fixed capacity.",
+      "mustMatchAny": [
+        "backpressure",
+        "autoscal",
+        "burst",
+        "scale.*queue",
+        "buffer.*spike",
+        "elastic"
+      ]
+    },
+    {
+      "id": "DES-Q-3",
+      "description": "Addresses retry/dead-letter handling so a transient fulfillment failure does not lose the order.",
+      "mustMatchAny": [
+        "dead.letter",
+        "retry",
+        "dlq",
+        "never lose",
+        "no order.*lost"
+      ]
+    },
+    {
+      "id": "DES-Q-4",
+      "description": "Separates the fast \"acknowledge/show processing\" path from the slower fulfillment path to meet the 5-second visibility requirement without blocking on the slow step.",
+      "mustMatchAny": [
+        "fast path",
+        "separate.*(path|step)",
+        "decoupl",
+        "async.*fulfil",
+        "5.second",
+        "immediate.*ack"
+      ]
+    },
+    {
+      "id": "DES-Q-5",
+      "description": "Addresses per-order ordering guarantees explicitly (either ensures ordering per order/customer, or explicitly argues it is not required).",
+      "mustMatchAny": [
+        "order.*guarante",
+        "per.order.*sequenc",
+        "ordering",
+        "fifo",
+        "partition.*by.*order"
+      ]
+    },
+    {
+      "id": "DES-Q-6",
+      "description": "Addresses observability/monitoring of queue depth, processing lag, or failure rate as part of the design, not an afterthought.",
+      "mustMatchAny": [
+        "monitor",
+        "observab",
+        "queue depth",
+        "alert",
+        "metric"
+      ]
+    }
+  ]
+}

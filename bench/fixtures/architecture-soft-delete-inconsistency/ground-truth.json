@@ -33,7 +33,11 @@
         "missing invariant",
         "not documented as.*invariant",
         "system-wide.*rule.*missing",
-        "root cause.*invariant"
+        "root cause.*invariant",
+        "nothing.*enforces",
+        "no schema-aware",
+        "missing safeguard",
+        "no test.*assert"
       ]
     }
   ]

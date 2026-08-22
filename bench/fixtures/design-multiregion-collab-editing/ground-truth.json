@@ -1,0 +1,75 @@
+{
+  "fixtureId": "design-multiregion-collab-editing",
+  "category": "ARCHITECTURE-DESIGN",
+  "title": "Design: multi-region collaborative editing with data residency",
+  "defects": [
+    {
+      "id": "DES-C-1",
+      "description": "Addresses region-based data partitioning as a hard requirement (not a single global database) to satisfy EU data residency.",
+      "mustMatchAny": [
+        "data residency",
+        "partition.*region",
+        "region.*isolat",
+        "eu.*infrastructure",
+        "stays? in (the )?eu",
+        "regional.*database"
+      ]
+    },
+    {
+      "id": "DES-C-2",
+      "description": "Addresses conflict resolution for concurrent edits specifically (e.g. CRDTs, operational transformation), not just \"use a database with locking\".",
+      "mustMatchAny": [
+        "crdt",
+        "operational transform",
+        "conflict.free",
+        "merge.*concurrent",
+        "conflict resolution"
+      ]
+    },
+    {
+      "id": "DES-C-3",
+      "description": "Addresses the tension between strong consistency and the sub-200ms latency requirement explicitly (e.g. strong within-region, eventual/async across regions), rather than assuming one global consistency model.",
+      "mustMatchAny": [
+        "eventual consist",
+        "strong.*within.region",
+        "consistency.*latency.*trade",
+        "local.*write.*then.*sync",
+        "async.*replicat"
+      ]
+    },
+    {
+      "id": "DES-C-4",
+      "description": "Addresses durable, replicated audit-log writes (e.g. append-only log acknowledged before commit) so an edit event cannot be lost even across a regional outage.",
+      "mustMatchAny": [
+        "append.only",
+        "audit log.*durable",
+        "write.ahead",
+        "replicat.*before.*ack",
+        "never lose.*event",
+        "durable.*log"
+      ]
+    },
+    {
+      "id": "DES-C-5",
+      "description": "Explicitly addresses what happens during a regional network partition/outage rather than assuming the network is always available.",
+      "mustMatchAny": [
+        "partition",
+        "regional outage",
+        "network split",
+        "region.*down",
+        "failover"
+      ]
+    },
+    {
+      "id": "DES-C-6",
+      "description": "Addresses cross-region shared metadata (e.g. user directory, permissions) in a way that does not violate the EU-data-residency constraint.",
+      "mustMatchAny": [
+        "metadata.*resid",
+        "user directory.*region",
+        "shared metadata",
+        "cross.region.*metadata",
+        "permission.*resid"
+      ]
+    }
+  ]
+}

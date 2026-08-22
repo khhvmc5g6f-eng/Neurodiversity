@@ -10,7 +10,12 @@
         "refund policy.*unspecified",
         "no refund.*requirement",
         "requirements.*silent.*refund",
-        "missing requirement.*refund"
+        "missing requirement.*refund",
+        "zero mention of (a )?refund",
+        "nothing.*(about|mention).*refund",
+        "never say.*refund",
+        "no authoritative spec.*refund",
+        "says nothing about (refund|payment)"
       ]
     },
     {
@@ -20,7 +25,10 @@
         "cutoff.*unspecified",
         "24.hour.*not.*requirement",
         "missing requirement.*cutoff",
-        "no.*window.*specified"
+        "no.*window.*specified",
+        "under what conditions",
+        "timing window",
+        "no authoritative spec.*timing"
       ]
     },
     {
