@@ -25,6 +25,11 @@ artifact — the skill *is* the Markdown.
 5. Sync `~/.claude/skills/autistic/` from `skills/autistic/` if you're
    testing locally against a live Claude Code session — the two are not
    automatically linked.
+6. If you rename, move, or delete a `references/`/`frames/`/`schemas/`
+   file, run `node skills/autistic/check-links.js` — it checks every
+   internal cross-reference the skill's own docs make to each other and
+   fails loudly on a broken one. CI runs it on every push, but it's
+   faster to catch locally before opening a PR.
 
 ## Scope discipline
 

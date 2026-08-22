@@ -29,7 +29,15 @@ function loadFindings(fixtureId, condition) {
   const data = JSON.parse(fs.readFileSync(p, 'utf8'));
   // findings: array of strings, or array of {finding: string}
   const items = Array.isArray(data.findings) ? data.findings : [];
-  return items.map(it => (typeof it === 'string' ? it : (it.finding || JSON.stringify(it))));
+  return items.map(it => (typeof it === 'string' ? it : (typeof it.finding === 'string' ? it.finding : JSON.stringify(it))));
+}
+
+function compilePattern(fixtureId, defectId, pattern) {
+  try {
+    return new RegExp(pattern, 'i');
+  } catch (e) {
+    throw new Error(`Invalid regex in ${fixtureId}/ground-truth.json, defect ${defectId}, pattern ${JSON.stringify(pattern)}: ${e.message}`);
+  }
 }
 
 function scoreOne(fixture, findings) {
@@ -37,16 +45,14 @@ function scoreOne(fixture, findings) {
   const perDefect = [];
   let tp = 0, fn = 0;
   for (const defect of fixture.defects) {
-    const patterns = defect.mustMatchAny.map(p => new RegExp(p, 'i'));
+    const patterns = defect.mustMatchAny.map(p => compilePattern(fixture.fixtureId, defect.id, p));
     const hitIndex = text.findIndex(t => patterns.some(re => re.test(t)));
     const hit = hitIndex !== -1;
-    perDefect.push({ id: defect.id, hit, matchedFinding: hit ? findings[hitIndex] : null });
+    perDefect.push({ id: defect.id, hit, matchedIndex: hit ? hitIndex : -1, matchedFinding: hit ? findings[hitIndex] : null });
     if (hit) tp++; else fn++;
   }
   // FP proxy: reported findings that matched none of this fixture's defects.
-  const matchedIdx = new Set(perDefect.filter(d => d.hit).map(d => text.findIndex(t =>
-    fixture.defects.find(def => def.id === d.id).mustMatchAny.some(p => new RegExp(p, 'i').test(t))
-  )));
+  const matchedIdx = new Set(perDefect.filter(d => d.hit).map(d => d.matchedIndex));
   const fp = findings.length - matchedIdx.size;
   const precision = (tp + fp) > 0 ? tp / (tp + fp) : (tp === 0 ? 1 : 0);
   const recall = (tp + fn) > 0 ? tp / (tp + fn) : 1;
@@ -81,7 +87,7 @@ function main() {
     const c = report.perCondition[cond];
     c.precision = (c.tp + c.fp) > 0 ? c.tp / (c.tp + c.fp) : null;
     c.recall = (c.tp + c.fn) > 0 ? c.tp / (c.tp + c.fn) : null;
-    c.f1 = (c.precision && c.recall && (c.precision + c.recall) > 0)
+    c.f1 = (c.precision !== null && c.recall !== null && (c.precision + c.recall) > 0)
       ? (2 * c.precision * c.recall) / (c.precision + c.recall) : null;
   }
 

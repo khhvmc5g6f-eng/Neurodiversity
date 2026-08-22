@@ -33,3 +33,5 @@ jobs:
           "
       - name: Run benchmark scorer against checked-in results
         run: node bench/harness/score.js --verify-only
+      - name: Check internal skill references resolve
+        run: node skills/autistic/check-links.js
