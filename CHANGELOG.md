@@ -6,7 +6,7 @@ version below corresponds to a real git tag on this repo — `git checkout
 v0.4.0`, for instance, gets you the skill exactly as it stood right
 after the STRIDE threat-taxonomy pass was added, before anything later.
 
-## Where things stand right now (v0.9.4)
+## Where things stand right now (v0.9.5)
 
 A single Claude Code Agent Skill (`skills/autistic/`) implementing
 depth-first systems reasoning, plus a mechanically-scored benchmark
@@ -42,6 +42,18 @@ but not exercised by the benchmark; token/time cost tracking exists in
 the harness but no committed result yet has that data.
 
 ---
+
+## v0.9.5 — 2026-08-22
+
+Lightened the README's narrative prose (repo intro, ADHD/AUTISTIC
+contrast, install blurb, ADHD-bridge summary): fewer em dashes, more
+varied sentence length. `SKILL.md`, `references/*.md`, this changelog,
+and `EVALS.md` were deliberately left alone — they're operational
+instructions or factual/data records, not marketing copy, and a voice
+pass there would cost precision for no real benefit. A phrase-list scan
+for common AI-writing tells (furthermore, delve into, robust, seamless,
+leverage, synergy, and the rest) found zero matches anywhere in the
+repo already.
 
 ## v0.9.4 — 2026-08-22
 
