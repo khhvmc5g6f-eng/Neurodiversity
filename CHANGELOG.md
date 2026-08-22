@@ -6,7 +6,7 @@ version below corresponds to a real git tag on this repo — `git checkout
 v0.4.0`, for instance, gets you the skill exactly as it stood right
 after the STRIDE threat-taxonomy pass was added, before anything later.
 
-## Where things stand right now (v0.9.1)
+## Where things stand right now (v0.9.2)
 
 A single Claude Code Agent Skill (`skills/autistic/`) implementing
 depth-first systems reasoning, plus a mechanically-scored benchmark
@@ -42,6 +42,13 @@ but not exercised by the benchmark; token/time cost tracking exists in
 the harness but no committed result yet has that data.
 
 ---
+
+## v0.9.2 — 2026-08-22
+
+- Rewrote the author's note in the README in the author's own further
+  words: more personal, no em dashes, naming specific struggles with
+  social interaction, why coding and AI both matter to them, and being
+  overwhelmed by the sheer volume of information at times.
 
 ## v0.9.1 — 2026-08-22
 

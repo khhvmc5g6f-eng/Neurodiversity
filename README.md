@@ -38,14 +38,19 @@ together.
 
 ## Author's note
 
-> I'm a certified autistic adult, and coding — especially staying with a
-> single hard problem long enough to actually understand it, instead of
-> bouncing off it — is something I've genuinely struggled with. I built
-> AUTISTIC to give myself (and Claude) a disciplined way to do that: pick
-> the one question that actually matters, stay on it until it's really
-> resolved, and not lose the whole-system picture while doing it. It's a
-> tool built out of my own struggle with this, for anyone else who wants
-> the same kind of sustained, structured depth from their coding agent.
+> I'm a certified autistic adult. Social situations have never come easy
+> to me, but coding always has. It's one of the few places I can just
+> settle in, focus, and feel like myself. I use AI a lot to help me
+> engage with the world in a way that actually works for me, though I'll
+> admit the sheer amount of information out there can get overwhelming
+> fast. Staying with one hard problem long enough to really understand
+> it, instead of bouncing off it the second something else grabs my
+> attention, is something I've genuinely struggled with. I built AUTISTIC
+> to give myself (and Claude) a disciplined way to do that: pick the one
+> question that actually matters, stay on it until it's really resolved,
+> and don't lose the whole picture while doing it. It's a tool built out
+> of my own struggle with all of this, for anyone else who wants the
+> same kind of sustained, structured depth from their coding agent.
 >
 > — Owen
 
