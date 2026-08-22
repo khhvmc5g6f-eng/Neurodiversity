@@ -240,7 +240,8 @@ Details and prompts for each pass: `references/requirements.md`,
 `references/patterns.md`, `references/verification.md`,
 `references/debugging.md`, `references/tooling.md`,
 `references/threat-taxonomy.md`, `references/invariant-taxonomy.md`,
-`references/failure-mode-taxonomy.md`, `references/production-readiness.md`.
+`references/failure-mode-taxonomy.md`, `references/production-readiness.md`,
+`references/edge-case-taxonomy.md`, `references/simplicity-taxonomy.md`.
 
 ## Resilience: a stalled or failed specialist call
 
@@ -335,7 +336,12 @@ confirmation requirements for genuinely risky actions.
 evidence link, confidence score, unresolved question. This can be long;
 it's the working document, not the output.
 
-**Synthesis B**: compress it into the user-facing result. Preserve
+**Synthesis B**: compress it into the user-facing result, conforming to
+`schemas/result-schema.json` — every field it defines
+(`systemMap`, `assumptions`, `invariants`, `contradictions`,
+`verifiedFindings`, `confidence`, etc.) should be populated or
+explicitly empty, not silently omitted; this is the canonical output
+shape whether or not a divergence-bridge run is involved. Preserve
 high-impact findings, evidence, uncertainty, and recommendations; drop
 low-value analytical detail unless the user asked for `--show-*` output
 (see Modes). Confidence is calibrated from direct evidence, independent
@@ -444,9 +450,17 @@ verify → find new problem → …`, stopping at saturation).
 
 Cartography (1) + profile selection (3–5 specialist calls) + one or more
 monotropic tunnels (2–5 calls each, tunnel-dependent) + cross-cutting
-passes (2–6 calls) + falsification (1 per high-impact finding) +
-two-stage synthesis ≈ 12–30 Agent calls for a `--standard` run, more for
-`--forensic`. Scale down with `--compact` or a narrow `--focus`.
+passes — now 8–10 calls for a typical non-trivial audit once the
+taxonomy passes are counted (assumption harvesting, invariant-taxonomy,
+literalist/pragmatist, negative-space, contradiction hunt, static
+analysis, STRIDE when a security boundary scored load-bearing, FMEA
+against load-bearing nodes, production-readiness for architecture
+reviews) — + falsification (1 per high-impact finding, easily 5–15 on a
+real repo) + two-stage synthesis ≈ **25–50 Agent calls for a
+`--standard` run**, more for `--forensic` (adds mutation testing, D5,
+more tunnels/profiles). This range was written before the taxonomy
+passes existed and understated the current skill; scale down with
+`--compact` or a narrow `--focus` if that cost isn't warranted.
 
 ## Companion library, benchmarks, and repo
 

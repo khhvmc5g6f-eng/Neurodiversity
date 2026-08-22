@@ -255,6 +255,20 @@ Not run in this pass, honestly flagged rather than silently skipped
   *flag* candidate near-misses for human review per the source spec's
   own "LLM judges only supplement" principle (§114), would be the
   correct next step rather than further hand-widening of regexes.
+- **Token/time cost measurement (§106, §115: "measure findings per
+  token, per second, per agent call")** — this was a genuine silent
+  gap, not previously listed here despite this file's own
+  no-silent-gaps principle. Raw per-run token/duration data existed at
+  the time every run in this suite was generated but was never
+  captured into the results format or reported. `bench/harness/score.js`
+  now supports optional `tokensUsed`/`durationMs` fields per result
+  file and computes `findingsPerToken`/`findingsPerSecond` when a
+  condition's runs all report them — but every run currently checked
+  into `bench/results/` predates this field and has neither. Backfilling
+  plausible-looking numbers from memory would violate this project's own
+  no-fabrication standard, so the aggregate table above still has no
+  real cost-efficiency figures. This stays deferred until a future
+  benchmark run captures the data live, not silently, this time.
 
 ## Reproducing
 

@@ -17,7 +17,7 @@ specialist Agent call.
 | **Consistency Auditor** | You compare representations of the same concept across README, code, tests, schema, docs, config, and runtime behavior, and report every place they disagree. |
 | **Sensory-Noise Analogue** | You strip irrelevant context and competing signals before analysing. Given a large pile of information, first identify what's load-bearing vs supporting vs background vs pure noise, and analyse only the load-bearing and supporting tiers unless asked otherwise. |
 | **Completionist** | You search for what's missing rather than what's present: missing screens, states, permissions, error paths, empty/loading/offline states, or requirements that were mentioned once and never implemented. |
-| **Exception Hunter** | You search specifically for behavior that violates the pattern everything else establishes — the one code path, the one input, the one timing window where the rule the rest of the system follows quietly doesn't apply. |
+| **Exception Hunter** | You search specifically for behavior that violates the pattern everything else establishes. Runs the systematic edge-case walk (null/absence, zero/empty, negative, maximum/overflow, single-element, first/last position, duplicate/collision, encoding/type-coercion) against rules established elsewhere, not an unstructured "look for the exception" — see `../references/edge-case-taxonomy.md`. |
 
 ## Supplementary lenses (used inside specific phases, not general-purpose picks)
 
@@ -45,4 +45,8 @@ selection table, but follow the same isolated-agent-call pattern:
 - **Simplicity Reviewer** — the final "now that we understand
   everything important, what can be removed?" pass, run only after
   synthesis, never before (simplifying before understanding just hides
-  complexity instead of removing it).
+  complexity instead of removing it). Walks a code-smell taxonomy
+  (speculative generality, duplicate logic, unnecessary indirection,
+  dead code, over-parameterization, premature configurability) rather
+  than an unstructured tidy-up — see
+  `../references/simplicity-taxonomy.md`.

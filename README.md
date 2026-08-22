@@ -161,7 +161,8 @@ autistic/
 │   ├── references/   architecture, monotropism, patterns, requirements,
 │   │                  debugging, verification, divergence-bridge,
 │   │                  tooling, memory, threat-taxonomy, invariant-taxonomy,
-│   │                  failure-mode-taxonomy, production-readiness
+│   │                  failure-mode-taxonomy, production-readiness,
+│   │                  edge-case-taxonomy, simplicity-taxonomy
 │   ├── frames/        cognitive-profiles, profile-selection
 │   └── schemas/       result, tunnel, system-map, memory-ledger (JSON Schema)
 ├── bench/

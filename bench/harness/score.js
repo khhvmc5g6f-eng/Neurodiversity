@@ -23,13 +23,20 @@ function loadGroundTruth() {
     .map(id => JSON.parse(fs.readFileSync(path.join(FIXDIR, id, 'ground-truth.json'), 'utf8')));
 }
 
-function loadFindings(fixtureId, condition) {
+function loadRun(fixtureId, condition) {
   const p = path.join(RESULTSDIR, fixtureId, `${condition}.json`);
   if (!fs.existsSync(p)) return null;
   const data = JSON.parse(fs.readFileSync(p, 'utf8'));
   // findings: array of strings, or array of {finding: string}
   const items = Array.isArray(data.findings) ? data.findings : [];
-  return items.map(it => (typeof it === 'string' ? it : (typeof it.finding === 'string' ? it.finding : JSON.stringify(it))));
+  const findings = items.map(it => (typeof it === 'string' ? it : (typeof it.finding === 'string' ? it.finding : JSON.stringify(it))));
+  // tokensUsed / durationMs: optional, per §106/§115 of the source spec
+  // ("measure findings per token, per second"). Not present on any run
+  // committed before this field existed -- see EVALS.md's Deferred
+  // section for why those aren't backfilled.
+  const tokensUsed = typeof data.tokensUsed === 'number' ? data.tokensUsed : null;
+  const durationMs = typeof data.durationMs === 'number' ? data.durationMs : null;
+  return { findings, tokensUsed, durationMs };
 }
 
 function compilePattern(fixtureId, defectId, pattern) {
@@ -66,20 +73,27 @@ function main() {
   const report = { generatedFrom: 'bench/results/', perFixture: {}, perCondition: {} };
 
   for (const cond of CONDITIONS) {
-    report.perCondition[cond] = { tp: 0, fp: 0, fn: 0, fixturesScored: 0 };
+    report.perCondition[cond] = { tp: 0, fp: 0, fn: 0, fixturesScored: 0, tokensUsed: 0, durationMs: 0, runsWithTokenData: 0 };
   }
 
   for (const fixture of fixtures) {
     report.perFixture[fixture.fixtureId] = {};
     for (const cond of CONDITIONS) {
-      const findings = loadFindings(fixture.fixtureId, cond);
-      if (findings === null) continue; // not run yet
-      const s = scoreOne(fixture, findings);
+      const run = loadRun(fixture.fixtureId, cond);
+      if (run === null) continue; // not run yet
+      const s = scoreOne(fixture, run.findings);
+      s.tokensUsed = run.tokensUsed;
+      s.durationMs = run.durationMs;
       report.perFixture[fixture.fixtureId][cond] = s;
       report.perCondition[cond].tp += s.tp;
       report.perCondition[cond].fp += s.fp;
       report.perCondition[cond].fn += s.fn;
       report.perCondition[cond].fixturesScored += 1;
+      if (run.tokensUsed !== null) {
+        report.perCondition[cond].tokensUsed += run.tokensUsed;
+        report.perCondition[cond].durationMs += run.durationMs || 0;
+        report.perCondition[cond].runsWithTokenData += 1;
+      }
     }
   }
 
@@ -89,6 +103,14 @@ function main() {
     c.recall = (c.tp + c.fn) > 0 ? c.tp / (c.tp + c.fn) : null;
     c.f1 = (c.precision !== null && c.recall !== null && (c.precision + c.recall) > 0)
       ? (2 * c.precision * c.recall) / (c.precision + c.recall) : null;
+    // Cost-efficiency metrics per source spec §106/§115 ("findings per
+    // token, per second"). Only meaningful if every scored run for this
+    // condition actually reported token data -- a partial sample would
+    // silently understate cost, so we require full coverage rather than
+    // averaging over whatever happens to be available.
+    const hasFullTokenData = c.runsWithTokenData > 0 && c.runsWithTokenData === c.fixturesScored;
+    c.findingsPerToken = hasFullTokenData && c.tokensUsed > 0 ? (c.tp + c.fp) / c.tokensUsed : null;
+    c.findingsPerSecond = hasFullTokenData && c.durationMs > 0 ? (c.tp + c.fp) / (c.durationMs / 1000) : null;
   }
 
   const summaryPath = path.join(RESULTSDIR, 'summary.json');

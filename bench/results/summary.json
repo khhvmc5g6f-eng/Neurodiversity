@@ -29,7 +29,9 @@
             "matchedFinding": "There is no shared/generated type or schema (e.g. no shared TS interface, no OpenAPI/JSON-schema validation, no contract test) enforcing that server output matches the documented contract, so the spelling and units mismatches were not caught at compile time or by any automated check."
           }
         ],
-        "reportedCount": 6
+        "reportedCount": 6,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "divergent": {
         "tp": 2,
@@ -58,7 +60,9 @@
             "matchedFinding": null
           }
         ],
-        "reportedCount": 5
+        "reportedCount": 5,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "autistic": {
         "tp": 2,
@@ -87,7 +91,9 @@
             "matchedFinding": null
           }
         ],
-        "reportedCount": 2
+        "reportedCount": 2,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "divergent-autistic": {
         "tp": 2,
@@ -116,7 +122,9 @@
             "matchedFinding": null
           }
         ],
-        "reportedCount": 3
+        "reportedCount": 3,
+        "tokensUsed": null,
+        "durationMs": null
       }
     },
     "architecture-soft-delete-inconsistency": {
@@ -147,7 +155,9 @@
             "matchedFinding": "Nothing in the described system (types, tests, schema validation, or the query builder) enforces that excludeDeleted() references a column that actually exists on the target table, so the same class of bug (filter silently no-ops due to column mismatch) can recur for any other filter, not just deleted_at."
           }
         ],
-        "reportedCount": 7
+        "reportedCount": 7,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "divergent": {
         "tp": 2,
@@ -176,7 +186,9 @@
             "matchedFinding": null
           }
         ],
-        "reportedCount": 6
+        "reportedCount": 6,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "autistic": {
         "tp": 3,
@@ -205,7 +217,9 @@
             "matchedFinding": "Missing safeguard: there is no schema-aware check or test asserting that excludeDeleted actually narrows results per table (e.g., validating the exclusion column exists before executing, or a test that soft-deleted users are excluded from search). That gap is precisely why a filter that has been a silent no-op for every users-table search went undetected until support reported it manually."
           }
         ],
-        "reportedCount": 5
+        "reportedCount": 5,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "divergent-autistic": {
         "tp": 2,
@@ -234,7 +248,9 @@
             "matchedFinding": null
           }
         ],
-        "reportedCount": 7
+        "reportedCount": 7,
+        "tokensUsed": null,
+        "durationMs": null
       }
     },
     "concurrency-token-refresh": {
@@ -265,7 +281,9 @@
             "matchedFinding": "The 'someone else is refreshing' branch (`await sleep(50); return currentToken;`) is a single fixed-duration poll, not a loop or a subscription to the in-flight refresh. If the actual `/auth/refresh` round-trip takes longer than 50ms (entirely plausible on a slow network, which is exactly when refreshes matter most), the waiting caller returns before `currentToken` has been updated, handing back an expired/invalid token to its caller and causing the downstream authenticated request to fail with a spurious 401."
           }
         ],
-        "reportedCount": 10
+        "reportedCount": 10,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "divergent": {
         "tp": 3,
@@ -294,7 +312,9 @@
             "matchedFinding": "The 'wait' branch synchronizes via a boolean flag plus a single fixed 50ms sleep rather than awaiting the actual in-flight refresh's result/promise. If the refresh takes longer than 50ms (routine on a slow network), the waiting caller unconditionally returns whatever is currently in 'currentToken' — still expired — with no re-check loop and no re-validation of expiry."
           }
         ],
-        "reportedCount": 4
+        "reportedCount": 4,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "autistic": {
         "tp": 3,
@@ -323,7 +343,9 @@
             "matchedFinding": "The refresh-in-progress branch (`await sleep(50); return currentToken;`) does not actually wait for the in-flight refresh to finish — it waits a fixed 50ms and then returns whatever `currentToken` currently holds, without re-checking `refreshing` or the token's validity. If the real `/auth/refresh` round trip takes longer than 50ms (entirely normal under network latency/congestion), waiting callers return the OLD token value before `currentToken = newToken` has run. Since the docstring states the server invalidates `oldToken` the instant it receives the refresh request, that returned token is already dead server-side, so the caller's subsequent authenticated request gets a 401 — this is exactly the 'intermittent logout with no clear repro' symptom, since it only triggers when refresh latency happens to exceed the hardcoded 50ms window."
           }
         ],
-        "reportedCount": 3
+        "reportedCount": 3,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "divergent-autistic": {
         "tp": 3,
@@ -352,7 +374,9 @@
             "matchedFinding": "Non-initiating callers (the `else` branch) only `sleep(50)` once and then unconditionally return whatever `currentToken` currently holds — they never re-check whether the in-flight refresh actually completed, and there is no shared promise/queue at the call sites (the file explicitly says every request calls `getToken()` independently). Since refresh is a network round trip typically well over 50ms, these callers systematically return the same token that was already judged expired by the caller that triggered the refresh, so their authenticated request fails and the app surfaces this as a logout. This is the primary root cause of the 'intermittent logout' reports, with severity scaling with request concurrency and refresh latency."
           }
         ],
-        "reportedCount": 3
+        "reportedCount": 3,
+        "tokensUsed": null,
+        "durationMs": null
       }
     },
     "configuration-stale-override": {
@@ -383,7 +407,9 @@
             "matchedFinding": "The debug cache change was bundled into the same commit as an unrelated, intentional DB_POOL_SIZE=50 change, violating single-purpose/atomic commit practice; this makes the diff harder to review, makes `git revert` impossible without also undoing the legitimate pool-size change, and likely let the debug line slip past reviewers who were focused on the pool-size change"
           }
         ],
-        "reportedCount": 9
+        "reportedCount": 9,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "divergent": {
         "tp": 3,
@@ -412,7 +438,9 @@
             "matchedFinding": "The debug cache-disable was bundled into the same commit as an unrelated, intentional DB_POOL_SIZE change, making the commit non-atomic and harder to safely review, isolate, or revert."
           }
         ],
-        "reportedCount": 7
+        "reportedCount": 7,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "autistic": {
         "tp": 1,
@@ -441,7 +469,9 @@
             "matchedFinding": null
           }
         ],
-        "reportedCount": 5
+        "reportedCount": 5,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "divergent-autistic": {
         "tp": 3,
@@ -470,7 +500,9 @@
             "matchedFinding": "The debug CACHE_TTL_SECONDS=0 change was committed together with an unrelated, intentional DB_POOL_SIZE=20→50 change in the same commit. This coupling means a naive fix (git revert of that commit) would also undo the legitimate pool-size increase — the fix must surgically remove only the CACHE_TTL_SECONDS line, not revert the commit wholesale."
           }
         ],
-        "reportedCount": 6
+        "reportedCount": 6,
+        "tokensUsed": null,
+        "durationMs": null
       }
     },
     "data-nullability-mismatch": {
@@ -501,7 +533,9 @@
             "matchedFinding": "`signup()` performs a non-atomic check-then-insert for email uniqueness (SELECT at line 35, INSERT at lines 37-40) against a table with no UNIQUE constraint on email (explicitly noted at schema.sql line 16); two concurrent signup calls with the same email can both pass the SELECT check before either INSERT commits, producing duplicate email rows (TOCTOU race)."
           }
         ],
-        "reportedCount": 6
+        "reportedCount": 6,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "divergent": {
         "tp": 3,
@@ -530,7 +564,9 @@
             "matchedFinding": "Check-then-insert TOCTOU race in signup(): two concurrent signup calls for the same email can both pass the SELECT check before either INSERT commits, producing duplicate accounts, because there is no transaction, lock, or unique index enforcing it."
           }
         ],
-        "reportedCount": 6
+        "reportedCount": 6,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "autistic": {
         "tp": 3,
@@ -559,7 +595,9 @@
             "matchedFinding": "signup() enforces 'no duplicate email' via a check-then-insert pattern (`SELECT id ... WHERE email=$1` followed by a separate `INSERT`) with no transaction, locking, or advisory lock, and schema.sql explicitly notes 'no UNIQUE constraint on email'. Two concurrent signup calls with the same email can both pass the SELECT (finding zero rows) before either INSERT commits, producing two rows with the same email — the 'email taken' invariant is not actually enforced under concurrency, and there is no DB-level backstop since the column isn't UNIQUE."
           }
         ],
-        "reportedCount": 4
+        "reportedCount": 4,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "divergent-autistic": {
         "tp": 3,
@@ -588,7 +626,9 @@
             "matchedFinding": "Email uniqueness is enforced only in application code via a check-then-insert pattern (`SELECT ... WHERE email=$1` followed by a separate `INSERT`), with no transaction or locking, and the schema explicitly has no UNIQUE constraint on email (per the schema.sql comment) — two concurrent signup calls with the same email can both pass the existence check before either INSERT completes, producing duplicate email rows that nothing in the DB or code prevents."
           }
         ],
-        "reportedCount": 4
+        "reportedCount": 4,
+        "tokensUsed": null,
+        "durationMs": null
       }
     },
     "design-multiregion-collab-editing": {
@@ -637,7 +677,9 @@
             "matchedFinding": null
           }
         ],
-        "reportedCount": 15
+        "reportedCount": 15,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "divergent": {
         "tp": 4,
@@ -684,7 +726,9 @@
             "matchedFinding": null
           }
         ],
-        "reportedCount": 14
+        "reportedCount": 14,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "autistic": {
         "tp": 4,
@@ -731,7 +775,9 @@
             "matchedFinding": null
           }
         ],
-        "reportedCount": 13
+        "reportedCount": 13,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "divergent-autistic": {
         "tp": 5,
@@ -778,7 +824,9 @@
             "matchedFinding": "A global, jurisdiction-agnostic control plane (org-to-region routing table, user directory) is the only component replicated worldwide, since it carries no regulated document content, and it is what lets one global entry point route every session to the correct regional cluster."
           }
         ],
-        "reportedCount": 11
+        "reportedCount": 11,
+        "tokensUsed": null,
+        "durationMs": null
       }
     },
     "design-order-fulfillment-queue": {
@@ -827,7 +875,9 @@
             "matchedFinding": "Put a durable, horizontally-scalable log/queue (Kafka, Kinesis, or SQS) between ingestion and fulfillment specifically to absorb the 50x Black Friday burst: producers (API writes) are decoupled from consumer (fulfillment worker) throughput, so a traffic spike becomes queue depth/latency rather than dropped requests or overloaded downstream systems."
           }
         ],
-        "reportedCount": 14
+        "reportedCount": 14,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "divergent": {
         "tp": 6,
@@ -874,7 +924,9 @@
             "matchedFinding": "Use a durable, horizontally-scalable queue (e.g. Kafka or SQS) as the buffer between order acceptance and fulfillment workers, so a 50x Black Friday burst is absorbed by queue depth rather than causing rejected orders or timeouts"
           }
         ],
-        "reportedCount": 13
+        "reportedCount": 13,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "autistic": {
         "tp": 6,
@@ -921,7 +973,9 @@
             "matchedFinding": "Never let the DLQ path silently drop an order: DLQ entries keep the order visibly in a 'processing/retrying' state with alerting for operator/automated remediation, so 'never lost' holds even for orders whose downstream fulfillment call keeps failing."
           }
         ],
-        "reportedCount": 13
+        "reportedCount": 13,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "divergent-autistic": {
         "tp": 6,
@@ -968,7 +1022,9 @@
             "matchedFinding": "Flip order status to \"processing\" synchronously at the moment the DB transaction commits, not after the event reaches a consumer — this decouples the 5-second customer-facing SLA from downstream queue depth or fulfillment latency entirely."
           }
         ],
-        "reportedCount": 11
+        "reportedCount": 11,
+        "tokensUsed": null,
+        "durationMs": null
       }
     },
     "documentation-misleading-ratelimit": {
@@ -999,7 +1055,9 @@
             "matchedFinding": null
           }
         ],
-        "reportedCount": 6
+        "reportedCount": 6,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "divergent": {
         "tp": 2,
@@ -1028,7 +1086,9 @@
             "matchedFinding": null
           }
         ],
-        "reportedCount": 5
+        "reportedCount": 5,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "autistic": {
         "tp": 2,
@@ -1057,7 +1117,9 @@
             "matchedFinding": null
           }
         ],
-        "reportedCount": 4
+        "reportedCount": 4,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "divergent-autistic": {
         "tp": 2,
@@ -1086,7 +1148,9 @@
             "matchedFinding": null
           }
         ],
-        "reportedCount": 5
+        "reportedCount": 5,
+        "tokensUsed": null,
+        "durationMs": null
       }
     },
     "integration-webhook-version-mismatch": {
@@ -1117,7 +1181,9 @@
             "matchedFinding": null
           }
         ],
-        "reportedCount": 6
+        "reportedCount": 6,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "divergent": {
         "tp": 2,
@@ -1146,7 +1212,9 @@
             "matchedFinding": "Because legacyImportSender.ts sends amount with no currency, even a consumer that didn't crash would still have to guess the currency for bulk-import orders -- the missing field is a genuine data-ambiguity risk for financial processing, not just a crash trigger."
           }
         ],
-        "reportedCount": 7
+        "reportedCount": 7,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "autistic": {
         "tp": 3,
@@ -1175,7 +1243,9 @@
             "matchedFinding": "This exactly reproduces the reported symptom: crashes occur only for bulk CSV import orders (via legacyImportSender, missing currency) and never for normal checkout orders (via webhookSender, which includes currency), confirming the root cause is the unmigrated legacy sender rather than any consumer-side defect."
           }
         ],
-        "reportedCount": 5
+        "reportedCount": 5,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "divergent-autistic": {
         "tp": 2,
@@ -1204,7 +1274,9 @@
             "matchedFinding": null
           }
         ],
-        "reportedCount": 7
+        "reportedCount": 7,
+        "tokensUsed": null,
+        "durationMs": null
       }
     },
     "performance-cascade-dashboard": {
@@ -1235,7 +1307,9 @@
             "matchedFinding": "`pricingApi.get(sku)` is called with no timeout configured on the client, so any single slow or hung upstream call blocks that iteration indefinitely with no way to time out."
           }
         ],
-        "reportedCount": 12
+        "reportedCount": 12,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "divergent": {
         "tp": 3,
@@ -1264,7 +1338,9 @@
             "matchedFinding": "pricingApi.get is called with no timeout configured (explicitly flagged in the code comment), so a single slow or hung downstream response blocks the entire dashboard request indefinitely with no upper bound on latency."
           }
         ],
-        "reportedCount": 7
+        "reportedCount": 7,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "autistic": {
         "tp": 2,
@@ -1293,7 +1369,9 @@
             "matchedFinding": "pricingApi has no timeout configured (acknowledged in the code's own comment). A hung/slow upstream call never throws, so the try/catch retry logic never even engages — the await simply blocks forever. This means the retry mechanism gives a false sense of resilience: the actual unbounded-latency failure mode (a stalled TCP connection or a pricingApi instance that accepts but never responds) is not retried, it is just hung on indefinitely."
           }
         ],
-        "reportedCount": 6
+        "reportedCount": 6,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "divergent-autistic": {
         "tp": 3,
@@ -1322,7 +1400,9 @@
             "matchedFinding": "fetchLivePrice calls pricingApi.get with no timeout configured (explicitly noted in the code), so a single hung or slow call to the pricing API blocks that request indefinitely — this is the direct mechanism behind requests that time out entirely rather than merely running slow."
           }
         ],
-        "reportedCount": 6
+        "reportedCount": 6,
+        "tokensUsed": null,
+        "durationMs": null
       }
     },
     "requirements-missing-refund-policy": {
@@ -1353,7 +1433,9 @@
             "matchedFinding": "The two implementations of the same operation diverge on refund eligibility: `api/cancelBooking.ts` (line 20) only refunds if `hoursUntil(booking.start) > 24`, while `admin/cancelBooking.ts` (line 29) refunds unconditionally on every cancellation, regardless of timing."
           }
         ],
-        "reportedCount": 11
+        "reportedCount": 11,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "divergent": {
         "tp": 3,
@@ -1382,7 +1464,9 @@
             "matchedFinding": "The two 'cancel a booking' implementations diverge on refund behavior for the same requirement: api/cancelBooking.ts only refunds if hoursUntil(booking.start) > 24, while admin/cancelBooking.ts calls refund(booking.payment) unconditionally — the same cancellation done through the account page vs. the admin panel produces different refund outcomes (e.g. cancelling 2 hours before start yields no refund via the customer path but a full refund via the admin path)."
           }
         ],
-        "reportedCount": 4
+        "reportedCount": 4,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "autistic": {
         "tp": 3,
@@ -1411,7 +1495,9 @@
             "matchedFinding": "The two 'cancel a booking' implementations enforce contradictory refund policies with no requirement documenting either: api/cancelBooking.ts (customer self-service) only refunds if hoursUntil(booking.start) > 24, while admin/cancelBooking.ts (support-staff panel) refunds unconditionally regardless of timing. This is directly exploitable: a customer cancelling 2 hours before their booking via the account page forfeits the refund, but the same cancellation performed by support staff (e.g. after the customer calls in) always refunds. Nothing in the requirements doc justifies staff having discretion to waive the 24-hour cutoff, so this reads as an unintentional divergence rather than a documented policy exception, and creates a direct incentive to route cancellations through support to bypass the refund cutoff."
           }
         ],
-        "reportedCount": 4
+        "reportedCount": 4,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "divergent-autistic": {
         "tp": 2,
@@ -1440,7 +1526,9 @@
             "matchedFinding": null
           }
         ],
-        "reportedCount": 7
+        "reportedCount": 7,
+        "tokensUsed": null,
+        "durationMs": null
       }
     },
     "security-trust-boundary": {
@@ -1471,7 +1559,9 @@
             "matchedFinding": "There is no validation on `req.body.amount` (type, sign, or bounds) before passing it to `processRefund` — e.g. no check against the order's actual charged amount, no rejection of negative or zero values, allowing arbitrary/duplicate/over-refunds."
           }
         ],
-        "reportedCount": 10
+        "reportedCount": 10,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "divergent": {
         "tp": 3,
@@ -1500,7 +1590,9 @@
             "matchedFinding": "`processRefund(req.body.orderId, req.body.amount)` is invoked with no validation or sanitization of `orderId` or `amount` — arbitrary, negative, zero, or oversized values are accepted as-is."
           }
         ],
-        "reportedCount": 8
+        "reportedCount": 8,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "autistic": {
         "tp": 3,
@@ -1529,7 +1621,9 @@
             "matchedFinding": "processRefund(req.body.orderId, req.body.amount) performs no authorization scoping or amount validation: there's no check that the caller/role is entitled to refund that specific orderId, and no check that amount is bounded by or matches the order's original charge. Combined with the header-spoofing bypass, an unauthenticated attacker can trigger refunds for arbitrary amounts on arbitrary orders — direct financial fraud, not just an access-control gap."
           }
         ],
-        "reportedCount": 5
+        "reportedCount": 5,
+        "tokensUsed": null,
+        "durationMs": null
       },
       "divergent-autistic": {
         "tp": 3,
@@ -1558,7 +1652,9 @@
             "matchedFinding": "processRefund(req.body.orderId, req.body.amount) is invoked directly from unvalidated request-body fields — there's no check that orderId refers to a real/owned order or that amount is positive, bounded, or matches the order's actual value, so a spoofed request can refund an arbitrary amount to an arbitrary order."
           }
         ],
-        "reportedCount": 5
+        "reportedCount": 5,
+        "tokensUsed": null,
+        "durationMs": null
       }
     }
   },
@@ -1568,36 +1664,56 @@
       "fp": 78,
       "fn": 4,
       "fixturesScored": 12,
+      "tokensUsed": 0,
+      "durationMs": 0,
+      "runsWithTokenData": 0,
       "precision": 0.3275862068965517,
       "recall": 0.9047619047619048,
-      "f1": 0.48101265822784806
+      "f1": 0.48101265822784806,
+      "findingsPerToken": null,
+      "findingsPerSecond": null
     },
     "divergent": {
       "tp": 36,
       "fp": 54,
       "fn": 6,
       "fixturesScored": 12,
+      "tokensUsed": 0,
+      "durationMs": 0,
+      "runsWithTokenData": 0,
       "precision": 0.4,
       "recall": 0.8571428571428571,
-      "f1": 0.5454545454545455
+      "f1": 0.5454545454545455,
+      "findingsPerToken": null,
+      "findingsPerSecond": null
     },
     "autistic": {
       "tp": 35,
       "fp": 43,
       "fn": 7,
       "fixturesScored": 12,
+      "tokensUsed": 0,
+      "durationMs": 0,
+      "runsWithTokenData": 0,
       "precision": 0.44871794871794873,
       "recall": 0.8333333333333334,
-      "f1": 0.5833333333333333
+      "f1": 0.5833333333333333,
+      "findingsPerToken": null,
+      "findingsPerSecond": null
     },
     "divergent-autistic": {
       "tp": 36,
       "fp": 44,
       "fn": 6,
       "fixturesScored": 12,
+      "tokensUsed": 0,
+      "durationMs": 0,
+      "runsWithTokenData": 0,
       "precision": 0.45,
       "recall": 0.8571428571428571,
-      "f1": 0.5901639344262294
+      "f1": 0.5901639344262294,
+      "findingsPerToken": null,
+      "findingsPerSecond": null
     }
   }
 }
