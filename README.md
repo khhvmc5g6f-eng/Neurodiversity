@@ -7,20 +7,21 @@
 ![Neurodiversity: Deep Systems Reasoning for Agents. Two minds, one system, limitless potential. ADHD is the divergent-thinking engine — explore the possibilities, wide exploration, creative connections, alternative ideas, break patterns, find the unseen. AUTISTIC is the depth-first reasoning engine — understand the system, deep system analysis, pattern recognition, contradiction detection, dependency mapping, invariant discovery, edge-case hunting, truth and verification. Bridge the gap, combine strengths: explore widely, understand deeply, build better.](docs/banner.png)
 
 This repo is named **Neurodiversity Coding** because it's one half of
-that pairing: AUTISTIC lives here; ADHD lives at
-[`UditAkhourii/adhd`](https://github.com/UditAkhourii/adhd) and is
+that pairing. AUTISTIC lives here. ADHD lives at
+[`UditAkhourii/adhd`](https://github.com/UditAkhourii/adhd), and it's
 never vendored in, only bridged to (see the ADHD bridge below).
 
 AUTISTIC is a depth-first systems-reasoning Agent Skill for coding
 agents, built as the complementary architecture to
-[`UditAkhourii/adhd`](https://github.com/UditAkhourii/adhd). ADHD is a
-breadth-first ideation loop: isolated parallel cognitive frames widen
-the solution space, then a critic scores, clusters, and deepens the
-survivors. AUTISTIC is a depth-first systems-reasoning loop: it builds a
-system map, then drives sustained, ranked, single-tunnel focus through
-assumptions, invariants, contradictions, and edge cases — with a hard
-"hyperfocus" limiter so depth never becomes tunnel vision — until the
-model of the system stops changing materially.
+[`UditAkhourii/adhd`](https://github.com/UditAkhourii/adhd). ADHD runs
+a breadth-first ideation loop: isolated parallel cognitive frames widen
+the solution space, then a critic scores, clusters, and deepens
+whatever survives. AUTISTIC does the opposite. It builds a system map
+first, then drives sustained, ranked, single-tunnel focus through
+assumptions, invariants, contradictions, and edge cases, with a hard
+"hyperfocus" limiter so depth never turns into tunnel vision, and it
+keeps going until the model of the system stops changing in any way
+that matters.
 
 ```
 ADHD                              AUTISTIC
@@ -37,9 +38,9 @@ ideas · options · novelty         truth · structure · clarity
 alternatives · insight            precision · completeness
 ```
 
-ADHD exists to prevent **premature convergence**. AUTISTIC exists to
-prevent **premature understanding**. ADHD keeps looking outward. AUTISTIC
-keeps looking inward until the model holds together.
+ADHD exists to stop **premature convergence**; AUTISTIC exists to stop
+**premature understanding**. One keeps looking outward. The other keeps
+looking inward, until the model actually holds together.
 
 ## Author's note
 
@@ -64,10 +65,10 @@ keeps looking inward until the model holds together.
 >
 > — Owen
 
-This is the author's own self-description, in their own words. It is
-separate from — and does not change — the neuroaffirming design rule
-below, which governs how *this project* talks about autistic people and
-autistic cognition in general.
+This is the author's own self-description, in their own words. It sits
+apart from the neuroaffirming design rule below and doesn't change it —
+that rule is about how *this project* talks about autistic people and
+autistic cognition in general, not about the author personally.
 
 ## Neuroaffirming design rule
 
@@ -75,10 +76,10 @@ This project does not claim that all autistic people think alike, that
 autistic cognition is inherently superior, that autistic people are
 always detail-focused, or that autism reduces to a coding style. It
 models a configurable set of analytical strategies inspired by
-monotropism and reported autistic experience — sustained single-channel
+monotropism and reported autistic experience (sustained single-channel
 attention, detail-oriented processing, systemising, explicit rule
 construction, reduced tolerance for ambiguity, persistent pursuit of
-unresolved questions — as reasoning tools, not diagnostic claims. The
+unresolved questions) as reasoning tools, not diagnostic claims. The
 name describes the reasoning architecture: sustained focus, explicit
 structure, pattern consistency, and persistence until important
 uncertainty has been resolved. See
@@ -102,11 +103,12 @@ Then in Claude Code:
 /autistic --monotropic --focus auth find the race
 ```
 
-No install is required to read the reasoning — it's a Markdown skill
-that drives Claude's own `Agent` tool calls, the same mechanism the
-[`adhd`](https://github.com/UditAkhourii/adhd) skill uses for isolated
-parallel branches. AUTISTIC deliberately doesn't duplicate ADHD's
-divergence engine — see the ADHD bridge below. Full operational detail:
+You don't need to install anything to read the reasoning. It's a
+Markdown skill that drives Claude's own `Agent` tool calls, the same
+mechanism the [`adhd`](https://github.com/UditAkhourii/adhd) skill
+uses for isolated parallel branches. AUTISTIC deliberately doesn't
+duplicate ADHD's divergence engine; see the ADHD bridge below for how
+the two actually connect. Full operational detail:
 [`skills/autistic/SKILL.md`](skills/autistic/SKILL.md).
 
 ## How it works, briefly
@@ -148,10 +150,11 @@ Typed schemas: [`skills/autistic/schemas/`](skills/autistic/schemas/).
 
 ## ADHD bridge
 
-AUTISTIC can consume ADHD's `{ideas, clusters, traps, shortlist,
+AUTISTIC can take ADHD's `{ideas, clusters, traps, shortlist,
 deepened, nonObviousPick}` output directly and verify each shortlisted
-candidate in depth, or hand AUTISTIC's own precisely-defined failures to
-ADHD when depth has diagnosed a dead end but not a way forward. See
+candidate in depth. It can also hand its own precisely-defined failures
+back to ADHD, for when depth has diagnosed a dead end but not found a
+way forward. See
 [`skills/autistic/references/adhd-bridge.md`](skills/autistic/references/adhd-bridge.md)
 for the routing table and both pipeline directions.
 
