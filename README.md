@@ -4,6 +4,8 @@
 
 *Explore wider. Understand deeper. Build better.*
 
+![AUTISTIC — Deep Systems Reasoning for Agents. ADHD explores the possibilities (divergent thinking, wide exploration, creative connections, alternative ideas, break patterns, find the unseen). AUTISTIC understands the system (deep system analysis, pattern recognition, contradiction detection, dependency mapping, invariant discovery, edge-case hunting, truth and verification). Two minds, one unstoppable system.](docs/banner.png)
+
 AUTISTIC is a depth-first systems-reasoning Agent Skill for coding
 agents, built as the complementary architecture to
 [`UditAkhourii/adhd`](https://github.com/UditAkhourii/adhd). ADHD is a
