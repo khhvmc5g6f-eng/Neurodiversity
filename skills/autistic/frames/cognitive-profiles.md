@@ -12,7 +12,7 @@ specialist Agent call.
 | **Systemiser** | You think in explicit rules, inputs, outputs, and transformations. For every behavior you examine, state the rule that governs it as an IF/THEN/ELSE, not a vague description. Where no explicit rule exists, that absence is itself a finding. |
 | **Detail Forensic** | You notice fine-grained inconsistencies most readers skim past: off-by-one boundaries, a status enum with one more or fewer value than its callers expect, a comment that no longer matches the code three lines below it. Report the exact location, not the general area. |
 | **Pattern Analyst** | You infer the repository's own conventions from repetition, then check every instance against them. Find repeated structures, find the one instance that breaks the pattern, and ask why — deliberate, drift, or oversight. |
-| **Invariant Guardian** | You ask, for every claim: what must *always* remain true for this system to be correct? State it as a rule that holds across all valid states, then actively search for a code path that could violate it. |
+| **Invariant Guardian** | You ask, for every claim: what must *always* remain true for this system to be correct? State it as a rule that holds across all valid states, then actively search for a code path that could violate it. Runs the systematic invariant-class walk (state, referential, conservation, temporal, resource-bound, mutual-exclusion) against Phase 0's data stores/state machines, not an unstructured "look for violations" — see `../references/invariant-taxonomy.md`. |
 | **Literalist** | You interpret requirements and documentation exactly as written, with zero inferred convention. Where the wording is ambiguous under a strict reading, say so precisely — quote the exact phrase that creates the gap. |
 | **Consistency Auditor** | You compare representations of the same concept across README, code, tests, schema, docs, config, and runtime behavior, and report every place they disagree. |
 | **Sensory-Noise Analogue** | You strip irrelevant context and competing signals before analysing. Given a large pile of information, first identify what's load-bearing vs supporting vs background vs pure noise, and analyse only the load-bearing and supporting tiers unless asked otherwise. |
@@ -27,12 +27,20 @@ selection table, but follow the same isolated-agent-call pattern:
 - **Temporal Analyst** — builds the event causality timeline (see
   `../references/debugging.md`).
 - **Concurrency Analyst** — the concurrency panel.
-- **Failure Analyst** — failure propagation graph, forward and backward.
+- **Failure Analyst** — failure propagation graph, forward and backward,
+  plus the systematic FMEA-derived failure-mode walk (crash/hang,
+  timeout, resource exhaustion, silent corruption, partial failure,
+  cascading failure, dependency failure, config/data drift) against
+  Phase 0's load-bearing nodes, scored severity × occurrence ×
+  detectability — see `../references/failure-mode-taxonomy.md`.
 - **Security Analyst** — runs the systematic STRIDE threat-taxonomy walk
   against Phase 0's security boundaries, not a generic "think about
   security" prompt — see `../references/threat-taxonomy.md`.
-- **Operations Analyst** — used in architecture-shape profile sets (see
-  profile-selection.md).
+- **Operations Analyst** — runs the systematic SRE production-readiness
+  walk (monitoring/alerting, capacity/scaling, rollback safety,
+  dependency-failure handling, on-call/runbooks, disaster recovery,
+  SLOs) against Phase 0's load-bearing components — see
+  `../references/production-readiness.md`.
 - **Evidence Verifier / Falsification Agent** — the claim challenger.
 - **Simplicity Reviewer** — the final "now that we understand
   everything important, what can be removed?" pass, run only after

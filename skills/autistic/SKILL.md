@@ -188,8 +188,11 @@ actually surfaced (don't run all of them exhaustively on trivial scope):
 - **Assumption harvesting**: for every material claim, what must be true
   for it to hold? Build the assumption graph; prioritise by blast radius
   (dependent claims → dependent components → user impact).
-- **Invariant discovery + violation search**: what rules must hold across
-  all valid states? Then actively look for paths that could violate them.
+- **Invariant discovery + violation search**: walk the invariant-class
+  taxonomy (state, referential/uniqueness, conservation, temporal,
+  resource-bound, mutual-exclusion) against Phase 0's data stores and
+  state machines — not an unstructured "look for violations." See
+  `references/invariant-taxonomy.md`.
 - **Requirements literalist + pragmatist passes**: one agent reads
   requirements literally with no inferred convention; a second infers
   likely intent. Differences become explicit ambiguity, classified
@@ -213,6 +216,17 @@ actually surfaced (don't run all of them exhaustively on trivial scope):
   hypothesis per category, checked against evidence like any other
   candidate finding, not a creative-attacker roleplay. See
   `references/threat-taxonomy.md`.
+- **Failure mode analysis (FMEA)**: for "production bug, no known
+  cause" runs, or any load-bearing node from Phase 0, walk crash/hang,
+  timeout, resource exhaustion, silent corruption, partial failure,
+  cascading failure, dependency failure, config/data drift
+  systematically — score confirmed modes severity × occurrence ×
+  detectability. See `references/failure-mode-taxonomy.md`.
+- **Production readiness (Operations Analyst)**: for architecture
+  reviews and pre-release audits, walk monitoring/alerting,
+  capacity/scaling, rollback safety, dependency-failure handling,
+  on-call/runbooks, disaster recovery, and SLOs against load-bearing
+  components. See `references/production-readiness.md`.
 - **Mutation testing**: for `--forensic` runs or an explicit request,
   on load-bearing logic identified in Phase 0 only (expensive; not a
   `--standard`-mode default) — dispatch to the ecosystem's tool
@@ -224,7 +238,8 @@ actually surfaced (don't run all of them exhaustively on trivial scope):
 Details and prompts for each pass: `references/requirements.md`,
 `references/patterns.md`, `references/verification.md`,
 `references/debugging.md`, `references/tooling.md`,
-`references/threat-taxonomy.md`.
+`references/threat-taxonomy.md`, `references/invariant-taxonomy.md`,
+`references/failure-mode-taxonomy.md`, `references/production-readiness.md`.
 
 ## Resilience: a stalled or failed specialist call
 

@@ -9,8 +9,8 @@ not novelty.
 | Problem shape | Profiles (in priority order) |
 |---|---|
 | Repository / pre-merge audit | Systemiser, Detail Forensic, Pattern Analyst, Consistency Auditor, Completionist |
-| Production bug, root cause unknown | Monotropic, Detail Forensic, Invariant Guardian, Exception Hunter, + Temporal Analyst (debugging.md) |
-| Architecture review / design decision | Systemiser, Invariant Guardian, Consistency Auditor, + Failure Analyst, Operations Analyst (supplementary) |
+| Production bug, root cause unknown | Monotropic, Detail Forensic, Invariant Guardian, Exception Hunter, + Temporal Analyst, Failure Analyst running the FMEA walk (failure-mode-taxonomy.md) |
+| Architecture review / design decision | Systemiser, Invariant Guardian running the invariant-class walk (invariant-taxonomy.md), Consistency Auditor, + Failure Analyst (FMEA), Operations Analyst running the PRR walk (production-readiness.md) |
 | Requirements review | Literalist, Completionist, Consistency Auditor |
 | Security-focused pass | Invariant Guardian, Exception Hunter, + Security Analyst running the STRIDE walk (threat-taxonomy.md), Consistency Auditor |
 | Data/schema audit | Pattern Analyst, Consistency Auditor, Detail Forensic (nullability, units — see patterns.md) |

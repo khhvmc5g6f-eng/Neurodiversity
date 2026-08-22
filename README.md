@@ -159,7 +159,8 @@ autistic/
 │   ├── SKILL.md
 │   ├── references/   architecture, monotropism, patterns, requirements,
 │   │                  debugging, verification, adhd-bridge, tooling,
-│   │                  memory, threat-taxonomy
+│   │                  memory, threat-taxonomy, invariant-taxonomy,
+│   │                  failure-mode-taxonomy, production-readiness
 │   ├── frames/        cognitive-profiles, profile-selection
 │   └── schemas/       result, tunnel, system-map, memory-ledger (JSON Schema)
 ├── bench/
