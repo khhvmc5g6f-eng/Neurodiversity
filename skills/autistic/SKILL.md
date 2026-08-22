@@ -200,6 +200,13 @@ actually surfaced (don't run all of them exhaustively on trivial scope):
 - **Static analysis**: prefer a connected static-analysis MCP (Semgrep)
   or the target repo's own configured linter over a purely manual read
   — see `references/tooling.md`.
+- **Threat taxonomy (STRIDE)**: for security-focused audits, or any
+  `security_boundary` node Phase 0 scored as load-bearing, walk
+  Spoofing/Tampering/Repudiation/Information-disclosure/Denial-of-
+  service/Elevation-of-privilege systematically against it — a
+  hypothesis per category, checked against evidence like any other
+  candidate finding, not a creative-attacker roleplay. See
+  `references/threat-taxonomy.md`.
 - **Mutation testing**: for `--forensic` runs or an explicit request,
   on load-bearing logic identified in Phase 0 only (expensive; not a
   `--standard`-mode default) — dispatch to the ecosystem's tool
@@ -210,7 +217,8 @@ actually surfaced (don't run all of them exhaustively on trivial scope):
 
 Details and prompts for each pass: `references/requirements.md`,
 `references/patterns.md`, `references/verification.md`,
-`references/debugging.md`, `references/tooling.md`.
+`references/debugging.md`, `references/tooling.md`,
+`references/threat-taxonomy.md`.
 
 ## Resilience: a stalled or failed specialist call
 

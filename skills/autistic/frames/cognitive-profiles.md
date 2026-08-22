@@ -28,8 +28,11 @@ selection table, but follow the same isolated-agent-call pattern:
   `../references/debugging.md`).
 - **Concurrency Analyst** — the concurrency panel.
 - **Failure Analyst** — failure propagation graph, forward and backward.
-- **Security Analyst / Operations Analyst** — used in architecture-shape
-  profile sets (see profile-selection.md).
+- **Security Analyst** — runs the systematic STRIDE threat-taxonomy walk
+  against Phase 0's security boundaries, not a generic "think about
+  security" prompt — see `../references/threat-taxonomy.md`.
+- **Operations Analyst** — used in architecture-shape profile sets (see
+  profile-selection.md).
 - **Evidence Verifier / Falsification Agent** — the claim challenger.
 - **Simplicity Reviewer** — the final "now that we understand
   everything important, what can be removed?" pass, run only after

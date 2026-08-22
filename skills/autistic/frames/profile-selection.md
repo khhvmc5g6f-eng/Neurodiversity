@@ -12,7 +12,7 @@ not novelty.
 | Production bug, root cause unknown | Monotropic, Detail Forensic, Invariant Guardian, Exception Hunter, + Temporal Analyst (debugging.md) |
 | Architecture review / design decision | Systemiser, Invariant Guardian, Consistency Auditor, + Failure Analyst, Operations Analyst (supplementary) |
 | Requirements review | Literalist, Completionist, Consistency Auditor |
-| Security-focused pass | Invariant Guardian, Exception Hunter, + Security Analyst (supplementary), Consistency Auditor |
+| Security-focused pass | Invariant Guardian, Exception Hunter, + Security Analyst running the STRIDE walk (threat-taxonomy.md), Consistency Auditor |
 | Data/schema audit | Pattern Analyst, Consistency Auditor, Detail Forensic (nullability, units — see patterns.md) |
 | Large/noisy context (many files, long history) | Sensory-Noise Analogue first (to triage), then whichever set fits the triaged scope |
 
