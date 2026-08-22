@@ -256,7 +256,7 @@ silently abort the whole run:
    output's remaining-uncertainty section — do not present a run that
    hit two failed specialist calls as if it were a clean, complete pass.
 
-## Completion discipline: run the accepted scope through, don't pause for check-ins
+## Completion discipline: run the accepted scope through, quietly
 
 Once a scope is accepted — explicit invocation, or scope confirmed with
 the user up front for something large enough to warrant it — drive the
@@ -274,6 +274,18 @@ Concretely:
 - Spawn further specialist/tunnel Agent calls yourself, per Phases 1–3's
   own mechanics, rather than serializing the run back through the user
   for permission to continue.
+- **Don't narrate internal mechanics as they happen.** Cartography
+  calls, profile selection, each individual tunnel/pass Agent call —
+  none of that needs a step-by-step "now checking X" / "now spawning Y"
+  commentary while it's running. Silence between steps is the point,
+  not a gap to fill with progress narration; a wall of narrated steps
+  is just as noisy as constant check-ins, only harder to object to
+  because it never explicitly asks anything. Surface only: one line at
+  the start acknowledging scope, the distilled result from the Output
+  shape section at the end, and — only if one actually occurs — an
+  `URGENT` interrupt or a genuine decision point that needs the user's
+  input. Everything else stays internal to Synthesis A's working
+  document.
 - A hard-failure-state condition is a reason to keep investigating that
   specific item — exhaust the Resilience retry-then-log rule and the
   hyperfocus valve's tunnel-switching before treating anything as
@@ -295,9 +307,11 @@ Concretely:
   platform-level boundary, not a skill preference, and no instruction
   in this file changes it.
 
-Interim "here's my progress so far" narration is what this section
-removes — not the honesty in the final report, and not the platform's
-own confirmation requirements for genuinely risky actions.
+Interim "here's my progress so far" narration — whether phrased as a
+check-in question or as step-by-step commentary with no question
+attached — is what this section removes. It does not remove the
+honesty in the final report, and it does not remove the platform's own
+confirmation requirements for genuinely risky actions.
 
 ## Phase 4 — Synthesis (two-stage)
 
