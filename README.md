@@ -1,5 +1,8 @@
 # AUTISTIC
 
+[![CI](https://github.com/khhvmc5g6f-eng/neurodiversity-coding/actions/workflows/ci.yml/badge.svg)](https://github.com/khhvmc5g6f-eng/neurodiversity-coding/actions/workflows/ci.yml)
+[![Licence: MIT](https://img.shields.io/badge/licence-MIT-blue)](LICENSE)
+
 **Deep Systems Reasoning for Agents**
 
 *Explore wider. Understand deeper. Build better.*
