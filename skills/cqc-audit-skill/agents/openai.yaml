@@ -1,0 +1,5 @@
+interface:
+  display_name: "CQC Audit Skill"
+  short_description: "Clinic audits and CQC-ready document fixes"
+  brand_color: "#1F3864"
+  default_prompt: "Use $cqc-audit-skill to audit our clinic governance estate and produce the CQC audit report with the linked SOP, policy, COSHH, protocol, and risk-assessment actions."
