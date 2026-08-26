@@ -1,6 +1,6 @@
-# AUTISTIC
+# Neurodiversity Coding
 
-[![CI](https://github.com/khhvmc5g6f-eng/neurodiversity-coding/actions/workflows/ci.yml/badge.svg)](https://github.com/khhvmc5g6f-eng/neurodiversity-coding/actions/workflows/ci.yml)
+[![CI](https://github.com/khhvmc5g6f-eng/Neurodiversity/actions/workflows/ci.yml/badge.svg)](https://github.com/khhvmc5g6f-eng/Neurodiversity/actions/workflows/ci.yml)
 [![Licence: MIT](https://img.shields.io/badge/licence-MIT-blue)](LICENSE)
 
 **Deep Systems Reasoning for Agents**
@@ -9,7 +9,7 @@
 
 ![Neurodiversity: Deep Systems Reasoning for Agents. Two minds, one system, limitless potential. ADHD is the divergent-thinking engine — explore the possibilities, wide exploration, creative connections, alternative ideas, break patterns, find the unseen. AUTISTIC is the depth-first reasoning engine — understand the system, deep system analysis, pattern recognition, contradiction detection, dependency mapping, invariant discovery, edge-case hunting, truth and verification. Bridge the gap, combine strengths: explore widely, understand deeply, build better.](docs/banner.png)
 
-This repo is named **Neurodiversity Coding** because it's one half of
+This repository is named **Neurodiversity Coding** because it is one half of
 that pairing. AUTISTIC lives here. ADHD lives at
 [`UditAkhourii/adhd`](https://github.com/UditAkhourii/adhd), and it's
 never vendored in, only bridged to (see the ADHD bridge below).
@@ -91,9 +91,20 @@ for the theory this borrows from, its limits, and the terminology this
 project deliberately avoids in its own generic framing (see
 [`AGENTS.md`](AGENTS.md) for the full list).
 
-## Install (Claude Code Skill)
+## Install
+
+Install the Agent Skill directly from GitHub with the GitHub CLI:
 
 ```bash
+gh skill install khhvmc5g6f-eng/Neurodiversity autistic
+```
+
+For Claude Code without `gh skill`, clone the repository first and copy the
+skill directory:
+
+```bash
+git clone https://github.com/khhvmc5g6f-eng/Neurodiversity.git
+cd Neurodiversity
 mkdir -p ~/.claude/skills
 cp -R skills/autistic ~/.claude/skills/autistic
 ```
@@ -106,12 +117,10 @@ Then in Claude Code:
 /autistic --monotropic --focus auth find the race
 ```
 
-You don't need to install anything to read the reasoning. It's a
-Markdown skill that drives Claude's own `Agent` tool calls, the same
-mechanism the [`adhd`](https://github.com/UditAkhourii/adhd) skill
-uses for isolated parallel branches. AUTISTIC deliberately doesn't
-duplicate ADHD's divergence engine; see the ADHD bridge below for how
-the two actually connect. Full operational detail:
+You do not need to install anything to read the reasoning. It is a portable
+Markdown Agent Skill. Runtimes without isolated subagents can execute the
+same phases inline. AUTISTIC deliberately does not duplicate ADHD's
+divergence engine; see the ADHD bridge below for how the two connect. Full operational detail:
 [`skills/autistic/SKILL.md`](skills/autistic/SKILL.md).
 
 ## How it works, briefly
@@ -174,7 +183,7 @@ principles.
 ## Repository layout
 
 ```
-autistic/
+Neurodiversity/
 ├── README.md · LICENSE · SECURITY.md · CONTRIBUTING.md
 ├── CODE_OF_CONDUCT.md · EVALS.md · AGENTS.md
 ├── skills/autistic/
