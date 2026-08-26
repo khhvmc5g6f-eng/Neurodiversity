@@ -29,6 +29,9 @@ jobs:
             const fm = text.slice(3, end);
             if (!/^name:\s*autistic\s*$/m.test(fm)) throw new Error('name field missing/wrong');
             if (!/^description:/m.test(fm)) throw new Error('description field missing');
+            const keys = [...fm.matchAll(/^([A-Za-z0-9_-]+):/gm)].map(m => m[1]);
+            const unexpected = keys.filter(k => !['name', 'description'].includes(k));
+            if (unexpected.length) throw new Error('unexpected frontmatter key(s): ' + unexpected.join(', '));
             console.log('frontmatter OK');
           "
       - name: Run benchmark scorer against checked-in results
