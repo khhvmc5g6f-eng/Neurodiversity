@@ -1,7 +1,6 @@
 ---
 name: autistic
 description: Depth-first systems reasoning for coding agents. Builds a system map, then drives sustained monotropic focus through one load-bearing question at a time — assumptions, invariants, contradictions, edge cases — until the model of the system stops changing materially. Use on /autistic, "AUTISTIC mode", repository audits, production bugs with no known root cause, architecture review, or "why does this happen" questions. Skip for syntax, lookups, bugs with an already-known root cause, or closed phrasing ("quick", "standard", "just fix"). Full pre-flight gate is in the skill body. Complementary to the adhd skill — see the bridge section below.
-license: MIT
 ---
 
 # AUTISTIC
