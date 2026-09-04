@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/khhvmc5g6f-eng/neurodiversity-coding/schemas/system-map.schema.json",
+  "$id": "https://github.com/khhvmc5g6f-eng/Neurodiversity/schemas/system-map.schema.json",
   "title": "System map",
   "description": "Typed graph produced by Phase 0 System Cartography. See references/architecture.md",
   "type": "object",

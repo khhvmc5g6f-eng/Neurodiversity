@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/khhvmc5g6f-eng/neurodiversity-coding/schemas/tunnel.schema.json",
+  "$id": "https://github.com/khhvmc5g6f-eng/Neurodiversity/schemas/tunnel.schema.json",
   "title": "Attention tunnel",
   "description": "One sustained monotropic investigation. See SKILL.md Phase 2.",
   "type": "object",
