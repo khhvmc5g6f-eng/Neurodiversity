@@ -6,16 +6,20 @@ version below corresponds to a real git tag on this repo — `git checkout
 v0.4.0`, for instance, gets you the skill exactly as it stood right
 after the STRIDE threat-taxonomy pass was added, before anything later.
 
-## Where things stand right now (v0.9.6)
+## Where things stand right now (v0.10.0)
 
-A single Claude Code Agent Skill (`skills/neurodiversity/`) implementing
-depth-first systems reasoning, plus a mechanically-scored benchmark
-suite (12 fixtures, seeded defects, no LLM judge) and supporting docs.
-No compiled artifact, no build step, no standalone CLI yet — the skill
-*is* the Markdown, installed by copying `skills/neurodiversity/` into
-`~/.claude/skills/`.
+A single, fully self-sufficient Claude Code Agent Skill
+(`skills/neurodiversity/`) implementing both depth-first systems
+reasoning AND breadth-first divergent ideation, plus a
+mechanically-scored benchmark suite (12 fixtures, seeded defects, no
+LLM judge) and supporting docs. No compiled artifact, no build step, no
+standalone CLI yet — the skill *is* the Markdown, installed by copying
+`skills/neurodiversity/` into `~/.claude/skills/`.
 
 **What's real and working:**
+- Divergent ideation (Phase D): 5 parallel isolated frames generate,
+  then score/cluster/prune-traps/deepen the survivors — no external
+  skill required, see `references/divergence.md`.
 - System cartography (explicit + inferred security boundaries) → 5
   systematic taxonomy-driven passes (STRIDE for security, FMEA for
   failure modes, design-by-contract classes for invariants, SRE
@@ -23,8 +27,9 @@ No compiled artifact, no build step, no standalone CLI yet — the skill
   for edge cases, Fowler's code-smell catalogue for simplification) →
   monotropic single-tunnel depth engine with a hard hyperfocus valve →
   two-stage synthesis conforming to a typed result schema.
-- An ADHD bridge to hand off to/consume from [`adhd`](https://github.com/UditAkhourii/adhd),
-  the companion breadth-first ideation skill, if one is installed.
+- Phase D's shortlist feeds directly into System Cartography for design
+  decisions, and depth-first phases can hand a precisely-defined dead
+  end back to Phase D — both internal handoffs, not a cross-skill bridge.
 - Real-tool preference (MCP/CLI) over LLM-inferred data where available;
   a cross-run memory ledger written into the *target* repo being
   audited; resilience rules for a stalled/failed specialist call.
@@ -39,9 +44,68 @@ No compiled artifact, no build step, no standalone CLI yet — the skill
 package; the full 10×10 stress matrix isn't run, only 1 fixture per
 category; mutation-testing/contract-verification tooling is specified
 but not exercised by the benchmark; token/time cost tracking exists in
-the harness but no committed result yet has that data.
+the harness but no committed result yet has that data; **the benchmark
+itself predates the Phase D merge** — its `adhd`/`adhd→neurodiversity`
+conditions measured two separate skills, not the current single
+self-sufficient skill, and haven't been re-run since (see `EVALS.md`).
 
 ---
+
+## v0.10.0 — 2026-09-04
+
+Folded ADHD's breadth-first divergent-ideation mechanism directly into
+NEURODIVERSITY as an internal phase (Phase D), removing the skill's
+dependency on a separate companion skill for any part of its process.
+Per explicit user direction: "we shouldn't be handing off to other
+skills, our skill should be able to address all the issues."
+
+Added:
+- `references/divergence.md` — the Phase D mechanism (strict
+  diverge-then-focus split, isolation invariant, scoring/clustering/
+  shortlisting/deepening, output shape, calibration, anti-patterns),
+  independently composed rather than copied from the external skill's
+  wording, replacing the old ADHD-bridge's role.
+- `frames/divergence-frames.md` — 14 divergent-ideation vantage points
+  (constraint remover, adversary, inversion, extreme-budget variants,
+  and more), independently composed, parallel in structure to the
+  existing depth-first `frames/cognitive-profiles.md`.
+- `divergentOptions` in `schemas/result-schema.json` — candidates,
+  clusters, scores, traps, and the shortlist are now a typed part of
+  NEURODIVERSITY's own result shape, not a separate handoff object.
+- `--diverge`, `--diverge-loop`, `--top N` modes in `SKILL.md`.
+
+Removed:
+- `references/adhd-bridge.md` and every "hand off to the `adhd` skill"
+  instruction in `SKILL.md`'s Routing table, Pre-flight, Cost, and
+  Companion sections.
+- The frontmatter/README framing of this project as "one half of a
+  pairing" with a separately-installed companion skill.
+
+Rewrote for the new architecture: `SKILL.md` (Routing table now routes
+between this skill's own Phase D and Phases 0–4, never to an external
+skill; Pre-flight's self-judge now covers both directions; Cost section
+now itemises Phase D alone, Phases 0–4 alone, and Phase D → Phases 0–4);
+`README.md` (banner alt-text, the two-column comparison diagram, the
+install/companion-repo framing, "How it works" now includes Phase D as
+step 0); `AGENTS.md` (repo description, a stale-benchmark disclosure);
+`EVALS.md` (a disclosure ahead of the aggregate-results table: every
+existing `adhd`/`adhd→neurodiversity` number measured two separate
+skills handing off to each other, not the current merged single skill
+— re-running the design fixtures under the new architecture is flagged
+as the correct next step in "Deferred from the source spec", not
+silently assumed to still apply); `references/threat-taxonomy.md` and
+`references/monotropism.md` (design-rationale passages that compared
+against "the `adhd` skill" now compare against Phase D's own frames/
+anti-patterns instead, same reasoning, no external reference).
+
+The existing benchmark data in `bench/results/` is kept exactly as
+generated — a historical record of the pre-merge two-skill numbers, not
+retroactively reinterpreted as if it measured today's single skill. See
+`EVALS.md`'s new note for why the `adhd→neurodiversity` condition's old
+lead over solo `neurodiversity` (F1 0.590 vs 0.583 on the pre-widening
+numbers; 0.595 vs 0.564 split by fixture type on the widened set) should
+not be read as still describing the merged skill's actual capability
+either way, until a fresh run confirms it.
 
 ## v0.9.6 — 2026-09-04
 

@@ -1,8 +1,10 @@
 # bench/
 
 Seeded-defect benchmark suite comparing BASELINE / ADHD / NEURODIVERSITY /
-ADHD→NEURODIVERSITY. See [`../EVALS.md`](../EVALS.md) for results and
-methodology; this file just covers the mechanics.
+ADHD→NEURODIVERSITY. See [`../EVALS.md`](../EVALS.md) for results,
+methodology, and a note on how these conditions read now that Phase D
+(divergent ideation) is built into NEURODIVERSITY itself rather than a
+separate skill — this file just covers the mechanics.
 
 ```
 bench/

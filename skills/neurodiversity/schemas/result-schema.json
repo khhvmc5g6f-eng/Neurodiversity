@@ -6,6 +6,46 @@
   "type": "object",
   "required": ["systemMap", "attentionTunnels", "verifiedFindings", "recommendations", "confidence"],
   "properties": {
+    "divergentOptions": {
+      "type": "object",
+      "description": "Populated only when Phase D (divergence.md) ran. Structured, not prose.",
+      "properties": {
+        "candidates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["text", "cluster"],
+            "properties": {
+              "text": { "type": "string" },
+              "rationale": { "type": "string" },
+              "frame": { "type": "string" },
+              "cluster": { "type": "string" },
+              "novelty": { "type": "number", "minimum": 0, "maximum": 10 },
+              "viability": { "type": "number", "minimum": 0, "maximum": 10 },
+              "fit": { "type": "number", "minimum": 0, "maximum": 10 },
+              "isTrap": { "type": "boolean", "default": false },
+              "trapReason": { "type": "string" }
+            }
+          }
+        },
+        "shortlist": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["text", "why"],
+            "properties": {
+              "text": { "type": "string" },
+              "why": { "type": "string" },
+              "nonObviousPick": { "type": "boolean", "default": false },
+              "sketch": { "type": "string" },
+              "loadBearingRisk": { "type": "string" },
+              "firstStep": { "type": "string" },
+              "childIdeas": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        }
+      }
+    },
     "systemMap": { "$ref": "system-map.schema.json" },
     "requirements": {
       "type": "array",

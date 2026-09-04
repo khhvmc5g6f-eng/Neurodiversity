@@ -1,20 +1,22 @@
 ---
 name: neurodiversity
-description: Depth-first systems reasoning for coding agents. Builds a system map, then drives sustained monotropic focus through one load-bearing question at a time — assumptions, invariants, contradictions, edge cases — until the model of the system stops changing materially. Use on /neurodiversity, "NEURODIVERSITY mode", repository audits, production bugs with no known root cause, architecture review, or "why does this happen" questions. Skip for syntax, lookups, bugs with an already-known root cause, or closed phrasing ("quick", "standard", "just fix"). Full pre-flight gate is in the skill body. Complementary to the adhd skill — see the bridge section below.
+description: Self-contained depth-first AND breadth-first reasoning for coding agents. Builds a system map, then drives sustained monotropic focus through one load-bearing question at a time — assumptions, invariants, contradictions, edge cases — until the model of the system stops changing materially; when the ask calls for options rather than (or before) verification, runs its own internal divergent-ideation phase first. Use on /neurodiversity, "NEURODIVERSITY mode", repository audits, production bugs with no known root cause, architecture review, "why does this happen" questions, brainstorming, or open-ended design/naming/API-surface decisions. Skip for syntax, lookups, bugs with an already-known root cause, or closed phrasing ("quick", "standard", "just fix"). Full pre-flight gate is in the skill body. Fully self-sufficient — does not hand off to another skill for any part of the process.
 ---
 
 # NEURODIVERSITY
 
 Deep Systems Reasoning for Agents
 
-ADHD prevents premature convergence: it keeps looking outward for options
-you haven't considered. NEURODIVERSITY prevents premature understanding: it keeps
-looking inward until the model of the system holds together. ADHD finds
-options. NEURODIVERSITY finds structure. ADHD asks *what else?* NEURODIVERSITY asks
-*why, exactly where, what depends on that, is that always true, what
-breaks at the boundary, what contradicts it, what evidence proves it, what
-did we miss?* — then keeps asking until further investigation stops
-changing the material understanding of the system.
+Two modes, one skill. Phase D prevents premature convergence: it keeps
+looking outward for options not yet considered, asking *what else?*
+Phases 0–4 prevent premature understanding: they keep looking inward
+until the model of the system holds together, asking *why, exactly
+where, what depends on that, is that always true, what breaks at the
+boundary, what contradicts it, what evidence proves it, what did we
+miss?* — then keep asking until further investigation stops changing
+the material understanding of the system. Phase D finds options;
+Phases 0–4 find structure. Most asks need only one; a genuine design
+decision needs both, in sequence, inside this same skill.
 
 ## Neuroaffirming design rule
 
@@ -27,43 +29,77 @@ construction, reduced tolerance for ambiguity, persistent pursuit of
 unresolved questions — as reasoning tools, not diagnostic claims. See
 `references/monotropism.md` before extending this skill's framing.
 
-## Pre-flight (run before Phase 0)
+## Pre-flight (run before Phase D or Phase 0)
 
-This skill is expensive: a system map plus one or more sustained
-investigation tunnels, each potentially several Agent calls deep. Do not
-pay that cost when a direct answer is better.
+This skill is expensive: a divergent-ideation pass, a system map, and
+one or more sustained investigation tunnels, each potentially several
+Agent calls deep. Do not pay that cost when a direct answer is better.
 
 **Step 1. Explicit invocation check.** If the user typed `/neurodiversity` or
 explicitly asked for NEURODIVERSITY mode, "deep-dive this", "audit this
-repository", or "run NEURODIVERSITY on this" — skip the rest of this section
-and go to Phase 0. The user opted in.
+repository", "brainstorm this", or "run NEURODIVERSITY on this" — skip the
+rest of this section and go to Routing below. The user opted in.
 
 **Step 2. Self-judge (only if Step 1 did not match).** Ask three
 questions. If any answer is no, abort and answer directly.
 
-1. **Is the failure or system non-obvious?** If the root cause is already
-   known, or the question has one canonical answer, abort.
-2. **Is depth actually valuable here?** Production bugs with no known
-   cause, architecture/consistency audits, "why does X happen"
-   questions, pre-merge repository review = yes. A one-line fix, a
-   lookup, a syntax question = no.
+1. **Is the ask actually open?** A failure/system with an already-known
+   root cause, a question with one canonical answer, or a decision with
+   only one reasonable choice — abort. (This covers both directions:
+   "why is X broken" with a known cause, and "what should I call this"
+   with an obvious name, are both closed.)
+2. **Is depth or breadth actually valuable here?** Production bugs with
+   no known cause, architecture/consistency audits, "why does X
+   happen" questions, pre-merge review, genuine design/naming/API-
+   surface decisions, brainstorming = yes. A one-line fix, a lookup, a
+   syntax question = no.
 3. **Did the user avoid closed phrasing?** "quick", "just", "standard
-   fix", "one-liner" signal they want the direct answer. Abort on those.
+   fix", "one-liner", "canonical", "textbook" signal they want the
+   direct answer. Abort on those.
 
-If all three pass, proceed to Phase 0.
+If all three pass, proceed to Routing.
 
-## Routing: NEURODIVERSITY vs ADHD vs combined
+## Routing: divergence, depth, or both
 
 | Ask | Route |
 |---|---|
-| "Give me options / ideas / alternatives" | ADHD only |
-| "Why is this happening" / "audit this" / "what's wrong" | NEURODIVERSITY only |
-| "Design the best architecture for X" | ADHD → NEURODIVERSITY |
-| "This design is fundamentally broken, find another approach" | NEURODIVERSITY → ADHD → NEURODIVERSITY |
+| "Give me options / ideas / alternatives" / "brainstorm X" | Phase D only |
+| "Why is this happening" / "audit this" / "what's wrong" | Phase 0–4 only (skip Phase D — there's nothing to diverge on) |
+| "Design the best architecture for X" | Phase D → Phase 0–4 |
+| "This design is fundamentally broken, find another approach" | Phase 0–4 → Phase D → Phase 0–4 |
 
-Full heuristics and the shared JSON handoff shape are in
-`references/adhd-bridge.md`. Default to NEURODIVERSITY only unless the ask is
-explicitly about generating or choosing between options.
+Full heuristics, the loop mode, and the internal handoff shape between
+phases are in `references/divergence.md`. Default to Phase 0–4 only
+unless the ask is explicitly about generating or choosing between
+options — depth is the more conservative choice for anything that reads
+as investigation rather than ideation.
+
+## Phase D — Divergent Ideation (only when Routing selects it)
+
+When the ask calls for options rather than verification — pure
+ideation, or a design decision that needs candidates generated before
+anything can be verified — run this phase before Phase 0. Skip it
+entirely for audits, root-cause investigation, and anything else
+Routing sent straight to depth; forcing a divergence pass onto a
+question that has no options to generate just burns budget.
+
+Two strict sub-phases, generation then evaluation — mixing them kills
+idea quality, because evaluation suppresses generation before it has
+produced anything worth evaluating:
+
+1. **Diverge.** Pick 5 frames from `frames/divergence-frames.md`, spawn
+   5 parallel, isolated Agent calls (one per frame, no shared context
+   between them), each producing 6 short candidate ideas with zero
+   evaluation.
+2. **Focus.** Score every candidate on novelty/viability/fit, flag
+   traps, cluster by underlying angle, shortlist the top 2–4, and
+   deepen each shortlisted candidate (sketch, load-bearing risk, first
+   step, child ideas).
+
+Full mechanism, output shape, calibration, and anti-patterns:
+`references/divergence.md`. If Routing calls for Phase D → Phase 0–4,
+the shortlist from step 2 becomes the input to System Cartography below
+— each shortlisted candidate gets its own scoped depth pass.
 
 ## Phase 0 — System Cartography
 
@@ -339,7 +375,7 @@ it's the working document, not the output.
 (`systemMap`, `assumptions`, `invariants`, `contradictions`,
 `verifiedFindings`, `confidence`, etc.) should be populated or
 explicitly empty, not silently omitted; this is the canonical output
-shape whether or not an ADHD-bridge run is involved. Preserve
+shape whether or not a Phase D run preceded it. Preserve
 high-impact findings, evidence, uncertainty, and recommendations; drop
 low-value analytical detail unless the user asked for `--show-*` output
 (see Modes). Confidence is calibrated from direct evidence, independent
@@ -395,6 +431,9 @@ tunnels, the output should not:
 --whole-system        breadth-first cartography, then prioritised depth
 --patterns             --precision
 --focus <area>         disproportionate depth on one named area
+--diverge              run Phase D only, no depth pass after
+--diverge-loop         understand -> explore -> verify -> repeat, see references/divergence.md
+--top N                Phase D shortlist size, default up to 4
 --show-map --show-assumptions --show-contradictions --show-evidence
 --agents 3..16
 ```
@@ -403,16 +442,6 @@ Depth levels: `D1` surface map · `D2` dependency map · `D3` invariants +
 contradictions · `D4` recursive deep dive · `D5` forensic exhaustion.
 Adaptive by default — if a standard pass finds no material uncertainty,
 stop; don't run forensic mode on everything.
-
-## ADHD bridge
-
-NEURODIVERSITY can consume ADHD's output directly (`ideas / clusters / traps /
-shortlist / deepened / nonObviousPick`) and turn each shortlisted
-candidate into assumptions, dependencies, invariants, failure modes,
-edge cases, security/operations concerns, cost, and a verification plan
-— see `references/adhd-bridge.md` for the exact transform and the
-`/adhd-neurodiversity --loop` cycle (`understand → explore → verify → find new
-problem → …`, stopping at saturation).
 
 ## Anti-patterns
 
@@ -429,8 +458,12 @@ problem → …`, stopping at saturation).
   synthesis time. Every unresolved question either gets a materiality
   rating in the output or an explicit reason it was dropped.
 - **Hyperfocus without the valve.** See Phase 2. This is the mirror image
-  of ADHD's own "convergence disguised as divergence" failure mode —
-  here it's "depth disguised as progress."
+  of Phase D's own "convergence disguised as divergence" failure mode
+  (see `references/divergence.md`) — here it's "depth disguised as
+  progress."
+- **Running Phase D when there's nothing to diverge on**, or skipping it
+  when the ask genuinely needs candidates generated before anything can
+  be verified. Check Routing before defaulting either way.
 - **Coordination theatre.** A specialist agent relaying another agent's
   output back through a chain of messages instead of producing its own
   result is not resilience, it's a stall waiting to happen. See
@@ -446,29 +479,41 @@ problem → …`, stopping at saturation).
 
 ## Cost
 
-Cartography (1) + profile selection (3–5 specialist calls) + one or more
-monotropic tunnels (2–5 calls each, tunnel-dependent) + cross-cutting
-passes — now 8–10 calls for a typical non-trivial audit once the
-taxonomy passes are counted (assumption harvesting, invariant-taxonomy,
-literalist/pragmatist, negative-space, contradiction hunt, static
-analysis, STRIDE when a security boundary scored load-bearing, FMEA
-against load-bearing nodes, production-readiness for architecture
-reviews) — + falsification (1 per high-impact finding, easily 5–15 on a
-real repo) + two-stage synthesis ≈ **25–50 Agent calls for a
-`--standard` run**, more for `--forensic` (adds mutation testing, D5,
-more tunnels/profiles). This range was written before the taxonomy
-passes existed and understated the current skill; scale down with
-`--compact` or a narrow `--focus` if that cost isn't warranted.
+**Phase D alone** (pure ideation ask): 5 diverge + 1 score/cluster + 1
+shortlist + 2–4 deepen ≈ **10 Agent calls**.
+
+**Phase 0–4 alone** (depth-only ask): Cartography (1) + profile
+selection (3–5 specialist calls) + one or more monotropic tunnels (2–5
+calls each, tunnel-dependent) + cross-cutting passes — 8–10 calls for a
+typical non-trivial audit once the taxonomy passes are counted
+(assumption harvesting, invariant-taxonomy, literalist/pragmatist,
+negative-space, contradiction hunt, static analysis, STRIDE when a
+security boundary scored load-bearing, FMEA against load-bearing nodes,
+production-readiness for architecture reviews) — + falsification (1 per
+high-impact finding, easily 5–15 on a real repo) + two-stage synthesis
+≈ **25–50 Agent calls for a `--standard` run**, more for `--forensic`
+(adds mutation testing, D5, more tunnels/profiles).
+
+**Phase D → Phase 0–4** (design decisions): Phase D's ~10 calls, then a
+scoped Phase 0–4 pass per shortlisted candidate (2–4 candidates ×
+roughly the depth-only cost above, though scoped to the candidate
+rather than the whole system so each pass is cheaper than a full audit)
+≈ **40–100+ Agent calls** depending on shortlist size and depth mode.
+
+Scale down with `--compact` or a narrow `--focus` if a given run's cost
+isn't warranted; scale a design decision's shortlist size down (`--top
+2` instead of the default up to 4) before cutting depth on the
+candidates that remain.
 
 ## Companion library, benchmarks, and repo
 
-Full spec, reference docs, cognitive-profile definitions, JSON schemas,
-and the seeded-defect benchmark suite (raw results, not cherry-picked)
-live at https://github.com/khhvmc5g6f-eng/Neurodiversity. Companion
-breadth-first ideation skill: `adhd` (installed locally, also at
-https://github.com/UditAkhourii/adhd). Real-tool integration for
-cartography/static-analysis/mutation/contract verification:
+Full spec, reference docs, cognitive-profile and divergence-frame
+definitions, JSON schemas, and the seeded-defect benchmark suite (raw
+results, not cherry-picked) live at
+https://github.com/khhvmc5g6f-eng/Neurodiversity. Real-tool integration
+for cartography/static-analysis/mutation/contract verification:
 `references/tooling.md`. Cross-run memory: `references/memory.md`.
+Divergent ideation: `references/divergence.md`.
 
 ## Source spec
 

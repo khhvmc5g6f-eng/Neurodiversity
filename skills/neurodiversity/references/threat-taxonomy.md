@@ -2,24 +2,28 @@
 
 ## Why this exists, and why it isn't "roleplay as an attacker"
 
-Stress-testing NEURODIVERSITY against problems shaped by ADHD's own frame
-parameters (hostile-attacker framing, extreme-constraint framing,
-inversion, trap-detection, breadth-routing) found
-NEURODIVERSITY strong across the board except one specific, repeatable gap:
-given a security question, NEURODIVERSITY's specialist lenses *review* — they
-verify or refute a claim already on the table — but nothing in the
-skill *generates* novel attack surface before anything's been proposed.
-Falsification (`references/verification.md`) is excellent at "assume
-this claim is false and find evidence against it"; it has no
-counterpart for "what haven't we even considered yet."
+Stress-testing NEURODIVERSITY's depth-first phases against problems shaped
+by divergent-framing parameters (hostile-attacker framing,
+extreme-constraint framing, inversion, trap-detection, breadth-routing —
+see `divergence.md`'s frame table) found the depth-first phases strong
+across the board except one specific, repeatable gap: given a security
+question, the specialist lenses *review* — they verify or refute a
+claim already on the table — but nothing in Phases 0–4 *generates* novel
+attack surface before anything's been proposed. Falsification
+(`references/verification.md`) is excellent at "assume this claim is
+false and find evidence against it"; it has no counterpart for "what
+haven't we even considered yet."
 
-The tempting fix is to bolt on an ADHD-style adversarial-attacker
-persona (see the `adhd` skill's frame table: "you are a hostile
-competitor... generate approaches that exploit, fail, or sabotage").
-That's the wrong fix for this skill specifically — creative, associative
-roleplay is exactly the breadth-first mechanism NEURODIVERSITY exists to
-complement, not adopt. The fix that's actually *more* NEURODIVERSITY, not
-less, is systematic taxonomy enumeration: apply the same explicit-rule-
+The tempting fix is to bolt an adversarial-attacker persona (the same
+shape as Phase D's own Adversary frame: "you are trying to break,
+exploit, or sabotage the obvious solution") directly onto the
+depth-first Security Analyst lens. That's the wrong fix for the
+depth-first phases specifically — creative, associative roleplay is
+exactly Phase D's mechanism, and duplicating it inside a
+verification-oriented lens would blur the strict generation/evaluation
+separation both phases depend on (see Phase D's own anti-patterns in
+`divergence.md`). The fix that's actually *more* depth-first, not less,
+is systematic taxonomy enumeration: apply the same explicit-rule-
 construction, systemising instinct the rest of this skill already uses,
 to security specifically, instead of leaving "Security Analyst" as an
 unstructured generic lens.

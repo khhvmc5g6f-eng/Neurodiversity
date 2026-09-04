@@ -7,27 +7,22 @@
 
 *Explore wider. Understand deeper. Build better.*
 
-![Neurodiversity: Deep Systems Reasoning for Agents. Two minds, one system, limitless potential. ADHD is the divergent-thinking engine — explore the possibilities, wide exploration, creative connections, alternative ideas, break patterns, find the unseen. NEURODIVERSITY is the depth-first reasoning engine — understand the system, deep system analysis, pattern recognition, contradiction detection, dependency mapping, invariant discovery, edge-case hunting, truth and verification. Bridge the gap, combine strengths: explore widely, understand deeply, build better.](docs/banner.png)
+![Neurodiversity: Deep Systems Reasoning for Agents. One skill, two minds, limitless potential. Phase D is the divergent-thinking engine — explore the possibilities, wide exploration, creative connections, alternative ideas, break patterns, find the unseen. Phases 0-4 are the depth-first reasoning engine — understand the system, deep system analysis, pattern recognition, contradiction detection, dependency mapping, invariant discovery, edge-case hunting, truth and verification. Both live in one self-sufficient skill: explore widely, understand deeply, build better.](docs/banner.png)
 
-This repository is named **Neurodiversity Coding** because it is one half of
-that pairing. NEURODIVERSITY lives here. ADHD lives at
-[`UditAkhourii/adhd`](https://github.com/UditAkhourii/adhd), and it's
-never vendored in, only bridged to (see the ADHD bridge below).
-
-NEURODIVERSITY is a depth-first systems-reasoning Agent Skill for coding
-agents, built as the complementary architecture to
-[`UditAkhourii/adhd`](https://github.com/UditAkhourii/adhd). ADHD runs
-a breadth-first ideation loop: isolated parallel cognitive frames widen
+NEURODIVERSITY is a self-sufficient systems-reasoning Agent Skill for coding
+agents — both breadth-first divergent ideation and depth-first
+verification, in one skill, with no dependency on any other skill for
+either half. Phase D runs isolated parallel cognitive frames to widen
 the solution space, then a critic scores, clusters, and deepens
-whatever survives. NEURODIVERSITY does the opposite. It builds a system map
-first, then drives sustained, ranked, single-tunnel focus through
-assumptions, invariants, contradictions, and edge cases, with a hard
-"hyperfocus" limiter so depth never turns into tunnel vision, and it
-keeps going until the model of the system stops changing in any way
-that matters.
+whatever survives. Phases 0–4 build a system map first, then drive
+sustained, ranked, single-tunnel focus through assumptions, invariants,
+contradictions, and edge cases, with a hard "hyperfocus" limiter so
+depth never turns into tunnel vision, and keep going until the model of
+the system stops changing in any way that matters. Most asks need only
+one half; a genuine design decision runs both, in sequence.
 
 ```
-ADHD                              NEURODIVERSITY
+PHASE D                           PHASES 0-4
 explore the possibilities         understand the system
 divergent thinking                deep system analysis
 wide exploration                  pattern recognition
@@ -41,9 +36,10 @@ ideas · options · novelty         truth · structure · clarity
 alternatives · insight            precision · completeness
 ```
 
-ADHD exists to stop **premature convergence**; NEURODIVERSITY exists to stop
+Phase D exists to stop **premature convergence**; Phases 0–4 exist to stop
 **premature understanding**. One keeps looking outward. The other keeps
-looking inward, until the model actually holds together.
+looking inward, until the model actually holds together. Both are one
+skill's own two modes, not two skills coordinating.
 
 ## Author's note
 
@@ -119,12 +115,17 @@ Then in Claude Code:
 
 You do not need to install anything to read the reasoning. It is a portable
 Markdown Agent Skill. Runtimes without isolated subagents can execute the
-same phases inline. NEURODIVERSITY deliberately does not duplicate ADHD's
-divergence engine; see the ADHD bridge below for how the two connect. Full operational detail:
+same phases inline. Full operational detail:
 [`skills/neurodiversity/SKILL.md`](skills/neurodiversity/SKILL.md).
 
 ## How it works, briefly
 
+0. **Divergent Ideation (Phase D, when the ask calls for it)** — pick 5
+   frames from a divergence-frame table (adversary, constraint-remover,
+   inversion, extreme-budget, and more), spawn isolated parallel
+   generator calls under each, then score, cluster, prune traps, and
+   deepen the top survivors. Skipped entirely for audits and root-cause
+   work — nothing to diverge on there.
 1. **System Cartography** — map actors, components, data, dependencies,
    security/failure boundaries into a typed graph before anything else.
 2. **Cognitive profile selection** — pick 3–5 analytical lenses
@@ -145,6 +146,10 @@ divergence engine; see the ADHD bridge below for how the two connect. Full opera
    evidence-linked, confidence-calibrated result. Nothing unresolved is
    silently dropped; it's ranked `BLOCKING → CURIOSITY` and reported.
 
+For a design decision, Phase D's shortlist feeds directly into step 1 —
+each candidate gets its own scoped System Cartography and depth pass,
+compared on evidence, not on how exciting it seemed during ideation.
+
 Two things run underneath all five phases: **tool-backed verification**
 prefers a real call-graph MCP, static-analysis MCP, or CLI tool
 (dependency-cruiser, Semgrep, Stryker/mutmut/cargo-mutants,
@@ -160,16 +165,6 @@ Full architecture: [`skills/neurodiversity/references/`](skills/neurodiversity/r
 Cognitive profiles: [`skills/neurodiversity/frames/`](skills/neurodiversity/frames/).
 Typed schemas: [`skills/neurodiversity/schemas/`](skills/neurodiversity/schemas/).
 
-## ADHD bridge
-
-NEURODIVERSITY can take ADHD's `{ideas, clusters, traps, shortlist,
-deepened, nonObviousPick}` output directly and verify each shortlisted
-candidate in depth. It can also hand its own precisely-defined failures
-back to ADHD, for when depth has diagnosed a dead end but not found a
-way forward. See
-[`skills/neurodiversity/references/adhd-bridge.md`](skills/neurodiversity/references/adhd-bridge.md)
-for the routing table and both pipeline directions.
-
 ## Benchmarks
 
 Raw, non-cherry-picked results from running BASELINE / ADHD /
@@ -178,7 +173,9 @@ NEURODIVERSITY / ADHD→NEURODIVERSITY against a seeded-defect fixture suite
 requirements, config failure, and more) are in [`EVALS.md`](EVALS.md).
 The scoring is mechanical (planted defects matched against reported
 findings), not an LLM judge, per the project's own evaluation
-principles.
+principles. **These runs predate Phase D's merge into NEURODIVERSITY** —
+see `EVALS.md`'s own note on what that means for the `ADHD→NEURODIVERSITY`
+comparison going forward.
 
 ## Repository layout
 
@@ -189,11 +186,12 @@ Neurodiversity/
 ├── skills/neurodiversity/
 │   ├── SKILL.md
 │   ├── references/   architecture, monotropism, patterns, requirements,
-│   │                  debugging, verification, adhd-bridge,
+│   │                  debugging, verification, divergence,
 │   │                  tooling, memory, threat-taxonomy, invariant-taxonomy,
 │   │                  failure-mode-taxonomy, production-readiness,
 │   │                  edge-case-taxonomy, simplicity-taxonomy
-│   ├── frames/        cognitive-profiles, profile-selection
+│   ├── frames/        cognitive-profiles, profile-selection,
+│   │                  divergence-frames
 │   └── schemas/       result, tunnel, system-map, memory-ledger (JSON Schema)
 ├── bench/
 │   ├── fixtures/      seeded-defect scenarios + ground-truth answer keys

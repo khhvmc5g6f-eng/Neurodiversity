@@ -5,11 +5,15 @@ this repository.
 
 ## What this repo is
 
-A Claude Code Agent Skill (`skills/neurodiversity/`) that implements
-depth-first systems reasoning, plus reference docs, JSON schemas for its
-intermediate objects, and a mechanically-scored benchmark suite. It has
-a companion, complementary skill, `adhd` (breadth-first ideation), which
-this repo does not vendor — see `skills/neurodiversity/references/adhd-bridge.md`.
+A Claude Code Agent Skill (`skills/neurodiversity/`) that implements both
+depth-first systems reasoning AND breadth-first divergent ideation
+(Phase D, `references/divergence.md`), plus reference docs, JSON schemas
+for its intermediate objects, and a mechanically-scored benchmark suite.
+Fully self-sufficient as of the 2026-09-04 rename — it does not hand off
+to another skill for any part of the process. (An earlier design used a
+separate companion skill, `adhd`, for the breadth-first half; that
+functionality was folded in directly rather than kept as an external
+dependency — see `CHANGELOG.md`'s v0.10.0 entry.)
 
 ## Editing the skill
 
@@ -46,6 +50,17 @@ the ground truth, not an LLM judge) into `bench/results/`. `EVALS.md`
 publishes the aggregate numbers, including losses — do not edit
 `EVALS.md` to remove an unfavorable result; add a new run instead and
 let both stand with their run IDs.
+
+**Stale as of the Phase D merge (2026-09-04):** these results measured
+NEURODIVERSITY *without* its own divergent-ideation phase against a
+separate ADHD skill, alone and combined. Now that Phase D is built into
+NEURODIVERSITY directly, the `neurodiversity` condition alone should
+approximate what `adhd-neurodiversity` used to require two skills to do.
+The existing runs stay as an honest historical record of the
+two-skill-orchestration numbers; a fresh benchmark run using the
+current single-skill NEURODIVERSITY on the design fixtures is the right
+next step before claiming the merge preserved or improved on the old
+combined score, not an assumption either way.
 
 ## Deferred scope
 

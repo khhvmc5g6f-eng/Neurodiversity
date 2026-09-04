@@ -77,7 +77,25 @@ distinguish "wrong" from "correct but not what we were counting."
 - **v2** (this version): added the 2 design fixtures, 8 more runs, 48
   total.
 
-## Aggregate results (v2: 48 runs, 12 fixtures × 4 conditions, 42 ground-truth entries total)
+## Reading the `adhd`/`adhd→neurodiversity` conditions after the Phase D merge (2026-09-04)
+
+Every result below predates NEURODIVERSITY absorbing its own
+divergent-ideation phase (`references/divergence.md`) — at the time
+these runs were generated, `neurodiversity` meant depth-first phases
+only, and `adhd→neurodiversity` meant two separate skills handed off to
+each other. That distinction no longer exists in the shipped skill:
+`neurodiversity` alone now runs Phase D internally whenever Routing
+calls for it, which is conceptually closer to what `adhd→neurodiversity`
+used to require two skills to do. The numbers below are kept as an
+honest historical record of the two-skill-orchestration measurement,
+not silently reinterpreted — but they should not be read as "solo
+NEURODIVERSITY now scores 0.583," because solo NEURODIVERSITY no longer means
+what it meant when this run was generated. A fresh benchmark run under
+the merged architecture is the correct next step before any claim about
+whether the merge preserved, improved on, or fell short of the old
+combined score.
+
+## Aggregate results (v2: 48 runs, 12 fixtures × 4 conditions, 42 ground-truth entries total — pre-Phase-D-merge, see note above)
 
 | Condition | TP | FP | FN | Precision | Recall | F1 | Total findings reported |
 |---|---|---|---|---|---|---|---|
@@ -233,6 +251,13 @@ which has a clear volume-tradeoff explanation).
 Not run in this pass, honestly flagged rather than silently skipped
 (see `AGENTS.md` → Deferred scope):
 
+- **A benchmark run under the post-Phase-D-merge architecture** (see the
+  note above the Aggregate results table) — every number in this file
+  measures the pre-merge two-skill design. Re-running the 2 design
+  fixtures (and ideally a few of the 10 bug-finding ones, to check
+  Phase D isn't spuriously triggered on non-ideation asks) against the
+  merged skill, as a new `neurodiversity` condition, is the right next
+  step before making any comparative claim about the merge.
 - The full 10×10 category-by-scenario stress matrix (§145) — this pass
   used 1 bug-finding fixture per category (10 total) plus 2 design
   fixtures, not 10 per category.

@@ -1,10 +1,12 @@
 # Profile selection heuristics
 
-Unlike ADHD's frame picking (which deliberately varies to widen the
-candidate pool), NEURODIVERSITY selects profiles *for* the problem, not
+NEURODIVERSITY selects depth-first profiles *for* the problem, not
 against it. Don't rotate for variety's sake — a repository audit gets
 the repository-audit set every time, because the set is chosen for fit,
-not novelty.
+not novelty. (This is the opposite bias from Phase D's frame selection,
+which deliberately varies to widen a candidate pool — see
+`divergence-frames.md`; depth and breadth are different jobs and use
+different selection logic on purpose.)
 
 | Problem shape | Profiles (in priority order) |
 |---|---|
@@ -27,16 +29,16 @@ not novelty.
    ready," "what's missing," or "audit."
 4. Cap at 5 for a `--standard` run; `--forensic` may use more, but
    justify each addition against the problem, not against "more
-   coverage is always better" — an unjustified sixth lens usually
+   coverage is always always better" — an unjustified sixth lens usually
    produces redundant findings that just cost another Agent call without
    adding a new angle.
 
 ## What NOT to do
 
-Do not pick profiles the way ADHD picks frames (bias toward variety,
-always include one wild card). A "wild card" lens on a production
-incident wastes the run's budget on an angle the problem doesn't need.
-If a wide, unconstrained search for *angles* is actually what's wanted,
-that's the ADHD → NEURODIVERSITY route (see `../references/adhd-bridge.md`),
-not a reason to make NEURODIVERSITY's
-own selection random.
+Do not pick depth-first profiles the way Phase D picks divergence
+frames (bias toward variety, always include one wild card). A "wild
+card" analytical lens on a production incident wastes the run's budget
+on an angle the problem doesn't need. If a wide, unconstrained search
+for *angles on a candidate solution* is what's actually wanted, that's
+Phase D (`../references/divergence.md`), not a reason to make this
+selection random.
