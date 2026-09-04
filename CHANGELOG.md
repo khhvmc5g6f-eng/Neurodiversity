@@ -1,18 +1,18 @@
 # Changelog
 
-All notable changes to AUTISTIC are recorded here, newest first. Format
+All notable changes to NEURODIVERSITY are recorded here, newest first. Format
 loosely follows [Keep a Changelog](https://keepachangelog.com/). Every
 version below corresponds to a real git tag on this repo — `git checkout
 v0.4.0`, for instance, gets you the skill exactly as it stood right
 after the STRIDE threat-taxonomy pass was added, before anything later.
 
-## Where things stand right now (v0.9.5)
+## Where things stand right now (v0.9.6)
 
-A single Claude Code Agent Skill (`skills/autistic/`) implementing
+A single Claude Code Agent Skill (`skills/neurodiversity/`) implementing
 depth-first systems reasoning, plus a mechanically-scored benchmark
 suite (12 fixtures, seeded defects, no LLM judge) and supporting docs.
 No compiled artifact, no build step, no standalone CLI yet — the skill
-*is* the Markdown, installed by copying `skills/autistic/` into
+*is* the Markdown, installed by copying `skills/neurodiversity/` into
 `~/.claude/skills/`.
 
 **What's real and working:**
@@ -31,7 +31,7 @@ No compiled artifact, no build step, no standalone CLI yet — the skill
 - CI-enforced internal consistency: every cross-reference this skill's
   own docs make to each other is checked to actually resolve.
 - A benchmark that publishes losses, not just wins — baseline
-  out-recalls AUTISTIC by volume alone, and that's stated plainly
+  out-recalls NEURODIVERSITY by volume alone, and that's stated plainly
   rather than hidden.
 
 **Known, disclosed gaps** (see `AGENTS.md` → Deferred scope,
@@ -43,9 +43,62 @@ the harness but no committed result yet has that data.
 
 ---
 
+## v0.9.6 — 2026-09-04
+
+Renamed the skill itself from AUTISTIC to NEURODIVERSITY, repo-wide:
+`skills/autistic/` → `skills/neurodiversity/`, frontmatter `name:
+autistic` → `name: neurodiversity`, every internal AUTISTIC/autistic
+mention in `SKILL.md`, `references/*`, `frames/*`, `schemas/*`,
+`README.md`, `CHANGELOG.md`, `EVALS.md`, `AGENTS.md`,
+`CONTRIBUTING.md`, `SECURITY.md`, `CODE_OF_CONDUCT.md`, and
+`.github/workflows/ci.yml`. Benchmark condition renamed to match:
+`autistic`/`adhd-autistic` → `neurodiversity`/`adhd-neurodiversity`
+throughout `bench/harness/score.js`'s `CONDITIONS` array, every
+per-fixture result file, and both `summary.json` (regenerated,
+verified byte-identical scores under the key mapping) and the frozen
+`summary.v1-original-patterns.json` (keys renamed in place, values
+untouched). `documentation/SOURCE-SPEC.md` deliberately left
+untouched, as before.
+
+This was a same-day catch-up: the installed copy at
+`~/.claude/skills/neurodiversity/` had already been renamed locally in
+an earlier session, but that rename was never committed back here —
+this repo was still shipping `skills/autistic/` with the old name
+throughout. Copied the already-renamed installed files back in as the
+source of truth for the skill's own content, then propagated the same
+rename to every repo-root file the installed copy doesn't include.
+
+Corrected a rename-collateral mistake along the way: a blanket
+find-replace initially also renamed genuine references to real
+autistic people/cognition/experience (the neuroaffirming design rule's
+own language) to "neurodiversity people"/"neurodiversity cognition",
+which is grammatically wrong and changes the meaning — "neurodiversity"
+is a concept, not a trait a person has. Caught by checking the
+already-correct pattern in `skills/neurodiversity/references/
+monotropism.md` (which the installed copy had preserved correctly) and
+fixed by hand in `README.md`, `AGENTS.md`, `CONTRIBUTING.md`, and
+`CODE_OF_CONDUCT.md`.
+
+Also fixed a functional regression the earlier local rename had
+introduced silently: the cross-run memory ledger path changed from
+`.autistic/memory.json` to `.neurodiversity/memory.json` in
+`SKILL.md`/`references/memory.md`, which would have orphaned every
+existing ledger already on disk. Migrated all 4 real `.autistic/`
+directories found on this machine (legal-chamber, clean-room-coding,
+XCVarioFlight native app, and its rasp worktree — 3.6KB to 22KB of
+real accumulated invariants/findings each) to `.neurodiversity/`
+rather than adding a permanent dual-path fallback to the skill logic.
+
+Verified before committing: all 49 internal cross-references still
+resolve (`check-links.js`), all JSON schemas and fixtures still parse,
+frontmatter validates, and `bench/harness/score.js --verify-only`
+confirms the renamed condition keys score identically to before the
+rename — this is a naming change with zero effect on the skill's
+actual behavior or benchmark results.
+
 ## v0.9.5 — 2026-08-22
 
-Lightened the README's narrative prose (repo intro, ADHD/AUTISTIC
+Lightened the README's narrative prose (repo intro, ADHD/NEURODIVERSITY
 contrast, install blurb, ADHD-bridge summary): fewer em dashes, more
 varied sentence length. `SKILL.md`, `references/*.md`, this changelog,
 and `EVALS.md` were deliberately left alone — they're operational
@@ -57,19 +110,19 @@ repo already.
 
 ## v0.9.4 — 2026-08-22
 
-- GitHub repo renamed `autistic` → `neurodiversity-coding` to match a
-  new banner that presents ADHD and AUTISTIC as two explicitly
+- GitHub repo renamed `neurodiversity` → `neurodiversity-coding` to match a
+  new banner that presents ADHD and NEURODIVERSITY as two explicitly
   co-branded, paired reasoning engines under one "Neurodiversity"
   identity. Every internal self-reference (`SKILL.md`, JSON schema
   `$id` fields, README) updated to the new URL.
 - Adopted the new banner image; README gained a short line on why the
-  repo carries this name while the skill itself stays `autistic` (its
-  own identity, and its `/autistic` invocation, are unchanged).
+  repo carries this name while the skill itself stays `neurodiversity` (its
+  own identity, and its `/neurodiversity` invocation, are unchanged).
 
 ## v0.9.3 — 2026-08-22
 
 Reversed the v0.8.0 de-attribution, on request, after a banner design
-made ADHD and AUTISTIC into two explicitly co-named, paired engines —
+made ADHD and NEURODIVERSITY into two explicitly co-named, paired engines —
 naming both openly is now the whole point of the design, so the
 generic phrasing it left behind no longer fit:
 
@@ -194,7 +247,7 @@ Fixed two ground-truth patterns in the benchmark that were too narrow
 to match correctly-phrased findings (found across every condition, not
 one — the same frozen results were rescored, nothing regenerated).
 Added two open-ended architecture-design fixtures specifically to test
-the combined ADHD→AUTISTIC condition on the kind of problem
+the combined ADHD→NEURODIVERSITY condition on the kind of problem
 it's actually built for, rather than only bug-finding tasks. Result:
 depth-first reasoning alone wins on bug-finding, the combined approach
 wins on open design decisions — the benchmark can show either winning,
@@ -202,7 +255,7 @@ not just confirm one by construction.
 
 ## v0.1.0 — 2026-08-22
 
-Initial build. `skills/autistic/SKILL.md` plus reference docs, ten
+Initial build. `skills/neurodiversity/SKILL.md` plus reference docs, ten
 cognitive profiles, JSON schemas for the skill's intermediate objects,
 and a 10-fixture seeded-defect benchmark suite scored mechanically
 (no LLM judge). Public repo, MIT licensed.

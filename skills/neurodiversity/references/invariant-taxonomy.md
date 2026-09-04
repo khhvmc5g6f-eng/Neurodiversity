@@ -8,7 +8,7 @@ them." That second sentence is the same shape of gap STRIDE closed for
 security: "actively look for X" with no enumerated categories to walk,
 so violation-search depends entirely on whatever the agent happens to
 think of, rather than a systematic sweep. Invariant violations are
-frequently the actual root cause AUTISTIC exists to find — this pass
+frequently the actual root cause NEURODIVERSITY exists to find — this pass
 runs in nearly every profile set (repository audit, production bug,
 architecture review), so a vague method here has outsized cost.
 

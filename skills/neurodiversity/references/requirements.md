@@ -70,7 +70,7 @@ FEATURE SCREEN STATE SETTING ROLE PERMISSION API DATA ERROR
 EMPTY_STATE LOADING_STATE OFFLINE_STATE ACCESSIBILITY TEST
 ```
 
-Then ask the core AUTISTIC question the completeness engine exists to
+Then ask the core NEURODIVERSITY question the completeness engine exists to
 answer: **what should exist here but doesn't?** Concretely check for:
 missing empty/loading/offline states, no logout route, no rollback, no
 migration, no audit log, no permission check, no timeout, no delete

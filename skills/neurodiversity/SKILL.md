@@ -1,16 +1,16 @@
 ---
-name: autistic
-description: Depth-first systems reasoning for coding agents. Builds a system map, then drives sustained monotropic focus through one load-bearing question at a time — assumptions, invariants, contradictions, edge cases — until the model of the system stops changing materially. Use on /autistic, "AUTISTIC mode", repository audits, production bugs with no known root cause, architecture review, or "why does this happen" questions. Skip for syntax, lookups, bugs with an already-known root cause, or closed phrasing ("quick", "standard", "just fix"). Full pre-flight gate is in the skill body. Complementary to the adhd skill — see the bridge section below.
+name: neurodiversity
+description: Depth-first systems reasoning for coding agents. Builds a system map, then drives sustained monotropic focus through one load-bearing question at a time — assumptions, invariants, contradictions, edge cases — until the model of the system stops changing materially. Use on /neurodiversity, "NEURODIVERSITY mode", repository audits, production bugs with no known root cause, architecture review, or "why does this happen" questions. Skip for syntax, lookups, bugs with an already-known root cause, or closed phrasing ("quick", "standard", "just fix"). Full pre-flight gate is in the skill body. Complementary to the adhd skill — see the bridge section below.
 ---
 
-# AUTISTIC
+# NEURODIVERSITY
 
 Deep Systems Reasoning for Agents
 
 ADHD prevents premature convergence: it keeps looking outward for options
-you haven't considered. AUTISTIC prevents premature understanding: it keeps
+you haven't considered. NEURODIVERSITY prevents premature understanding: it keeps
 looking inward until the model of the system holds together. ADHD finds
-options. AUTISTIC finds structure. ADHD asks *what else?* AUTISTIC asks
+options. NEURODIVERSITY finds structure. ADHD asks *what else?* NEURODIVERSITY asks
 *why, exactly where, what depends on that, is that always true, what
 breaks at the boundary, what contradicts it, what evidence proves it, what
 did we miss?* — then keeps asking until further investigation stops
@@ -33,9 +33,9 @@ This skill is expensive: a system map plus one or more sustained
 investigation tunnels, each potentially several Agent calls deep. Do not
 pay that cost when a direct answer is better.
 
-**Step 1. Explicit invocation check.** If the user typed `/autistic` or
-explicitly asked for AUTISTIC mode, "deep-dive this", "audit this
-repository", or "run AUTISTIC on this" — skip the rest of this section
+**Step 1. Explicit invocation check.** If the user typed `/neurodiversity` or
+explicitly asked for NEURODIVERSITY mode, "deep-dive this", "audit this
+repository", or "run NEURODIVERSITY on this" — skip the rest of this section
 and go to Phase 0. The user opted in.
 
 **Step 2. Self-judge (only if Step 1 did not match).** Ask three
@@ -52,17 +52,17 @@ questions. If any answer is no, abort and answer directly.
 
 If all three pass, proceed to Phase 0.
 
-## Routing: AUTISTIC vs ADHD vs combined
+## Routing: NEURODIVERSITY vs ADHD vs combined
 
 | Ask | Route |
 |---|---|
 | "Give me options / ideas / alternatives" | ADHD only |
-| "Why is this happening" / "audit this" / "what's wrong" | AUTISTIC only |
-| "Design the best architecture for X" | ADHD → AUTISTIC |
-| "This design is fundamentally broken, find another approach" | AUTISTIC → ADHD → AUTISTIC |
+| "Why is this happening" / "audit this" / "what's wrong" | NEURODIVERSITY only |
+| "Design the best architecture for X" | ADHD → NEURODIVERSITY |
+| "This design is fundamentally broken, find another approach" | NEURODIVERSITY → ADHD → NEURODIVERSITY |
 
 Full heuristics and the shared JSON handoff shape are in
-`references/adhd-bridge.md`. Default to AUTISTIC only unless the ask is
+`references/adhd-bridge.md`. Default to NEURODIVERSITY only unless the ask is
 explicitly about generating or choosing between options.
 
 ## Phase 0 — System Cartography
@@ -70,7 +70,7 @@ explicitly about generating or choosing between options.
 Before any deep dive, check for a memory ledger and prefer real tools
 over manual reading:
 
-- If `.autistic/memory.json` exists in the target repo, load it —
+- If `.neurodiversity/memory.json` exists in the target repo, load it —
   prior invariants/contradictions/assumptions are evidence, not
   settled fact; re-verify what this run actually touches. Full
   behavior: `references/memory.md`.
@@ -109,7 +109,7 @@ Three layers must all be populated, not just the one that's easiest:
 
 ## Phase 1 — Cognitive profile selection
 
-Do not use one generic "autistic mode." Select 3–5 profiles from
+Do not use one generic "neurodiversity mode." Select 3–5 profiles from
 `frames/cognitive-profiles.md` based on the problem shape (selection
 heuristics are in `frames/profile-selection.md`). Typical picks:
 
@@ -346,13 +346,13 @@ low-value analytical detail unless the user asked for `--show-*` output
 confirmation, test results, and assumption/contradiction count — never
 from writing tone.
 
-**Memory write**: update `.autistic/memory.json` in the target repo
+**Memory write**: update `.neurodiversity/memory.json` in the target repo
 with this run's confirmed invariants/contradictions/assumptions (not
 speculative `unknowns`). Increment `confirmedRuns` for anything
 re-verified rather than duplicating it; mark anything this run's
 evidence overturned as `superseded`, don't silently overwrite it. Full
 behavior: `references/memory.md`. Skip this step only when the target
-isn't a real repo AUTISTIC can write into (e.g. a pasted snippet).
+isn't a real repo NEURODIVERSITY can write into (e.g. a pasted snippet).
 
 ### Hard failure states — do not declare success if
 
@@ -406,12 +406,12 @@ stop; don't run forensic mode on everything.
 
 ## ADHD bridge
 
-AUTISTIC can consume ADHD's output directly (`ideas / clusters / traps /
+NEURODIVERSITY can consume ADHD's output directly (`ideas / clusters / traps /
 shortlist / deepened / nonObviousPick`) and turn each shortlisted
 candidate into assumptions, dependencies, invariants, failure modes,
 edge cases, security/operations concerns, cost, and a verification plan
 — see `references/adhd-bridge.md` for the exact transform and the
-`/adhd-autistic --loop` cycle (`understand → explore → verify → find new
+`/adhd-neurodiversity --loop` cycle (`understand → explore → verify → find new
 problem → …`, stopping at saturation).
 
 ## Anti-patterns
@@ -435,7 +435,7 @@ problem → …`, stopping at saturation).
   output back through a chain of messages instead of producing its own
   result is not resilience, it's a stall waiting to happen. See
   "Resilience" above.
-- **Trusting stale memory.** Loading `.autistic/memory.json` and
+- **Trusting stale memory.** Loading `.neurodiversity/memory.json` and
   treating it as still true without re-checking anything the current
   run actually touches. See `references/memory.md`.
 - **Checking in instead of continuing.** Pausing mid-run to post a

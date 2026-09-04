@@ -7,19 +7,19 @@
 
 *Explore wider. Understand deeper. Build better.*
 
-![Neurodiversity: Deep Systems Reasoning for Agents. Two minds, one system, limitless potential. ADHD is the divergent-thinking engine — explore the possibilities, wide exploration, creative connections, alternative ideas, break patterns, find the unseen. AUTISTIC is the depth-first reasoning engine — understand the system, deep system analysis, pattern recognition, contradiction detection, dependency mapping, invariant discovery, edge-case hunting, truth and verification. Bridge the gap, combine strengths: explore widely, understand deeply, build better.](docs/banner.png)
+![Neurodiversity: Deep Systems Reasoning for Agents. Two minds, one system, limitless potential. ADHD is the divergent-thinking engine — explore the possibilities, wide exploration, creative connections, alternative ideas, break patterns, find the unseen. NEURODIVERSITY is the depth-first reasoning engine — understand the system, deep system analysis, pattern recognition, contradiction detection, dependency mapping, invariant discovery, edge-case hunting, truth and verification. Bridge the gap, combine strengths: explore widely, understand deeply, build better.](docs/banner.png)
 
 This repository is named **Neurodiversity Coding** because it is one half of
-that pairing. AUTISTIC lives here. ADHD lives at
+that pairing. NEURODIVERSITY lives here. ADHD lives at
 [`UditAkhourii/adhd`](https://github.com/UditAkhourii/adhd), and it's
 never vendored in, only bridged to (see the ADHD bridge below).
 
-AUTISTIC is a depth-first systems-reasoning Agent Skill for coding
+NEURODIVERSITY is a depth-first systems-reasoning Agent Skill for coding
 agents, built as the complementary architecture to
 [`UditAkhourii/adhd`](https://github.com/UditAkhourii/adhd). ADHD runs
 a breadth-first ideation loop: isolated parallel cognitive frames widen
 the solution space, then a critic scores, clusters, and deepens
-whatever survives. AUTISTIC does the opposite. It builds a system map
+whatever survives. NEURODIVERSITY does the opposite. It builds a system map
 first, then drives sustained, ranked, single-tunnel focus through
 assumptions, invariants, contradictions, and edge cases, with a hard
 "hyperfocus" limiter so depth never turns into tunnel vision, and it
@@ -27,7 +27,7 @@ keeps going until the model of the system stops changing in any way
 that matters.
 
 ```
-ADHD                              AUTISTIC
+ADHD                              NEURODIVERSITY
 explore the possibilities         understand the system
 divergent thinking                deep system analysis
 wide exploration                  pattern recognition
@@ -41,13 +41,13 @@ ideas · options · novelty         truth · structure · clarity
 alternatives · insight            precision · completeness
 ```
 
-ADHD exists to stop **premature convergence**; AUTISTIC exists to stop
+ADHD exists to stop **premature convergence**; NEURODIVERSITY exists to stop
 **premature understanding**. One keeps looking outward. The other keeps
 looking inward, until the model actually holds together.
 
 ## Author's note
 
-> I'm a certified autistic adult. Social situations have never come easy
+> I'm a certified neurodiversity adult. Social situations have never come easy
 > to me, but coding always has. It's one of the few places I can just
 > settle in, focus, and feel like myself.
 >
@@ -58,7 +58,7 @@ looking inward, until the model actually holds together.
 > Staying with one hard problem long enough to really understand it,
 > instead of bouncing off it the second something else grabs my
 > attention, is something I've genuinely struggled with. I built
-> AUTISTIC to give myself (and Claude) a disciplined way to do that: pick
+> NEURODIVERSITY to give myself (and Claude) a disciplined way to do that: pick
 > the one question that actually matters, stay on it until it's really
 > resolved, and don't lose the whole picture while doing it.
 >
@@ -86,7 +86,7 @@ unresolved questions) as reasoning tools, not diagnostic claims. The
 name describes the reasoning architecture: sustained focus, explicit
 structure, pattern consistency, and persistence until important
 uncertainty has been resolved. See
-[`skills/autistic/references/monotropism.md`](skills/autistic/references/monotropism.md)
+[`skills/neurodiversity/references/monotropism.md`](skills/neurodiversity/references/monotropism.md)
 for the theory this borrows from, its limits, and the terminology this
 project deliberately avoids in its own generic framing (see
 [`AGENTS.md`](AGENTS.md) for the full list).
@@ -96,7 +96,7 @@ project deliberately avoids in its own generic framing (see
 Install the Agent Skill directly from GitHub with the GitHub CLI:
 
 ```bash
-gh skill install khhvmc5g6f-eng/Neurodiversity autistic
+gh skill install khhvmc5g6f-eng/Neurodiversity neurodiversity
 ```
 
 For Claude Code without `gh skill`, clone the repository first and copy the
@@ -106,22 +106,22 @@ skill directory:
 git clone https://github.com/khhvmc5g6f-eng/Neurodiversity.git
 cd Neurodiversity
 mkdir -p ~/.claude/skills
-cp -R skills/autistic ~/.claude/skills/autistic
+cp -R skills/neurodiversity ~/.claude/skills/neurodiversity
 ```
 
 Then in Claude Code:
 
 ```
-/autistic why is this service intermittently losing state?
-/autistic --forensic audit this repository
-/autistic --monotropic --focus auth find the race
+/neurodiversity why is this service intermittently losing state?
+/neurodiversity --forensic audit this repository
+/neurodiversity --monotropic --focus auth find the race
 ```
 
 You do not need to install anything to read the reasoning. It is a portable
 Markdown Agent Skill. Runtimes without isolated subagents can execute the
-same phases inline. AUTISTIC deliberately does not duplicate ADHD's
+same phases inline. NEURODIVERSITY deliberately does not duplicate ADHD's
 divergence engine; see the ADHD bridge below for how the two connect. Full operational detail:
-[`skills/autistic/SKILL.md`](skills/autistic/SKILL.md).
+[`skills/neurodiversity/SKILL.md`](skills/neurodiversity/SKILL.md).
 
 ## How it works, briefly
 
@@ -150,30 +150,30 @@ prefers a real call-graph MCP, static-analysis MCP, or CLI tool
 (dependency-cruiser, Semgrep, Stryker/mutmut/cargo-mutants,
 Schemathesis/oasdiff) over an LLM inferring the same thing from reading
 files, wherever one is available
-([`references/tooling.md`](skills/autistic/references/tooling.md)); and
-a **cross-run memory ledger** (`.autistic/memory.json`, written into the
+([`references/tooling.md`](skills/neurodiversity/references/tooling.md)); and
+a **cross-run memory ledger** (`.neurodiversity/memory.json`, written into the
 *target* repo being analysed) means a repeat audit doesn't re-derive
 invariants and contradictions a previous run already confirmed
-([`references/memory.md`](skills/autistic/references/memory.md)).
+([`references/memory.md`](skills/neurodiversity/references/memory.md)).
 
-Full architecture: [`skills/autistic/references/`](skills/autistic/references/).
-Cognitive profiles: [`skills/autistic/frames/`](skills/autistic/frames/).
-Typed schemas: [`skills/autistic/schemas/`](skills/autistic/schemas/).
+Full architecture: [`skills/neurodiversity/references/`](skills/neurodiversity/references/).
+Cognitive profiles: [`skills/neurodiversity/frames/`](skills/neurodiversity/frames/).
+Typed schemas: [`skills/neurodiversity/schemas/`](skills/neurodiversity/schemas/).
 
 ## ADHD bridge
 
-AUTISTIC can take ADHD's `{ideas, clusters, traps, shortlist,
+NEURODIVERSITY can take ADHD's `{ideas, clusters, traps, shortlist,
 deepened, nonObviousPick}` output directly and verify each shortlisted
 candidate in depth. It can also hand its own precisely-defined failures
 back to ADHD, for when depth has diagnosed a dead end but not found a
 way forward. See
-[`skills/autistic/references/adhd-bridge.md`](skills/autistic/references/adhd-bridge.md)
+[`skills/neurodiversity/references/adhd-bridge.md`](skills/neurodiversity/references/adhd-bridge.md)
 for the routing table and both pipeline directions.
 
 ## Benchmarks
 
 Raw, non-cherry-picked results from running BASELINE / ADHD /
-AUTISTIC / ADHD→AUTISTIC against a seeded-defect fixture suite
+NEURODIVERSITY / ADHD→NEURODIVERSITY against a seeded-defect fixture suite
 (concurrency, security, contradictory API contracts, missing
 requirements, config failure, and more) are in [`EVALS.md`](EVALS.md).
 The scoring is mechanical (planted defects matched against reported
@@ -186,7 +186,7 @@ principles.
 Neurodiversity/
 ├── README.md · LICENSE · SECURITY.md · CONTRIBUTING.md
 ├── CODE_OF_CONDUCT.md · EVALS.md · AGENTS.md
-├── skills/autistic/
+├── skills/neurodiversity/
 │   ├── SKILL.md
 │   ├── references/   architecture, monotropism, patterns, requirements,
 │   │                  debugging, verification, adhd-bridge,

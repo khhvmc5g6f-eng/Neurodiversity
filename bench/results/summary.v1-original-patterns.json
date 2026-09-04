@@ -13,7 +13,7 @@
           {
             "id": "API-1",
             "hit": true,
-            "matchedFinding": "Server serialize() emits the US spelling \"canceled\" (single L) for sub.canceledAt truthy case, and also for sub.status when it presumably equals \"cancelled\" — but the documented contract requires the value \"cancelled\" (UK spelling, double L); the client's isCancelled() checks `sub.status === \"cancelled\"`, which will never match \"canceled\", so the cancelled banner never appears — this is the root cause of the QA bug."
+            "matchedFinding": "Server serialize() emits the US spelling \"canceled\" (single L) for sub.canceledAt truthy case, and also for sub.status when it presumably equals \"cancelled\" \u2014 but the documented contract requires the value \"cancelled\" (UK spelling, double L); the client's isCancelled() checks `sub.status === \"cancelled\"`, which will never match \"canceled\", so the cancelled banner never appears \u2014 this is the root cause of the QA bug."
           },
           {
             "id": "API-2",
@@ -39,7 +39,7 @@
           {
             "id": "API-1",
             "hit": true,
-            "matchedFinding": "Server serializes cancelled subscriptions with status value \"canceled\" (US spelling, single L), but the documented contract's enum only contains \"cancelled\" (UK spelling, double L) — the server's own output is not a member of its documented enum."
+            "matchedFinding": "Server serializes cancelled subscriptions with status value \"canceled\" (US spelling, single L), but the documented contract's enum only contains \"cancelled\" (UK spelling, double L) \u2014 the server's own output is not a member of its documented enum."
           },
           {
             "id": "API-2",
@@ -54,7 +54,7 @@
         ],
         "reportedCount": 5
       },
-      "autistic": {
+      "neurodiversity": {
         "tp": 2,
         "fp": 0,
         "fn": 1,
@@ -65,7 +65,7 @@
           {
             "id": "API-1",
             "hit": true,
-            "matchedFinding": "Server's serialize() emits the US spelling \"canceled\" (`sub.canceledAt ? \"canceled\" : sub.status`) while the documented contract and the client's isCancelled() both use the UK spelling \"cancelled\" (`sub.status === \"cancelled\"`). Because the server never emits the string \"cancelled\", isCancelled() is always false for every subscription, including ones with canceledAt set — this is the exact root cause of the QA-reported bug that the cancelled banner never appears."
+            "matchedFinding": "Server's serialize() emits the US spelling \"canceled\" (`sub.canceledAt ? \"canceled\" : sub.status`) while the documented contract and the client's isCancelled() both use the UK spelling \"cancelled\" (`sub.status === \"cancelled\"`). Because the server never emits the string \"cancelled\", isCancelled() is always false for every subscription, including ones with canceledAt set \u2014 this is the exact root cause of the QA-reported bug that the cancelled banner never appears."
           },
           {
             "id": "API-2",
@@ -80,7 +80,7 @@
         ],
         "reportedCount": 2
       },
-      "adhd-autistic": {
+      "adhd-neurodiversity": {
         "tp": 2,
         "fp": 1,
         "fn": 1,
@@ -91,12 +91,12 @@
           {
             "id": "API-1",
             "hit": true,
-            "matchedFinding": "Server spells the cancelled status as \"canceled\" (US spelling, in serialize(): `sub.canceledAt ? \"canceled\" : sub.status`) while the client's isCancelled() does a strict equality check against \"cancelled\" (UK spelling, matching the documented contract). Because the server never emits the literal string \"cancelled\", isCancelled() returns false for every subscription regardless of actual cancellation state, which is the direct root cause of the banner never appearing — confirmed by the spelling called out in both code comments."
+            "matchedFinding": "Server spells the cancelled status as \"canceled\" (US spelling, in serialize(): `sub.canceledAt ? \"canceled\" : sub.status`) while the client's isCancelled() does a strict equality check against \"cancelled\" (UK spelling, matching the documented contract). Because the server never emits the literal string \"cancelled\", isCancelled() returns false for every subscription regardless of actual cancellation state, which is the direct root cause of the banner never appearing \u2014 confirmed by the spelling called out in both code comments."
           },
           {
             "id": "API-2",
             "hit": true,
-            "matchedFinding": "Independent of the status bug, the documented contract specifies `amount` as dollars, but serialize() returns `sub.amountCents` unconverted (no division by 100) under the `amount` key, and the client's formatAmount() does `$${sub.amount.toFixed(2)}` assuming the value is already dollars. This produces a dollar amount inflated 100x (e.g. 500 cents rendered as \"$500.00\" instead of \"$5.00\") for every subscription, not just cancelled ones — a second, separate contract violation with financial-display impact and broader reach than the banner bug."
+            "matchedFinding": "Independent of the status bug, the documented contract specifies `amount` as dollars, but serialize() returns `sub.amountCents` unconverted (no division by 100) under the `amount` key, and the client's formatAmount() does `$${sub.amount.toFixed(2)}` assuming the value is already dollars. This produces a dollar amount inflated 100x (e.g. 500 cents rendered as \"$500.00\" instead of \"$5.00\") for every subscription, not just cancelled ones \u2014 a second, separate contract violation with financial-display impact and broader reach than the banner bug."
           },
           {
             "id": "API-3",
@@ -119,12 +119,12 @@
           {
             "id": "ARCH-1",
             "hit": true,
-            "matchedFinding": "genericSearch.ts's excludeDeleted() hardcodes the column name 'deleted_at', but the users table has no deleted_at column at all (only is_deleted BOOLEAN) — the exclusion filter can never match anything on 'users'."
+            "matchedFinding": "genericSearch.ts's excludeDeleted() hardcodes the column name 'deleted_at', but the users table has no deleted_at column at all (only is_deleted BOOLEAN) \u2014 the exclusion filter can never match anything on 'users'."
           },
           {
             "id": "ARCH-2",
             "hit": true,
-            "matchedFinding": "Because the ORM is configured with unknownColumnMode: 'silent-skip', the where('deleted_at', 'IS', null) clause against the users table is silently dropped instead of erroring, so search('users', …) runs with no soft-delete filter whatsoever — this is the direct cause of deleted accounts appearing in search results."
+            "matchedFinding": "Because the ORM is configured with unknownColumnMode: 'silent-skip', the where('deleted_at', 'IS', null) clause against the users table is silently dropped instead of erroring, so search('users', \u2026) runs with no soft-delete filter whatsoever \u2014 this is the direct cause of deleted accounts appearing in search results."
           },
           {
             "id": "ARCH-3",
@@ -145,12 +145,12 @@
           {
             "id": "ARCH-1",
             "hit": true,
-            "matchedFinding": "excludeDeleted() hardcodes the column name 'deleted_at' and is applied uniformly to every table by the shared search() function, but the users table has no deleted_at column at all — it uses is_deleted instead — so the filter's column assumption doesn't match the real per-table schema."
+            "matchedFinding": "excludeDeleted() hardcodes the column name 'deleted_at' and is applied uniformly to every table by the shared search() function, but the users table has no deleted_at column at all \u2014 it uses is_deleted instead \u2014 so the filter's column assumption doesn't match the real per-table schema."
           },
           {
             "id": "ARCH-2",
             "hit": true,
-            "matchedFinding": "Because unknownColumnMode is 'silent-skip', the query builder silently drops the deleted_at clause when it runs against users instead of raising an error, so no soft-delete filter is applied to user search at all — this is the direct mechanism causing deleted accounts to leak into results while orders (which does have deleted_at) is correctly filtered."
+            "matchedFinding": "Because unknownColumnMode is 'silent-skip', the query builder silently drops the deleted_at clause when it runs against users instead of raising an error, so no soft-delete filter is applied to user search at all \u2014 this is the direct mechanism causing deleted accounts to leak into results while orders (which does have deleted_at) is correctly filtered."
           },
           {
             "id": "ARCH-3",
@@ -160,7 +160,7 @@
         ],
         "reportedCount": 6
       },
-      "autistic": {
+      "neurodiversity": {
         "tp": 2,
         "fp": 4,
         "fn": 1,
@@ -171,12 +171,12 @@
           {
             "id": "ARCH-1",
             "hit": true,
-            "matchedFinding": "Root cause of the reported bug: excludeDeleted() in genericSearch.ts hardcodes `where('deleted_at', 'IS', null)` and is applied uniformly (per the code's own comment) to both the orders and users searches. The users table has no deleted_at column at all (per the schema comment), and the ORM's unknownColumnMode: 'silent-skip', which is configured for all search endpoints, silently drops that predicate when it hits a nonexistent column instead of erroring. The result is that the users search runs with no deletion filter whatsoever, so soft-deleted users (is_deleted = true) leak into results — while orders, which really has deleted_at, is filtered correctly. This exactly matches the reported symptom."
+            "matchedFinding": "Root cause of the reported bug: excludeDeleted() in genericSearch.ts hardcodes `where('deleted_at', 'IS', null)` and is applied uniformly (per the code's own comment) to both the orders and users searches. The users table has no deleted_at column at all (per the schema comment), and the ORM's unknownColumnMode: 'silent-skip', which is configured for all search endpoints, silently drops that predicate when it hits a nonexistent column instead of erroring. The result is that the users search runs with no deletion filter whatsoever, so soft-deleted users (is_deleted = true) leak into results \u2014 while orders, which really has deleted_at, is filtered correctly. This exactly matches the reported symptom."
           },
           {
             "id": "ARCH-2",
             "hit": true,
-            "matchedFinding": "Root cause of the reported bug: excludeDeleted() in genericSearch.ts hardcodes `where('deleted_at', 'IS', null)` and is applied uniformly (per the code's own comment) to both the orders and users searches. The users table has no deleted_at column at all (per the schema comment), and the ORM's unknownColumnMode: 'silent-skip', which is configured for all search endpoints, silently drops that predicate when it hits a nonexistent column instead of erroring. The result is that the users search runs with no deletion filter whatsoever, so soft-deleted users (is_deleted = true) leak into results — while orders, which really has deleted_at, is filtered correctly. This exactly matches the reported symptom."
+            "matchedFinding": "Root cause of the reported bug: excludeDeleted() in genericSearch.ts hardcodes `where('deleted_at', 'IS', null)` and is applied uniformly (per the code's own comment) to both the orders and users searches. The users table has no deleted_at column at all (per the schema comment), and the ORM's unknownColumnMode: 'silent-skip', which is configured for all search endpoints, silently drops that predicate when it hits a nonexistent column instead of erroring. The result is that the users search runs with no deletion filter whatsoever, so soft-deleted users (is_deleted = true) leak into results \u2014 while orders, which really has deleted_at, is filtered correctly. This exactly matches the reported symptom."
           },
           {
             "id": "ARCH-3",
@@ -186,7 +186,7 @@
         ],
         "reportedCount": 5
       },
-      "adhd-autistic": {
+      "adhd-neurodiversity": {
         "tp": 2,
         "fp": 5,
         "fn": 1,
@@ -197,12 +197,12 @@
           {
             "id": "ARCH-1",
             "hit": true,
-            "matchedFinding": "Root cause: users table has no deleted_at column (only is_deleted boolean), but excludeDeleted() in genericSearch.ts hardcodes .where('deleted_at','IS',null) for every table — a column that simply doesn't exist on users."
+            "matchedFinding": "Root cause: users table has no deleted_at column (only is_deleted boolean), but excludeDeleted() in genericSearch.ts hardcodes .where('deleted_at','IS',null) for every table \u2014 a column that simply doesn't exist on users."
           },
           {
             "id": "ARCH-2",
             "hit": true,
-            "matchedFinding": "The ORM's unknownColumnMode:'silent-skip' (enabled for all search endpoints) converts that invalid column reference into a silent no-op instead of an error, so the soft-delete filter is dropped entirely for users searches while working correctly for orders (which does have deleted_at) — this is the direct mechanism producing the reported bug."
+            "matchedFinding": "The ORM's unknownColumnMode:'silent-skip' (enabled for all search endpoints) converts that invalid column reference into a silent no-op instead of an error, so the soft-delete filter is dropped entirely for users searches while working correctly for orders (which does have deleted_at) \u2014 this is the direct mechanism producing the reported bug."
           },
           {
             "id": "ARCH-3",
@@ -225,12 +225,12 @@
           {
             "id": "CONC-1",
             "hit": true,
-            "matchedFinding": "No try/catch/finally around `await refreshToken(oldToken)` (lines 19-21 of tokenService.js): if `api.post('/auth/refresh', ...)` rejects (network error, 5xx, timeout), the exception propagates up uncaught and `refreshing` is never reset to `false`. Every subsequent `getToken()` call then permanently falls into the 'wait a bit and use whatever we have' branch, forever returning the same stale `currentToken` (or `null`) — a single failed refresh permanently breaks the client until a full page reload."
+            "matchedFinding": "No try/catch/finally around `await refreshToken(oldToken)` (lines 19-21 of tokenService.js): if `api.post('/auth/refresh', ...)` rejects (network error, 5xx, timeout), the exception propagates up uncaught and `refreshing` is never reset to `false`. Every subsequent `getToken()` call then permanently falls into the 'wait a bit and use whatever we have' branch, forever returning the same stale `currentToken` (or `null`) \u2014 a single failed refresh permanently breaks the client until a full page reload."
           },
           {
             "id": "CONC-2",
             "hit": true,
-            "matchedFinding": "Worse than merely 'stale': per the code comment, 'the server invalidates oldToken the moment it receives this request' — so as soon as the refreshing call's POST lands, `currentToken` (still holding the old value) is guaranteed-revoked server-side, not just close to expiry. Any concurrent caller that reads `currentToken` in that window (either via the sleep(50) branch or via the initiating call's own in-flight requests started before refresh) will deterministically get a 401, not just probabilistically."
+            "matchedFinding": "Worse than merely 'stale': per the code comment, 'the server invalidates oldToken the moment it receives this request' \u2014 so as soon as the refreshing call's POST lands, `currentToken` (still holding the old value) is guaranteed-revoked server-side, not just close to expiry. Any concurrent caller that reads `currentToken` in that window (either via the sleep(50) branch or via the initiating call's own in-flight requests started before refresh) will deterministically get a 401, not just probabilistically."
           },
           {
             "id": "CONC-3",
@@ -251,22 +251,22 @@
           {
             "id": "CONC-1",
             "hit": true,
-            "matchedFinding": "Concurrent requests already using the current token race against a parallel refresh: refreshToken() invalidates oldToken server-side 'the moment it receives the request', but since every call site invokes getToken() independently with no shared request queue, any request already in flight (or dispatched moments later) with that same token gets rejected once the refresh lands — this is the direct mechanism behind the reported intermittent logouts."
+            "matchedFinding": "Concurrent requests already using the current token race against a parallel refresh: refreshToken() invalidates oldToken server-side 'the moment it receives the request', but since every call site invokes getToken() independently with no shared request queue, any request already in flight (or dispatched moments later) with that same token gets rejected once the refresh lands \u2014 this is the direct mechanism behind the reported intermittent logouts."
           },
           {
             "id": "CONC-2",
             "hit": true,
-            "matchedFinding": "Concurrent requests already using the current token race against a parallel refresh: refreshToken() invalidates oldToken server-side 'the moment it receives the request', but since every call site invokes getToken() independently with no shared request queue, any request already in flight (or dispatched moments later) with that same token gets rejected once the refresh lands — this is the direct mechanism behind the reported intermittent logouts."
+            "matchedFinding": "Concurrent requests already using the current token race against a parallel refresh: refreshToken() invalidates oldToken server-side 'the moment it receives the request', but since every call site invokes getToken() independently with no shared request queue, any request already in flight (or dispatched moments later) with that same token gets rejected once the refresh lands \u2014 this is the direct mechanism behind the reported intermittent logouts."
           },
           {
             "id": "CONC-3",
             "hit": true,
-            "matchedFinding": "The 'wait' branch synchronizes via a boolean flag plus a single fixed 50ms sleep rather than awaiting the actual in-flight refresh's result/promise. If the refresh takes longer than 50ms (routine on a slow network), the waiting caller unconditionally returns whatever is currently in 'currentToken' — still expired — with no re-check loop and no re-validation of expiry."
+            "matchedFinding": "The 'wait' branch synchronizes via a boolean flag plus a single fixed 50ms sleep rather than awaiting the actual in-flight refresh's result/promise. If the refresh takes longer than 50ms (routine on a slow network), the waiting caller unconditionally returns whatever is currently in 'currentToken' \u2014 still expired \u2014 with no re-check loop and no re-validation of expiry."
           }
         ],
         "reportedCount": 4
       },
-      "autistic": {
+      "neurodiversity": {
         "tp": 3,
         "fp": 2,
         "fn": 0,
@@ -277,22 +277,22 @@
           {
             "id": "CONC-1",
             "hit": true,
-            "matchedFinding": "The refresh-in-progress branch (`await sleep(50); return currentToken;`) does not actually wait for the in-flight refresh to finish — it waits a fixed 50ms and then returns whatever `currentToken` currently holds, without re-checking `refreshing` or the token's validity. If the real `/auth/refresh` round trip takes longer than 50ms (entirely normal under network latency/congestion), waiting callers return the OLD token value before `currentToken = newToken` has run. Since the docstring states the server invalidates `oldToken` the instant it receives the refresh request, that returned token is already dead server-side, so the caller's subsequent authenticated request gets a 401 — this is exactly the 'intermittent logout with no clear repro' symptom, since it only triggers when refresh latency happens to exceed the hardcoded 50ms window."
+            "matchedFinding": "The refresh-in-progress branch (`await sleep(50); return currentToken;`) does not actually wait for the in-flight refresh to finish \u2014 it waits a fixed 50ms and then returns whatever `currentToken` currently holds, without re-checking `refreshing` or the token's validity. If the real `/auth/refresh` round trip takes longer than 50ms (entirely normal under network latency/congestion), waiting callers return the OLD token value before `currentToken = newToken` has run. Since the docstring states the server invalidates `oldToken` the instant it receives the refresh request, that returned token is already dead server-side, so the caller's subsequent authenticated request gets a 401 \u2014 this is exactly the 'intermittent logout with no clear repro' symptom, since it only triggers when refresh latency happens to exceed the hardcoded 50ms window."
           },
           {
             "id": "CONC-2",
             "hit": true,
-            "matchedFinding": "The refresh-in-progress branch (`await sleep(50); return currentToken;`) does not actually wait for the in-flight refresh to finish — it waits a fixed 50ms and then returns whatever `currentToken` currently holds, without re-checking `refreshing` or the token's validity. If the real `/auth/refresh` round trip takes longer than 50ms (entirely normal under network latency/congestion), waiting callers return the OLD token value before `currentToken = newToken` has run. Since the docstring states the server invalidates `oldToken` the instant it receives the refresh request, that returned token is already dead server-side, so the caller's subsequent authenticated request gets a 401 — this is exactly the 'intermittent logout with no clear repro' symptom, since it only triggers when refresh latency happens to exceed the hardcoded 50ms window."
+            "matchedFinding": "The refresh-in-progress branch (`await sleep(50); return currentToken;`) does not actually wait for the in-flight refresh to finish \u2014 it waits a fixed 50ms and then returns whatever `currentToken` currently holds, without re-checking `refreshing` or the token's validity. If the real `/auth/refresh` round trip takes longer than 50ms (entirely normal under network latency/congestion), waiting callers return the OLD token value before `currentToken = newToken` has run. Since the docstring states the server invalidates `oldToken` the instant it receives the refresh request, that returned token is already dead server-side, so the caller's subsequent authenticated request gets a 401 \u2014 this is exactly the 'intermittent logout with no clear repro' symptom, since it only triggers when refresh latency happens to exceed the hardcoded 50ms window."
           },
           {
             "id": "CONC-3",
             "hit": true,
-            "matchedFinding": "The refresh-in-progress branch (`await sleep(50); return currentToken;`) does not actually wait for the in-flight refresh to finish — it waits a fixed 50ms and then returns whatever `currentToken` currently holds, without re-checking `refreshing` or the token's validity. If the real `/auth/refresh` round trip takes longer than 50ms (entirely normal under network latency/congestion), waiting callers return the OLD token value before `currentToken = newToken` has run. Since the docstring states the server invalidates `oldToken` the instant it receives the refresh request, that returned token is already dead server-side, so the caller's subsequent authenticated request gets a 401 — this is exactly the 'intermittent logout with no clear repro' symptom, since it only triggers when refresh latency happens to exceed the hardcoded 50ms window."
+            "matchedFinding": "The refresh-in-progress branch (`await sleep(50); return currentToken;`) does not actually wait for the in-flight refresh to finish \u2014 it waits a fixed 50ms and then returns whatever `currentToken` currently holds, without re-checking `refreshing` or the token's validity. If the real `/auth/refresh` round trip takes longer than 50ms (entirely normal under network latency/congestion), waiting callers return the OLD token value before `currentToken = newToken` has run. Since the docstring states the server invalidates `oldToken` the instant it receives the refresh request, that returned token is already dead server-side, so the caller's subsequent authenticated request gets a 401 \u2014 this is exactly the 'intermittent logout with no clear repro' symptom, since it only triggers when refresh latency happens to exceed the hardcoded 50ms window."
           }
         ],
         "reportedCount": 3
       },
-      "adhd-autistic": {
+      "adhd-neurodiversity": {
         "tp": 3,
         "fp": 1,
         "fn": 0,
@@ -303,17 +303,17 @@
           {
             "id": "CONC-1",
             "hit": true,
-            "matchedFinding": "Non-initiating callers (the `else` branch) only `sleep(50)` once and then unconditionally return whatever `currentToken` currently holds — they never re-check whether the in-flight refresh actually completed, and there is no shared promise/queue at the call sites (the file explicitly says every request calls `getToken()` independently). Since refresh is a network round trip typically well over 50ms, these callers systematically return the same token that was already judged expired by the caller that triggered the refresh, so their authenticated request fails and the app surfaces this as a logout. This is the primary root cause of the 'intermittent logout' reports, with severity scaling with request concurrency and refresh latency."
+            "matchedFinding": "Non-initiating callers (the `else` branch) only `sleep(50)` once and then unconditionally return whatever `currentToken` currently holds \u2014 they never re-check whether the in-flight refresh actually completed, and there is no shared promise/queue at the call sites (the file explicitly says every request calls `getToken()` independently). Since refresh is a network round trip typically well over 50ms, these callers systematically return the same token that was already judged expired by the caller that triggered the refresh, so their authenticated request fails and the app surfaces this as a logout. This is the primary root cause of the 'intermittent logout' reports, with severity scaling with request concurrency and refresh latency."
           },
           {
             "id": "CONC-2",
             "hit": true,
-            "matchedFinding": "The comment states the server invalidates `oldToken` the instant it receives the `/auth/refresh` POST, i.e. before the refresh response (and therefore the new token) is even available client-side. Combined with the architecture where every authenticated request calls `getToken()' independently with no shared in-flight-request tracking, any other request that grabbed the still-valid old token just before a refresh was triggered elsewhere on the page can fail collaterally the moment the refresh request lands server-side — a structural race between token invalidation and concurrent in-flight request usage that is not mitigated anywhere in this code."
+            "matchedFinding": "The comment states the server invalidates `oldToken` the instant it receives the `/auth/refresh` POST, i.e. before the refresh response (and therefore the new token) is even available client-side. Combined with the architecture where every authenticated request calls `getToken()' independently with no shared in-flight-request tracking, any other request that grabbed the still-valid old token just before a refresh was triggered elsewhere on the page can fail collaterally the moment the refresh request lands server-side \u2014 a structural race between token invalidation and concurrent in-flight request usage that is not mitigated anywhere in this code."
           },
           {
             "id": "CONC-3",
             "hit": true,
-            "matchedFinding": "Non-initiating callers (the `else` branch) only `sleep(50)` once and then unconditionally return whatever `currentToken` currently holds — they never re-check whether the in-flight refresh actually completed, and there is no shared promise/queue at the call sites (the file explicitly says every request calls `getToken()` independently). Since refresh is a network round trip typically well over 50ms, these callers systematically return the same token that was already judged expired by the caller that triggered the refresh, so their authenticated request fails and the app surfaces this as a logout. This is the primary root cause of the 'intermittent logout' reports, with severity scaling with request concurrency and refresh latency."
+            "matchedFinding": "Non-initiating callers (the `else` branch) only `sleep(50)` once and then unconditionally return whatever `currentToken` currently holds \u2014 they never re-check whether the in-flight refresh actually completed, and there is no shared promise/queue at the call sites (the file explicitly says every request calls `getToken()` independently). Since refresh is a network round trip typically well over 50ms, these callers systematically return the same token that was already judged expired by the caller that triggered the refresh, so their authenticated request fails and the app surfaces this as a logout. This is the primary root cause of the 'intermittent logout' reports, with severity scaling with request concurrency and refresh latency."
           }
         ],
         "reportedCount": 3
@@ -336,7 +336,7 @@
           {
             "id": "CFG-2",
             "hit": true,
-            "matchedFinding": "The debug CACHE_TTL_SECONDS=0 change was never reverted after issue #412 was resolved — it has persisted undetected in production for eight months"
+            "matchedFinding": "The debug CACHE_TTL_SECONDS=0 change was never reverted after issue #412 was resolved \u2014 it has persisted undetected in production for eight months"
           },
           {
             "id": "CFG-3",
@@ -362,7 +362,7 @@
           {
             "id": "CFG-2",
             "hit": true,
-            "matchedFinding": "The override originated as an explicitly temporary debug change (commit titled \"debug: temporarily disable cache to reproduce issue #412\") made eight months ago and was never reverted — there is no expiry mechanism or tracking for temporary debug config flags."
+            "matchedFinding": "The override originated as an explicitly temporary debug change (commit titled \"debug: temporarily disable cache to reproduce issue #412\") made eight months ago and was never reverted \u2014 there is no expiry mechanism or tracking for temporary debug config flags."
           },
           {
             "id": "CFG-3",
@@ -372,7 +372,7 @@
         ],
         "reportedCount": 7
       },
-      "autistic": {
+      "neurodiversity": {
         "tp": 1,
         "fp": 4,
         "fn": 2,
@@ -383,7 +383,7 @@
           {
             "id": "CFG-1",
             "hit": true,
-            "matchedFinding": "Root cause: config/production.env still sets CACHE_TTL_SECONDS=0 from an 8-month-old commit titled 'debug: temporarily disable cache to reproduce issue #412'. Since loadConfig() does `{...base, ...override}` and production.env is loaded after base.env, this stale debug value permanently wins over the documented 300s default — caching has been a no-op in production ever since, and the debug change was never paired with a follow-up commit that restored it (a missing enable/disable counterpart operation)."
+            "matchedFinding": "Root cause: config/production.env still sets CACHE_TTL_SECONDS=0 from an 8-month-old commit titled 'debug: temporarily disable cache to reproduce issue #412'. Since loadConfig() does `{...base, ...override}` and production.env is loaded after base.env, this stale debug value permanently wins over the documented 300s default \u2014 caching has been a no-op in production ever since, and the debug change was never paired with a follow-up commit that restored it (a missing enable/disable counterpart operation)."
           },
           {
             "id": "CFG-2",
@@ -398,7 +398,7 @@
         ],
         "reportedCount": 5
       },
-      "adhd-autistic": {
+      "adhd-neurodiversity": {
         "tp": 3,
         "fp": 3,
         "fn": 0,
@@ -409,7 +409,7 @@
           {
             "id": "CFG-1",
             "hit": true,
-            "matchedFinding": "Root cause is confirmed in code: loadConfig performs a shallow merge `{...base, ...override}`, so any key present in production.env unconditionally wins over base.env. CACHE_TTL_SECONDS=0 in production.env therefore overrides the documented 300s value in every production request — this is the direct, sole cause of caching being ineffective, and configLoader.ts itself is working exactly as designed (the bug is stale data, not merge logic)."
+            "matchedFinding": "Root cause is confirmed in code: loadConfig performs a shallow merge `{...base, ...override}`, so any key present in production.env unconditionally wins over base.env. CACHE_TTL_SECONDS=0 in production.env therefore overrides the documented 300s value in every production request \u2014 this is the direct, sole cause of caching being ineffective, and configLoader.ts itself is working exactly as designed (the bug is stale data, not merge logic)."
           },
           {
             "id": "CFG-2",
@@ -419,7 +419,7 @@
           {
             "id": "CFG-3",
             "hit": true,
-            "matchedFinding": "The debug CACHE_TTL_SECONDS=0 change was committed together with an unrelated, intentional DB_POOL_SIZE=20→50 change in the same commit. This coupling means a naive fix (git revert of that commit) would also undo the legitimate pool-size increase — the fix must surgically remove only the CACHE_TTL_SECONDS line, not revert the commit wholesale."
+            "matchedFinding": "The debug CACHE_TTL_SECONDS=0 change was committed together with an unrelated, intentional DB_POOL_SIZE=20\u219250 change in the same commit. This coupling means a naive fix (git revert of that commit) would also undo the legitimate pool-size increase \u2014 the fix must surgically remove only the CACHE_TTL_SECONDS line, not revert the commit wholesale."
           }
         ],
         "reportedCount": 6
@@ -478,7 +478,7 @@
         ],
         "reportedCount": 6
       },
-      "autistic": {
+      "neurodiversity": {
         "tp": 3,
         "fp": 2,
         "fn": 0,
@@ -489,22 +489,22 @@
           {
             "id": "DATA-1",
             "hit": true,
-            "matchedFinding": "User.ts declares `phone: string` as required/non-null, but schema.sql defines `phone TEXT NULL`. listActiveUsers() in userRepo.ts does `SELECT id, email, phone FROM users` and casts the result to `Promise<User[]>` with no null-check or COALESCE — any row with a NULL phone will silently violate the type contract, so downstream code that trusts `user.phone` as a string (e.g. calling `.toUpperCase()` or formatting it) will throw or misbehave at runtime for exactly the rows the schema says are legal."
+            "matchedFinding": "User.ts declares `phone: string` as required/non-null, but schema.sql defines `phone TEXT NULL`. listActiveUsers() in userRepo.ts does `SELECT id, email, phone FROM users` and casts the result to `Promise<User[]>` with no null-check or COALESCE \u2014 any row with a NULL phone will silently violate the type contract, so downstream code that trusts `user.phone` as a string (e.g. calling `.toUpperCase()` or formatting it) will throw or misbehave at runtime for exactly the rows the schema says are legal."
           },
           {
             "id": "DATA-2",
             "hit": true,
-            "matchedFinding": "User.ts declares `phone: string` as required/non-null, but schema.sql defines `phone TEXT NULL`. listActiveUsers() in userRepo.ts does `SELECT id, email, phone FROM users` and casts the result to `Promise<User[]>` with no null-check or COALESCE — any row with a NULL phone will silently violate the type contract, so downstream code that trusts `user.phone` as a string (e.g. calling `.toUpperCase()` or formatting it) will throw or misbehave at runtime for exactly the rows the schema says are legal."
+            "matchedFinding": "User.ts declares `phone: string` as required/non-null, but schema.sql defines `phone TEXT NULL`. listActiveUsers() in userRepo.ts does `SELECT id, email, phone FROM users` and casts the result to `Promise<User[]>` with no null-check or COALESCE \u2014 any row with a NULL phone will silently violate the type contract, so downstream code that trusts `user.phone` as a string (e.g. calling `.toUpperCase()` or formatting it) will throw or misbehave at runtime for exactly the rows the schema says are legal."
           },
           {
             "id": "DATA-3",
             "hit": true,
-            "matchedFinding": "signup() enforces 'no duplicate email' via a check-then-insert pattern (`SELECT id ... WHERE email=$1` followed by a separate `INSERT`) with no transaction, locking, or advisory lock, and schema.sql explicitly notes 'no UNIQUE constraint on email'. Two concurrent signup calls with the same email can both pass the SELECT (finding zero rows) before either INSERT commits, producing two rows with the same email — the 'email taken' invariant is not actually enforced under concurrency, and there is no DB-level backstop since the column isn't UNIQUE."
+            "matchedFinding": "signup() enforces 'no duplicate email' via a check-then-insert pattern (`SELECT id ... WHERE email=$1` followed by a separate `INSERT`) with no transaction, locking, or advisory lock, and schema.sql explicitly notes 'no UNIQUE constraint on email'. Two concurrent signup calls with the same email can both pass the SELECT (finding zero rows) before either INSERT commits, producing two rows with the same email \u2014 the 'email taken' invariant is not actually enforced under concurrency, and there is no DB-level backstop since the column isn't UNIQUE."
           }
         ],
         "reportedCount": 4
       },
-      "adhd-autistic": {
+      "adhd-neurodiversity": {
         "tp": 3,
         "fp": 2,
         "fn": 0,
@@ -515,17 +515,17 @@
           {
             "id": "DATA-1",
             "hit": true,
-            "matchedFinding": "The `User` interface declares `phone: string` (required, non-null) but the `users` table defines `phone TEXT NULL`; `listActiveUsers` does `SELECT id, email, phone FROM users` and casts the raw rows straight to `User[]` with no null-check or validation layer, so any row with a NULL phone silently violates the TS contract at runtime — code trusting `user.phone` as a string (e.g. calling string methods on it) will crash or misbehave, and this stays invisible in staging until a row with a null phone (e.g. a legacy user, or one from before phone was collected) is hit."
+            "matchedFinding": "The `User` interface declares `phone: string` (required, non-null) but the `users` table defines `phone TEXT NULL`; `listActiveUsers` does `SELECT id, email, phone FROM users` and casts the raw rows straight to `User[]` with no null-check or validation layer, so any row with a NULL phone silently violates the TS contract at runtime \u2014 code trusting `user.phone` as a string (e.g. calling string methods on it) will crash or misbehave, and this stays invisible in staging until a row with a null phone (e.g. a legacy user, or one from before phone was collected) is hit."
           },
           {
             "id": "DATA-2",
             "hit": true,
-            "matchedFinding": "The `User` interface declares `phone: string` (required, non-null) but the `users` table defines `phone TEXT NULL`; `listActiveUsers` does `SELECT id, email, phone FROM users` and casts the raw rows straight to `User[]` with no null-check or validation layer, so any row with a NULL phone silently violates the TS contract at runtime — code trusting `user.phone` as a string (e.g. calling string methods on it) will crash or misbehave, and this stays invisible in staging until a row with a null phone (e.g. a legacy user, or one from before phone was collected) is hit."
+            "matchedFinding": "The `User` interface declares `phone: string` (required, non-null) but the `users` table defines `phone TEXT NULL`; `listActiveUsers` does `SELECT id, email, phone FROM users` and casts the raw rows straight to `User[]` with no null-check or validation layer, so any row with a NULL phone silently violates the TS contract at runtime \u2014 code trusting `user.phone` as a string (e.g. calling string methods on it) will crash or misbehave, and this stays invisible in staging until a row with a null phone (e.g. a legacy user, or one from before phone was collected) is hit."
           },
           {
             "id": "DATA-3",
             "hit": true,
-            "matchedFinding": "Email uniqueness is enforced only in application code via a check-then-insert pattern (`SELECT ... WHERE email=$1` followed by a separate `INSERT`), with no transaction or locking, and the schema explicitly has no UNIQUE constraint on email (per the schema.sql comment) — two concurrent signup calls with the same email can both pass the existence check before either INSERT completes, producing duplicate email rows that nothing in the DB or code prevents."
+            "matchedFinding": "Email uniqueness is enforced only in application code via a check-then-insert pattern (`SELECT ... WHERE email=$1` followed by a separate `INSERT`), with no transaction or locking, and the schema explicitly has no UNIQUE constraint on email (per the schema.sql comment) \u2014 two concurrent signup calls with the same email can both pass the existence check before either INSERT completes, producing duplicate email rows that nothing in the DB or code prevents."
           }
         ],
         "reportedCount": 4
@@ -543,12 +543,12 @@
           {
             "id": "DOC-1",
             "hit": true,
-            "matchedFinding": "Rate limit key is req.ip, not the API key as documented ('Each API key is limited to 100 requests per minute') — this directly explains the reported symptom: a shared-office customer behind NAT/a single egress IP has all users' requests pooled into one bucket, exhausting the limit far faster than the doc implies."
+            "matchedFinding": "Rate limit key is req.ip, not the API key as documented ('Each API key is limited to 100 requests per minute') \u2014 this directly explains the reported symptom: a shared-office customer behind NAT/a single egress IP has all users' requests pooled into one bucket, exhausting the limit far faster than the doc implies."
           },
           {
             "id": "DOC-2",
             "hit": true,
-            "matchedFinding": "No Retry-After header (or any header) is ever produced by checkLimit — the function only returns {limited: true}, so the documented 'returns HTTP 429 ... with a Retry-After header indicating when to retry' is not implemented anywhere in the shown code."
+            "matchedFinding": "No Retry-After header (or any header) is ever produced by checkLimit \u2014 the function only returns {limited: true}, so the documented 'returns HTTP 429 ... with a Retry-After header indicating when to retry' is not implemented anywhere in the shown code."
           },
           {
             "id": "DOC-3",
@@ -574,7 +574,7 @@
           {
             "id": "DOC-2",
             "hit": true,
-            "matchedFinding": "The documentation states exceeding the limit \"returns HTTP 429 ... with a Retry-After header indicating when to retry,\" but `checkLimit` only returns `{ limited: boolean }` — it never computes a retry time, never builds a 429 response, and never sets any header, so the documented Retry-After behavior is not implemented anywhere in this code."
+            "matchedFinding": "The documentation states exceeding the limit \"returns HTTP 429 ... with a Retry-After header indicating when to retry,\" but `checkLimit` only returns `{ limited: boolean }` \u2014 it never computes a retry time, never builds a 429 response, and never sets any header, so the documented Retry-After behavior is not implemented anywhere in this code."
           },
           {
             "id": "DOC-3",
@@ -584,7 +584,7 @@
         ],
         "reportedCount": 5
       },
-      "autistic": {
+      "neurodiversity": {
         "tp": 2,
         "fp": 2,
         "fn": 1,
@@ -595,7 +595,7 @@
           {
             "id": "DOC-1",
             "hit": true,
-            "matchedFinding": "The limiter buckets by `req.ip` (`const key = req.ip`) instead of by API key as documented (\"Each API key is limited to 100 requests per minute\"). In a shared-office scenario, many distinct API keys/users sit behind one NATed public IP, so they all share a single counter and collectively exhaust the 100-request bucket far faster than any single key should — exactly the reported symptom."
+            "matchedFinding": "The limiter buckets by `req.ip` (`const key = req.ip`) instead of by API key as documented (\"Each API key is limited to 100 requests per minute\"). In a shared-office scenario, many distinct API keys/users sit behind one NATed public IP, so they all share a single counter and collectively exhaust the 100-request bucket far faster than any single key should \u2014 exactly the reported symptom."
           },
           {
             "id": "DOC-2",
@@ -610,7 +610,7 @@
         ],
         "reportedCount": 4
       },
-      "adhd-autistic": {
+      "adhd-neurodiversity": {
         "tp": 2,
         "fp": 3,
         "fn": 1,
@@ -621,7 +621,7 @@
           {
             "id": "DOC-1",
             "hit": true,
-            "matchedFinding": "Rate limiter buckets by `req.ip` (`const key = req.ip`) instead of by API key, directly contradicting the docs' claim that \"Each API key is limited to 100 requests per minute\" — no API key/token is referenced anywhere in checkLimit. On a shared-office network, all users/API keys behind the same NAT'd public IP share one bucket, so the effective per-key budget becomes 100/N (N = concurrent users on that IP) instead of 100, exactly matching the reported symptom of being rate-limited far more easily than documented."
+            "matchedFinding": "Rate limiter buckets by `req.ip` (`const key = req.ip`) instead of by API key, directly contradicting the docs' claim that \"Each API key is limited to 100 requests per minute\" \u2014 no API key/token is referenced anywhere in checkLimit. On a shared-office network, all users/API keys behind the same NAT'd public IP share one bucket, so the effective per-key budget becomes 100/N (N = concurrent users on that IP) instead of 100, exactly matching the reported symptom of being rate-limited far more easily than documented."
           },
           {
             "id": "DOC-2",
@@ -649,12 +649,12 @@
           {
             "id": "INT-1",
             "hit": true,
-            "matchedFinding": "legacyImportSender.ts (bulk CSV import path) sends a payload with only orderId and amount, omitting the currency field that the v2 docs declare as 'always present' — the sender was never updated when the schema moved from v1 to v2."
+            "matchedFinding": "legacyImportSender.ts (bulk CSV import path) sends a payload with only orderId and amount, omitting the currency field that the v2 docs declare as 'always present' \u2014 the sender was never updated when the schema moved from v1 to v2."
           },
           {
             "id": "INT-2",
             "hit": true,
-            "matchedFinding": "legacyImportSender.ts (bulk CSV import path) sends a payload with only orderId and amount, omitting the currency field that the v2 docs declare as 'always present' — the sender was never updated when the schema moved from v1 to v2."
+            "matchedFinding": "legacyImportSender.ts (bulk CSV import path) sends a payload with only orderId and amount, omitting the currency field that the v2 docs declare as 'always present' \u2014 the sender was never updated when the schema moved from v1 to v2."
           },
           {
             "id": "INT-3",
@@ -690,7 +690,7 @@
         ],
         "reportedCount": 7
       },
-      "autistic": {
+      "neurodiversity": {
         "tp": 3,
         "fp": 3,
         "fn": 0,
@@ -716,7 +716,7 @@
         ],
         "reportedCount": 5
       },
-      "adhd-autistic": {
+      "adhd-neurodiversity": {
         "tp": 2,
         "fp": 5,
         "fn": 1,
@@ -732,7 +732,7 @@
           {
             "id": "INT-2",
             "hit": true,
-            "matchedFinding": "`sendOrderCreatedFromImport` predates v2 ('written before v2 existed') and was evidently never migrated when the currency field was introduced — this looks like a missed rollout/migration step rather than an isolated coding slip, and simply appending `order.currency` may be insufficient if bulk-imported orders don't reliably capture a currency value at the source (CSV import may need an explicit currency default or backfill in addition to a payload fix)."
+            "matchedFinding": "`sendOrderCreatedFromImport` predates v2 ('written before v2 existed') and was evidently never migrated when the currency field was introduced \u2014 this looks like a missed rollout/migration step rather than an isolated coding slip, and simply appending `order.currency` may be insufficient if bulk-imported orders don't reliably capture a currency value at the source (CSV import may need an explicit currency default or backfill in addition to a payload fix)."
           },
           {
             "id": "INT-3",
@@ -755,12 +755,12 @@
           {
             "id": "PERF-1",
             "hit": true,
-            "matchedFinding": "`getDashboard` awaits `fetchLivePrice` sequentially inside a `for` loop instead of issuing the calls concurrently (e.g. `Promise.all`), so total latency scales linearly with the number of orders — an O(n) chain of network round-trips per request."
+            "matchedFinding": "`getDashboard` awaits `fetchLivePrice` sequentially inside a `for` loop instead of issuing the calls concurrently (e.g. `Promise.all`), so total latency scales linearly with the number of orders \u2014 an O(n) chain of network round-trips per request."
           },
           {
             "id": "PERF-2",
             "hit": true,
-            "matchedFinding": "The retry has no backoff/jitter — it re-issues the request immediately in a tight loop, which under load turns a single slow dependency into a retry storm that amplifies pressure on `pricingApi` (thundering-herd/retry-amplification), making the outage worse for all concurrent dashboard requests."
+            "matchedFinding": "The retry has no backoff/jitter \u2014 it re-issues the request immediately in a tight loop, which under load turns a single slow dependency into a retry storm that amplifies pressure on `pricingApi` (thundering-herd/retry-amplification), making the outage worse for all concurrent dashboard requests."
           },
           {
             "id": "PERF-3",
@@ -781,12 +781,12 @@
           {
             "id": "PERF-1",
             "hit": true,
-            "matchedFinding": "getDashboard awaits fetchLivePrice sequentially inside a for-loop instead of running the calls concurrently (e.g. Promise.all), so total request latency scales linearly with the number of orders on that account — this is the direct mechanism behind 'slow under load.'"
+            "matchedFinding": "getDashboard awaits fetchLivePrice sequentially inside a for-loop instead of running the calls concurrently (e.g. Promise.all), so total request latency scales linearly with the number of orders on that account \u2014 this is the direct mechanism behind 'slow under load.'"
           },
           {
             "id": "PERF-2",
             "hit": true,
-            "matchedFinding": "The retry has no maximum attempt count and no backoff/delay — a failing pricingApi is hit with immediate, unbounded, back-to-back retries as fast as the network allows, rather than failing fast or backing off."
+            "matchedFinding": "The retry has no maximum attempt count and no backoff/delay \u2014 a failing pricingApi is hit with immediate, unbounded, back-to-back retries as fast as the network allows, rather than failing fast or backing off."
           },
           {
             "id": "PERF-3",
@@ -796,7 +796,7 @@
         ],
         "reportedCount": 7
       },
-      "autistic": {
+      "neurodiversity": {
         "tp": 2,
         "fp": 4,
         "fn": 1,
@@ -817,12 +817,12 @@
           {
             "id": "PERF-3",
             "hit": true,
-            "matchedFinding": "pricingApi has no timeout configured (acknowledged in the code's own comment). A hung/slow upstream call never throws, so the try/catch retry logic never even engages — the await simply blocks forever. This means the retry mechanism gives a false sense of resilience: the actual unbounded-latency failure mode (a stalled TCP connection or a pricingApi instance that accepts but never responds) is not retried, it is just hung on indefinitely."
+            "matchedFinding": "pricingApi has no timeout configured (acknowledged in the code's own comment). A hung/slow upstream call never throws, so the try/catch retry logic never even engages \u2014 the await simply blocks forever. This means the retry mechanism gives a false sense of resilience: the actual unbounded-latency failure mode (a stalled TCP connection or a pricingApi instance that accepts but never responds) is not retried, it is just hung on indefinitely."
           }
         ],
         "reportedCount": 6
       },
-      "adhd-autistic": {
+      "adhd-neurodiversity": {
         "tp": 3,
         "fp": 3,
         "fn": 0,
@@ -833,7 +833,7 @@
           {
             "id": "PERF-1",
             "hit": true,
-            "matchedFinding": "getDashboard awaits fetchLivePrice sequentially inside a for-loop over all of the user's orders, so total request latency scales linearly with order count (N x per-call pricing-API latency) — a serial N+1-style external-call pattern that alone explains general slowness, independent of any errors."
+            "matchedFinding": "getDashboard awaits fetchLivePrice sequentially inside a for-loop over all of the user's orders, so total request latency scales linearly with order count (N x per-call pricing-API latency) \u2014 a serial N+1-style external-call pattern that alone explains general slowness, independent of any errors."
           },
           {
             "id": "PERF-2",
@@ -843,7 +843,7 @@
           {
             "id": "PERF-3",
             "hit": true,
-            "matchedFinding": "fetchLivePrice calls pricingApi.get with no timeout configured (explicitly noted in the code), so a single hung or slow call to the pricing API blocks that request indefinitely — this is the direct mechanism behind requests that time out entirely rather than merely running slow."
+            "matchedFinding": "fetchLivePrice calls pricingApi.get with no timeout configured (explicitly noted in the code), so a single hung or slow call to the pricing API blocks that request indefinitely \u2014 this is the direct mechanism behind requests that time out entirely rather than merely running slow."
           }
         ],
         "reportedCount": 6
@@ -897,12 +897,12 @@
           {
             "id": "REQ-3",
             "hit": true,
-            "matchedFinding": "The two 'cancel a booking' implementations diverge on refund behavior for the same requirement: api/cancelBooking.ts only refunds if hoursUntil(booking.start) > 24, while admin/cancelBooking.ts calls refund(booking.payment) unconditionally — the same cancellation done through the account page vs. the admin panel produces different refund outcomes (e.g. cancelling 2 hours before start yields no refund via the customer path but a full refund via the admin path)."
+            "matchedFinding": "The two 'cancel a booking' implementations diverge on refund behavior for the same requirement: api/cancelBooking.ts only refunds if hoursUntil(booking.start) > 24, while admin/cancelBooking.ts calls refund(booking.payment) unconditionally \u2014 the same cancellation done through the account page vs. the admin panel produces different refund outcomes (e.g. cancelling 2 hours before start yields no refund via the customer path but a full refund via the admin path)."
           }
         ],
         "reportedCount": 4
       },
-      "autistic": {
+      "neurodiversity": {
         "tp": 1,
         "fp": 3,
         "fn": 2,
@@ -928,7 +928,7 @@
         ],
         "reportedCount": 4
       },
-      "adhd-autistic": {
+      "adhd-neurodiversity": {
         "tp": 1,
         "fp": 6,
         "fn": 2,
@@ -944,7 +944,7 @@
           {
             "id": "REQ-2",
             "hit": true,
-            "matchedFinding": "The 24-hour refund threshold ('hoursUntil(booking.start) > 24') is a hardcoded magic number that exists only inside api/cancelBooking.ts's code — it is not stated anywhere in the requirements doc, is not configurable, and its exact boundary behavior (a booking exactly 24 hours out) is defined only implicitly by the '>' comparison."
+            "matchedFinding": "The 24-hour refund threshold ('hoursUntil(booking.start) > 24') is a hardcoded magic number that exists only inside api/cancelBooking.ts's code \u2014 it is not stated anywhere in the requirements doc, is not configurable, and its exact boundary behavior (a booking exactly 24 hours out) is defined only implicitly by the '>' comparison."
           },
           {
             "id": "REQ-3",
@@ -972,12 +972,12 @@
           {
             "id": "SEC-2",
             "hit": true,
-            "matchedFinding": "infra/network.yaml sets `public: true` on `api-service`, meaning the service backing `/admin/*` is reachable directly from the public internet — this directly contradicts the routes.yaml comment '# no auth middleware attached here; relies on the internal network for isolation', so the one security control the design depends on (network isolation) does not exist."
+            "matchedFinding": "infra/network.yaml sets `public: true` on `api-service`, meaning the service backing `/admin/*` is reachable directly from the public internet \u2014 this directly contradicts the routes.yaml comment '# no auth middleware attached here; relies on the internal network for isolation', so the one security control the design depends on (network isolation) does not exist."
           },
           {
             "id": "SEC-3",
             "hit": true,
-            "matchedFinding": "There is no validation on `req.body.amount` (type, sign, or bounds) before passing it to `processRefund` — e.g. no check against the order's actual charged amount, no rejection of negative or zero values, allowing arbitrary/duplicate/over-refunds."
+            "matchedFinding": "There is no validation on `req.body.amount` (type, sign, or bounds) before passing it to `processRefund` \u2014 e.g. no check against the order's actual charged amount, no rejection of negative or zero values, allowing arbitrary/duplicate/over-refunds."
           }
         ],
         "reportedCount": 10
@@ -998,17 +998,17 @@
           {
             "id": "SEC-2",
             "hit": true,
-            "matchedFinding": "`infra/network.yaml` sets `api-service.public: true`, directly contradicting the code comment's assumption ('relies on the internal network for isolation') — the trust boundary the auth check depends on does not actually exist."
+            "matchedFinding": "`infra/network.yaml` sets `api-service.public: true`, directly contradicting the code comment's assumption ('relies on the internal network for isolation') \u2014 the trust boundary the auth check depends on does not actually exist."
           },
           {
             "id": "SEC-3",
             "hit": true,
-            "matchedFinding": "`processRefund(req.body.orderId, req.body.amount)` is invoked with no validation or sanitization of `orderId` or `amount` — arbitrary, negative, zero, or oversized values are accepted as-is."
+            "matchedFinding": "`processRefund(req.body.orderId, req.body.amount)` is invoked with no validation or sanitization of `orderId` or `amount` \u2014 arbitrary, negative, zero, or oversized values are accepted as-is."
           }
         ],
         "reportedCount": 8
       },
-      "autistic": {
+      "neurodiversity": {
         "tp": 3,
         "fp": 2,
         "fn": 0,
@@ -1019,7 +1019,7 @@
           {
             "id": "SEC-1",
             "hit": true,
-            "matchedFinding": "Because the service is directly internet-reachable, adminRoutes.ts's only authorization check — `req.headers['x-internal-role'] !== 'admin'` — trusts a client-supplied HTTP header with zero verification (no mTLS, no gateway that injects/strips this header from external traffic, no signature/token check). Any unauthenticated internet client can send `x-internal-role: admin` on the request and pass the check, giving full public, unauthenticated access to the refund endpoint."
+            "matchedFinding": "Because the service is directly internet-reachable, adminRoutes.ts's only authorization check \u2014 `req.headers['x-internal-role'] !== 'admin'` \u2014 trusts a client-supplied HTTP header with zero verification (no mTLS, no gateway that injects/strips this header from external traffic, no signature/token check). Any unauthenticated internet client can send `x-internal-role: admin` on the request and pass the check, giving full public, unauthenticated access to the refund endpoint."
           },
           {
             "id": "SEC-2",
@@ -1029,12 +1029,12 @@
           {
             "id": "SEC-3",
             "hit": true,
-            "matchedFinding": "processRefund(req.body.orderId, req.body.amount) performs no authorization scoping or amount validation: there's no check that the caller/role is entitled to refund that specific orderId, and no check that amount is bounded by or matches the order's original charge. Combined with the header-spoofing bypass, an unauthenticated attacker can trigger refunds for arbitrary amounts on arbitrary orders — direct financial fraud, not just an access-control gap."
+            "matchedFinding": "processRefund(req.body.orderId, req.body.amount) performs no authorization scoping or amount validation: there's no check that the caller/role is entitled to refund that specific orderId, and no check that amount is bounded by or matches the order's original charge. Combined with the header-spoofing bypass, an unauthenticated attacker can trigger refunds for arbitrary amounts on arbitrary orders \u2014 direct financial fraud, not just an access-control gap."
           }
         ],
         "reportedCount": 5
       },
-      "adhd-autistic": {
+      "adhd-neurodiversity": {
         "tp": 3,
         "fp": 2,
         "fn": 0,
@@ -1050,12 +1050,12 @@
           {
             "id": "SEC-2",
             "hit": true,
-            "matchedFinding": "The route comment in infra/routes.yaml says admin protection 'relies on the internal network for isolation,' but infra/network.yaml sets `api-service.public: true`, directly contradicting that assumption — /admin/refund is reachable straight from the public internet with no network-layer restriction backing it up."
+            "matchedFinding": "The route comment in infra/routes.yaml says admin protection 'relies on the internal network for isolation,' but infra/network.yaml sets `api-service.public: true`, directly contradicting that assumption \u2014 /admin/refund is reachable straight from the public internet with no network-layer restriction backing it up."
           },
           {
             "id": "SEC-3",
             "hit": true,
-            "matchedFinding": "processRefund(req.body.orderId, req.body.amount) is invoked directly from unvalidated request-body fields — there's no check that orderId refers to a real/owned order or that amount is positive, bounded, or matches the order's actual value, so a spoofed request can refund an arbitrary amount to an arbitrary order."
+            "matchedFinding": "processRefund(req.body.orderId, req.body.amount) is invoked directly from unvalidated request-body fields \u2014 there's no check that orderId refers to a real/owned order or that amount is positive, bounded, or matches the order's actual value, so a spoofed request can refund an arbitrary amount to an arbitrary order."
           }
         ],
         "reportedCount": 5
@@ -1081,7 +1081,7 @@
       "recall": 0.8,
       "f1": 0.5333333333333333
     },
-    "autistic": {
+    "neurodiversity": {
       "tp": 22,
       "fp": 26,
       "fn": 8,
@@ -1090,7 +1090,7 @@
       "recall": 0.7333333333333333,
       "f1": 0.5641025641025641
     },
-    "adhd-autistic": {
+    "adhd-neurodiversity": {
       "tp": 24,
       "fp": 31,
       "fn": 6,

@@ -2,7 +2,7 @@
 // Checks that every backtick-quoted `references/X.md`, `frames/X.md`, or
 // `schemas/X.json` path mentioned in SKILL.md or any frames/references doc
 // actually resolves to a real file, relative to this skill's own directory.
-// Run from anywhere: node skills/autistic/check-links.js
+// Run from anywhere: node skills/neurodiversity/check-links.js
 
 const fs = require('fs');
 const path = require('path');

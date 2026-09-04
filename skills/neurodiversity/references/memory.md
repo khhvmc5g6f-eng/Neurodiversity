@@ -1,19 +1,19 @@
 # Cross-run memory ledger
 
-AUTISTIC has no memory by default: every run rebuilds the system map
+NEURODIVERSITY has no memory by default: every run rebuilds the system map
 and rediscovers every invariant and contradiction from scratch, even
 against the same repo it analysed yesterday. For a repo that gets
-audited repeatedly (recurring `/autistic audit repo` runs, or repeated
+audited repeatedly (recurring `/neurodiversity audit repo` runs, or repeated
 production-bug investigations in the same codebase), that's wasted
 depth — the highest-value use of a second run is going deeper than the
 first, not re-deriving what's already confirmed.
 
 ## The ledger file
 
-A confirmed-finding ledger lives at `.autistic/memory.json` **in the
+A confirmed-finding ledger lives at `.neurodiversity/memory.json` **in the
 target repo being analysed** (not in this skill's own directory, and
 not in the user's global Claude memory — it travels with the repo, so
-it's available regardless of which machine or session runs AUTISTIC
+it's available regardless of which machine or session runs NEURODIVERSITY
 against it next). Shape: `schemas/memory-ledger.schema.json`.
 
 ```json
@@ -37,7 +37,7 @@ against it next). Shape: `schemas/memory-ledger.schema.json`.
 
 ## Read: Phase 0
 
-At the start of System Cartography, check whether `.autistic/memory.json`
+At the start of System Cartography, check whether `.neurodiversity/memory.json`
 exists in the target repo. If it does:
 
 - Load it and treat its `invariants`/`assumptions` as **prior evidence,
@@ -56,7 +56,7 @@ exists in the target repo. If it does:
 
 ## Write: Phase 4 (Synthesis)
 
-After synthesis, update `.autistic/memory.json`:
+After synthesis, update `.neurodiversity/memory.json`:
 
 - Add newly confirmed invariants/contradictions/assumptions from this
   run's `verifiedFindings`.
@@ -70,7 +70,7 @@ After synthesis, update `.autistic/memory.json`:
   used to be true stopped being true, not just that it's now different.
 - Only write entries with real evidence (`verifiedFindings`, not
   `unknowns` or unresolved candidates) — the ledger is a record of what
-  AUTISTIC has actually confirmed, not a scratchpad of everything it
+  NEURODIVERSITY has actually confirmed, not a scratchpad of everything it
   considered.
 
 ## What this is not

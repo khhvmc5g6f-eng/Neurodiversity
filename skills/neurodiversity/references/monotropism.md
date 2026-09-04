@@ -1,4 +1,4 @@
-# Monotropism, hyperfocus, and why AUTISTIC is depth-first
+# Monotropism, hyperfocus, and why NEURODIVERSITY is depth-first
 
 ## The theory, briefly, and its limits
 

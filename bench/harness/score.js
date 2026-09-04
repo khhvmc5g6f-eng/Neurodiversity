@@ -15,7 +15,7 @@ const path = require('path');
 const ROOT = path.join(__dirname, '..');
 const FIXDIR = path.join(ROOT, 'fixtures');
 const RESULTSDIR = path.join(ROOT, 'results');
-const CONDITIONS = ['baseline', 'adhd', 'autistic', 'adhd-autistic'];
+const CONDITIONS = ['baseline', 'adhd', 'neurodiversity', 'adhd-neurodiversity'];
 
 function loadGroundTruth() {
   return fs.readdirSync(FIXDIR)

@@ -5,15 +5,15 @@ this repository.
 
 ## What this repo is
 
-A Claude Code Agent Skill (`skills/autistic/`) that implements
+A Claude Code Agent Skill (`skills/neurodiversity/`) that implements
 depth-first systems reasoning, plus reference docs, JSON schemas for its
 intermediate objects, and a mechanically-scored benchmark suite. It has
 a companion, complementary skill, `adhd` (breadth-first ideation), which
-this repo does not vendor — see `skills/autistic/references/adhd-bridge.md`.
+this repo does not vendor — see `skills/neurodiversity/references/adhd-bridge.md`.
 
 ## Editing the skill
 
-- `skills/autistic/SKILL.md` is the operational document — it's what a
+- `skills/neurodiversity/SKILL.md` is the operational document — it's what a
   Claude Code session actually reads when the skill triggers. Keep it
   tight; push detail into `references/` the way `SKILL.md` already
   points to them. A SKILL.md that grows past ~400 lines has usually
@@ -22,7 +22,7 @@ this repo does not vendor — see `skills/autistic/references/adhd-bridge.md`.
   code — there's no build step, editing them takes effect the next time
   a session reads the skill.
 - `schemas/*.json` are JSON Schema Draft-07. If you change a field
-  AUTISTIC's output actually uses (see `SKILL.md`'s Output shape and
+  NEURODIVERSITY's output actually uses (see `SKILL.md`'s Output shape and
   Phase 4), update the schema in the same change.
 
 ## Terminology this project avoids in its own voice
@@ -40,8 +40,8 @@ quoted, not paraphrased into "the project's" voice.
 
 `bench/` contains seeded-defect fixtures with a `ground-truth.json`
 answer key per fixture (planted defects, not visible in the fixture
-content itself) and a harness that runs BASELINE / ADHD / AUTISTIC /
-ADHD→AUTISTIC conditions and scores mechanically (ID-matching against
+content itself) and a harness that runs BASELINE / ADHD / NEURODIVERSITY /
+ADHD→NEURODIVERSITY conditions and scores mechanically (ID-matching against
 the ground truth, not an LLM judge) into `bench/results/`. `EVALS.md`
 publishes the aggregate numbers, including losses — do not edit
 `EVALS.md` to remove an unfavorable result; add a new run instead and
@@ -54,7 +54,7 @@ describes more than this first build implements — notably a standalone
 TS/CLI package (`src/*.ts`, `npm install -g`) and a full
 10-category × 10-scenario stress suite. Mutation-testing and
 static-analysis tool dispatch is specified concretely in
-`skills/autistic/references/tooling.md`, but is not exercised by the
+`skills/neurodiversity/references/tooling.md`, but is not exercised by the
 benchmark (see `EVALS.md`). This build scoped to: the Claude Code Skill
 itself (complete, including real-tool-integration guidance and a
 cross-run memory ledger — `references/tooling.md`,

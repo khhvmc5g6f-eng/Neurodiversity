@@ -1,9 +1,9 @@
-# ADHD ↔ AUTISTIC bridge
+# ADHD ↔ NEURODIVERSITY bridge
 
 ## Why a bridge, not a merger
 
 ADHD maximises divergence: novelty, lateral transfer, candidate
-generation. AUTISTIC maximises depth: precision, dependency
+generation. NEURODIVERSITY maximises depth: precision, dependency
 understanding, contradiction detection, falsification. Neither
 subsumes the other — a wide set of unverified options is not the same
 deliverable as one deeply verified answer, and forcing them into a
@@ -26,7 +26,7 @@ ADHD's output object, unchanged:
 }
 ```
 
-AUTISTIC's result object (`../schemas/result-schema.json`):
+NEURODIVERSITY's result object (`../schemas/result-schema.json`):
 
 ```json
 {
@@ -51,47 +51,47 @@ AUTISTIC's result object (`../schemas/result-schema.json`):
 Both are typed JSON, not prose — the bridge is a data transform, not a
 re-reading of a paragraph summary.
 
-## ADHD → AUTISTIC: verify the wide set
+## ADHD → NEURODIVERSITY: verify the wide set
 
 ```
 PROBLEM → ADHD DIVERGENCE → 30 CANDIDATES → ADHD CONVERGENCE
-        → 3 CANDIDATES → AUTISTIC SYSTEM MODEL → DEEP ANALYSIS PER CANDIDATE
+        → 3 CANDIDATES → NEURODIVERSITY SYSTEM MODEL → DEEP ANALYSIS PER CANDIDATE
         → FALSIFICATION → COMPARISON → FINAL DECISION
 ```
 
-For each of ADHD's shortlisted candidates, AUTISTIC runs a scoped
+For each of ADHD's shortlisted candidates, NEURODIVERSITY runs a scoped
 version of Phase 0–4 against *that candidate as the proposed system*:
 assumptions it requires, dependencies it introduces, invariants it must
 preserve, failure modes, edge cases, security/operations concerns,
 rough implementation cost, and a verification plan. The comparison
 across candidates uses the same evidence-graph and confidence-
-calibration machinery as any other AUTISTIC output — a candidate that
+calibration machinery as any other NEURODIVERSITY output — a candidate that
 "feels" more exciting from the ADHD phase gets no credit for that here.
 
-## AUTISTIC → ADHD → AUTISTIC: escape a dead end
+## NEURODIVERSITY → ADHD → NEURODIVERSITY: escape a dead end
 
-Used when AUTISTIC finds a precisely-defined structural problem with no
+Used when NEURODIVERSITY finds a precisely-defined structural problem with no
 obvious fix — the depth-first pass has done its job (the failure is
 understood, not vague) but hasn't produced a way forward, which is
 outside its job description.
 
 ```
-AUTISTIC → PRECISELY DEFINED FAILURE → ADHD → WIDE SOLUTION SEARCH
-         → AUTISTIC → VERIFY OPTIONS
+NEURODIVERSITY → PRECISELY DEFINED FAILURE → ADHD → WIDE SOLUTION SEARCH
+         → NEURODIVERSITY → VERIFY OPTIONS
 ```
 
-The handoff artifact from the first AUTISTIC pass to ADHD should be the
+The handoff artifact from the first NEURODIVERSITY pass to ADHD should be the
 failure statement plus its evidence graph — ADHD's frames diverge more
 usefully against a precisely stated problem than a vague one, so don't
 hand off the raw tunnel transcript, hand off the distilled failure.
 
-## Loop mode: `/adhd-autistic --loop`
+## Loop mode: `/adhd-neurodiversity --loop`
 
 ```
 UNDERSTAND → EXPLORE → VERIFY → FIND NEW PROBLEM → EXPLORE → VERIFY → ...
 ```
 
-`UNDERSTAND` and `VERIFY` are AUTISTIC phases; `EXPLORE` is ADHD.
+`UNDERSTAND` and `VERIFY` are NEURODIVERSITY phases; `EXPLORE` is ADHD.
 Stop the loop at analytical saturation (no phase in the last full cycle
 changed the system model or shortlist materially) or at a pre-agreed
 Agent-call budget — state which one triggered the stop in the output,
@@ -100,18 +100,18 @@ don't just stop silently.
 ## Routing heuristics (expanded from SKILL.md's table)
 
 - "Give me ten ideas for X" → ADHD only. No depth requested yet.
-- "Why is this production bug happening" → AUTISTIC only. There's
+- "Why is this production bug happening" → NEURODIVERSITY only. There's
   nothing to diverge on; the ask is for a correct explanation, not
   options.
-- "Design the best architecture for X" → ADHD → AUTISTIC. Generate wide,
+- "Design the best architecture for X" → ADHD → NEURODIVERSITY. Generate wide,
   then verify the leading candidates deeply before committing.
-- "Audit this repository thoroughly" → AUTISTIC only. Divergence adds
+- "Audit this repository thoroughly" → NEURODIVERSITY only. Divergence adds
   nothing to an audit; depth and coverage are the whole ask.
 - "This architecture is fundamentally wrong, find a genuinely different
-  approach" → AUTISTIC → ADHD → AUTISTIC. AUTISTIC first to precisely
+  approach" → NEURODIVERSITY → ADHD → NEURODIVERSITY. NEURODIVERSITY first to precisely
   state *why* it's wrong (so ADHD doesn't diverge against a vague
-  complaint), then ADHD to search wide, then AUTISTIC to verify.
+  complaint), then ADHD to search wide, then NEURODIVERSITY to verify.
 
-When the ask doesn't clearly match a row, default to AUTISTIC only —
+When the ask doesn't clearly match a row, default to NEURODIVERSITY only —
 it's the more conservative choice for anything that reads as
 investigation rather than ideation.

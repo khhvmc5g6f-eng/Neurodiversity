@@ -7,7 +7,7 @@ people who use or discuss it, accordingly.
 - Discuss the skill's mechanisms, not stereotypes about autistic people.
   If a proposed change or comment leans on "autistic people are just
   better at X," it doesn't belong here — see
-  `skills/autistic/references/monotropism.md` for why.
+  `skills/neurodiversity/references/monotropism.md` for why.
 - Avoid "high functioning" / "low functioning" / severity labels as
   identity shorthand, "autistic superpower," and "savant mode" in
   project language. Individuals describing themselves in their own words

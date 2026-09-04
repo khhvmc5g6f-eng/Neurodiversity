@@ -2,11 +2,11 @@
 
 ## Why this exists, and why it isn't "roleplay as an attacker"
 
-Stress-testing AUTISTIC against problems shaped by ADHD's own frame
+Stress-testing NEURODIVERSITY against problems shaped by ADHD's own frame
 parameters (hostile-attacker framing, extreme-constraint framing,
 inversion, trap-detection, breadth-routing) found
-AUTISTIC strong across the board except one specific, repeatable gap:
-given a security question, AUTISTIC's specialist lenses *review* — they
+NEURODIVERSITY strong across the board except one specific, repeatable gap:
+given a security question, NEURODIVERSITY's specialist lenses *review* — they
 verify or refute a claim already on the table — but nothing in the
 skill *generates* novel attack surface before anything's been proposed.
 Falsification (`references/verification.md`) is excellent at "assume
@@ -17,8 +17,8 @@ The tempting fix is to bolt on an ADHD-style adversarial-attacker
 persona (see the `adhd` skill's frame table: "you are a hostile
 competitor... generate approaches that exploit, fail, or sabotage").
 That's the wrong fix for this skill specifically — creative, associative
-roleplay is exactly the breadth-first mechanism AUTISTIC exists to
-complement, not adopt. The fix that's actually *more* AUTISTIC, not
+roleplay is exactly the breadth-first mechanism NEURODIVERSITY exists to
+complement, not adopt. The fix that's actually *more* NEURODIVERSITY, not
 less, is systematic taxonomy enumeration: apply the same explicit-rule-
 construction, systemising instinct the rest of this skill already uses,
 to security specifically, instead of leaving "Security Analyst" as an
@@ -63,7 +63,7 @@ just the interesting one:
   problems were looked for.
 - **Unresolved** — cannot be confirmed or ruled out from what's
   available (e.g. the enforcing mechanism lives server-side and isn't
-  in scope). State this plainly, as Phase 0's `.autistic/memory.json`
+  in scope). State this plainly, as Phase 0's `.neurodiversity/memory.json`
   and the stress-test transcript that motivated this file both did
   correctly — an honest "can't verify from here" beats a confident
   guess in either direction.

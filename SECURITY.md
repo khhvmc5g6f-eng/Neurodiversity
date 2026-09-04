@@ -1,12 +1,12 @@
 # Security policy
 
-AUTISTIC is a Markdown-based Claude Code Agent Skill: it contains no
+NEURODIVERSITY is a Markdown-based Claude Code Agent Skill: it contains no
 executable server, no network service, and no code that runs outside a
 Claude Code session invoking the `Agent` tool. The main things worth a
 security-minded look are:
 
-- The skill's own prompts (`skills/autistic/SKILL.md`,
-  `skills/autistic/references/*.md`) — could a maliciously crafted
+- The skill's own prompts (`skills/neurodiversity/SKILL.md`,
+  `skills/neurodiversity/references/*.md`) — could a maliciously crafted
   target repository or document cause the skill's instructions to be
   overridden by content the skill is analysing? Findings here (prompt
   injection via analysed content) are the primary class of vulnerability

@@ -64,7 +64,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "autistic": {
+      "neurodiversity": {
         "tp": 2,
         "fp": 0,
         "fn": 1,
@@ -95,7 +95,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "adhd-autistic": {
+      "adhd-neurodiversity": {
         "tp": 2,
         "fp": 1,
         "fn": 1,
@@ -190,7 +190,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "autistic": {
+      "neurodiversity": {
         "tp": 3,
         "fp": 3,
         "fn": 0,
@@ -221,7 +221,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "adhd-autistic": {
+      "adhd-neurodiversity": {
         "tp": 2,
         "fp": 5,
         "fn": 1,
@@ -316,7 +316,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "autistic": {
+      "neurodiversity": {
         "tp": 3,
         "fp": 2,
         "fn": 0,
@@ -347,7 +347,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "adhd-autistic": {
+      "adhd-neurodiversity": {
         "tp": 3,
         "fp": 1,
         "fn": 0,
@@ -442,7 +442,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "autistic": {
+      "neurodiversity": {
         "tp": 1,
         "fp": 4,
         "fn": 2,
@@ -473,7 +473,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "adhd-autistic": {
+      "adhd-neurodiversity": {
         "tp": 3,
         "fp": 3,
         "fn": 0,
@@ -568,7 +568,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "autistic": {
+      "neurodiversity": {
         "tp": 3,
         "fp": 2,
         "fn": 0,
@@ -599,7 +599,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "adhd-autistic": {
+      "adhd-neurodiversity": {
         "tp": 3,
         "fp": 2,
         "fn": 0,
@@ -730,7 +730,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "autistic": {
+      "neurodiversity": {
         "tp": 4,
         "fp": 11,
         "fn": 2,
@@ -779,7 +779,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "adhd-autistic": {
+      "adhd-neurodiversity": {
         "tp": 5,
         "fp": 7,
         "fn": 1,
@@ -928,7 +928,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "autistic": {
+      "neurodiversity": {
         "tp": 6,
         "fp": 8,
         "fn": 0,
@@ -977,7 +977,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "adhd-autistic": {
+      "adhd-neurodiversity": {
         "tp": 6,
         "fp": 7,
         "fn": 0,
@@ -1090,7 +1090,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "autistic": {
+      "neurodiversity": {
         "tp": 2,
         "fp": 2,
         "fn": 1,
@@ -1121,7 +1121,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "adhd-autistic": {
+      "adhd-neurodiversity": {
         "tp": 2,
         "fp": 3,
         "fn": 1,
@@ -1216,7 +1216,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "autistic": {
+      "neurodiversity": {
         "tp": 3,
         "fp": 3,
         "fn": 0,
@@ -1247,7 +1247,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "adhd-autistic": {
+      "adhd-neurodiversity": {
         "tp": 2,
         "fp": 5,
         "fn": 1,
@@ -1342,7 +1342,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "autistic": {
+      "neurodiversity": {
         "tp": 2,
         "fp": 4,
         "fn": 1,
@@ -1373,7 +1373,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "adhd-autistic": {
+      "adhd-neurodiversity": {
         "tp": 3,
         "fp": 3,
         "fn": 0,
@@ -1468,7 +1468,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "autistic": {
+      "neurodiversity": {
         "tp": 3,
         "fp": 2,
         "fn": 0,
@@ -1499,7 +1499,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "adhd-autistic": {
+      "adhd-neurodiversity": {
         "tp": 2,
         "fp": 5,
         "fn": 1,
@@ -1594,7 +1594,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "autistic": {
+      "neurodiversity": {
         "tp": 3,
         "fp": 2,
         "fn": 0,
@@ -1625,7 +1625,7 @@
         "tokensUsed": null,
         "durationMs": null
       },
-      "adhd-autistic": {
+      "adhd-neurodiversity": {
         "tp": 3,
         "fp": 2,
         "fn": 0,
@@ -1687,7 +1687,7 @@
       "findingsPerToken": null,
       "findingsPerSecond": null
     },
-    "autistic": {
+    "neurodiversity": {
       "tp": 35,
       "fp": 43,
       "fn": 7,
@@ -1701,7 +1701,7 @@
       "findingsPerToken": null,
       "findingsPerSecond": null
     },
-    "adhd-autistic": {
+    "adhd-neurodiversity": {
       "tp": 36,
       "fp": 44,
       "fn": 6,

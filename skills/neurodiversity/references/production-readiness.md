@@ -6,7 +6,7 @@ Operations Analyst had the same problem Security Analyst had before
 `threat-taxonomy.md`: a name and nothing else. Named as a supplementary
 lens, described in one clause, no method. That's a real gap — "does
 this system fall over safely in production" is exactly the kind of
-question AUTISTIC's depth-first, systemising approach should be best
+question NEURODIVERSITY's depth-first, systemising approach should be best
 at, and a vague "consider operational concerns" prompt produces the
 same shallow, reactive review the STRIDE fix replaced.
 
@@ -69,7 +69,7 @@ applies, not a new rule.
 
 ## What this is not
 
-Not a request for AUTISTIC to *build* monitoring, runbooks, or rollback
+Not a request for NEURODIVERSITY to *build* monitoring, runbooks, or rollback
 tooling — that's implementation work, decided and scoped separately per
 Phase 4's "implementation was requested but architecture is materially
 unclear" rule. This pass finds and reports the gaps; it doesn't

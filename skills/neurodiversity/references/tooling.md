@@ -87,8 +87,54 @@ When a Phase 3 contradiction hunt is checking a documented API contract
   `pact/` directory, `*.pact.json` files), run the existing Pact
   verification (`pact-broker can-i-deploy` or the language-specific
   verifier) instead of re-deriving the contract from scratch — a
-  contract that's already tested is stronger evidence than one AUTISTIC
+  contract that's already tested is stronger evidence than one NEURODIVERSITY
   infers fresh.
+
+## Live web-content extraction & verification
+
+When a Phase 3 contradiction hunt, negative-space pass, or a tunnel's
+own evidence-gathering needs to check a claim against a real external
+web page — a documented data source, a vendor's published spec, a
+site/club/product guide the system's own data claims to be sourced
+from — prefer **WebSpider** (`~/WebSpider`, installed CLI: `webspider`,
+repo home of the `webspider` skill) over an LLM eyeballing a single
+fetched page:
+
+- `webspider extract <url> --out record.json` (needs the `[text]`
+  extra: `pip install -e '.[text]'` once) pulls clean text/Markdown,
+  embedded structured data (JSON-LD/microdata/OpenGraph), and
+  `labeled_fields` — a flat `{label: value}` dict from the page's own
+  tables/definition-lists/bolded labels. This is the right tool
+  whenever the contradiction being checked is "does field X on our
+  system match what the source page states for X" — extracting into
+  `labeled_fields` gives a structured value to diff against the
+  system's own field, not a paraphrase to eyeball.
+- `webspider crawl <url> --extract --no-images --max-pages <n> --out
+  ./out` extracts every page across a whole guide/directory site in one
+  pass (e.g. a club's full site-guide index) — use this instead of
+  fetching pages one at a time when the contradiction hunt spans more
+  than a handful of URLs, so the evidence set is complete rather than a
+  sample.
+- `webspider inspect <url> --capture-network --out record.json` (needs
+  `[render]`) surfaces data a JS-rendered page holds in its own
+  framework state or API calls but never renders into the DOM —
+  reach for this before concluding "the source has no data on this"
+  when the target is JS-heavy (React/Vue/Next.js SPA), since a plain
+  fetch or a DOM-only read would under-report what the source actually
+  contains.
+- `webspider map <url> --out urls.txt` is the fast recon step before a
+  multi-page `crawl --extract` — confirms the real URL set (via
+  sitemap.xml or a link-crawl) before committing to a bigger pull.
+
+As with every other tool in this file: if the target is behind a real
+CAPTCHA/Cloudflare/WAF challenge, WebSpider will skip it rather than
+fight past it (matching this skill's own platform-level rule against
+bypassing bot detection) — treat that as a genuine "source
+unreachable" finding, log it as unresolved evidence with the
+appropriate materiality rating, and do not fall back to guessing the
+page's content. Politeness defaults (robots.txt, `Crawl-delay`, request
+delay) are on by default and should stay on for this use — this is
+verification against a live third party, not a bulk scrape.
 
 ## When no tool is available
 

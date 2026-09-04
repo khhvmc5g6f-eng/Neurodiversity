@@ -14,7 +14,7 @@ jobs:
           node-version: "20"
       - name: Validate JSON schemas parse
         run: |
-          for f in skills/autistic/schemas/*.json bench/fixtures/*/ground-truth.json; do
+          for f in skills/neurodiversity/schemas/*.json bench/fixtures/*/ground-truth.json; do
             echo "checking $f"
             node -e "JSON.parse(require('fs').readFileSync('$f','utf8'))"
           done
@@ -22,12 +22,12 @@ jobs:
         run: |
           node -e "
             const fs = require('fs');
-            const text = fs.readFileSync('skills/autistic/SKILL.md', 'utf8');
+            const text = fs.readFileSync('skills/neurodiversity/SKILL.md', 'utf8');
             if (!text.startsWith('---')) throw new Error('missing frontmatter');
             const end = text.indexOf('---', 3);
             if (end === -1) throw new Error('unterminated frontmatter');
             const fm = text.slice(3, end);
-            if (!/^name:\s*autistic\s*$/m.test(fm)) throw new Error('name field missing/wrong');
+            if (!/^name:\s*neurodiversity\s*$/m.test(fm)) throw new Error('name field missing/wrong');
             if (!/^description:/m.test(fm)) throw new Error('description field missing');
             const keys = [...fm.matchAll(/^([A-Za-z0-9_-]+):/gm)].map(m => m[1]);
             const unexpected = keys.filter(k => !['name', 'description'].includes(k));
@@ -37,4 +37,4 @@ jobs:
       - name: Run benchmark scorer against checked-in results
         run: node bench/harness/score.js --verify-only
       - name: Check internal skill references resolve
-        run: node skills/autistic/check-links.js
+        run: node skills/neurodiversity/check-links.js
